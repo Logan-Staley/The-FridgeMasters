@@ -77,7 +77,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Senior Project The FridgeMaster 2023
+Senior Project The FridgeMaster 2023!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
