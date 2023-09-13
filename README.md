@@ -85,14 +85,10 @@ Senior Project The FridgeMaster 2023!
 
 ### Built With
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* [Flutter](https://flutter.dev/)
+* [Dart](https://dart.dev/)
+* [AWS Amplify​]()
+* [SQL]()di
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -107,26 +103,17 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+
 
 ### Installation
 
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   [git clone https://github.com/github_username/repo_name.git](https://github.com/Logan-Staley/The-FridgeMasters)]
    ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+3. flutter Doctor-
+  This will ensure all checks are covered
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
