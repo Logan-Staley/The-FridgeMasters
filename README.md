@@ -96,11 +96,16 @@ This is an example of how to list things you need to use the software and how to
    [git clone https://github.com/github_username/repo_name.git](https://github.com/Logan-Staley/The-FridgeMasters)]
    ```
 2. Create your branch-
+
   This will ensure all changes are in seperate branches for everyone to view.
   This is done by the following: 
+
     ctrl + Shift + P - opens the command search bar
+
     Search for Git: Create branch from
+
     choose master
+
     choose the name you are wanting your branch to be called.
 4.flutter Doctor-
   This will ensure all checks are covered
