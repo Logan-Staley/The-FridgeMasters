@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutterproject_v1/Pages/Home.dart';
+import 'package:flutterproject_v1/Pages/Choose_Location.dart';
+import 'package:flutterproject_v1/Pages/loading.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(MaterialApp(
+      home: Home(),
+    ));
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
