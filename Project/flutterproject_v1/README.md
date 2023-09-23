@@ -1,4 +1,4 @@
-# flutterproject_v1
+# fridgemasters
 
 A new Flutter project.
 

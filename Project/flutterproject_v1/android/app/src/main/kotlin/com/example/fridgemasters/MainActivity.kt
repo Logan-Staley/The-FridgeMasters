@@ -1,4 +1,4 @@
-package com.example.flutterproject_v1
+package com.example.fridgemasters
 
 import io.flutter.embedding.android.FlutterActivity
 
