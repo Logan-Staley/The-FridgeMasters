@@ -23,8 +23,10 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="[[images/logo.png](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reddit.com%2Fr%2Fhappy%2Fcomments%2Fvqklbm%2Ffully_stocked_my_fridge_for_the_first_time_after%2F&psig=AOvVaw1oRZzOnnz8n-W4idHayaA0&ust=1695575442776000&source=images&cd=vfe&opi=89978449&ved=0CA8QjRxqFwoTCPC03PGcwYEDFQAAAAAdAAAAABAJ)](https://external-preview.redd.it/4X4FyK0LQwOvgYmzOIsRScKa7TIelU4B2c1s2lI200k.jpg?width=640&crop=smart&auto=webp&s=c2c99cc38e139f58c99318ee4841ae51d54b9321)" alt="Logo" width="80" height="80">
+    <img src="https://external-preview.redd.it/4X4FyK0LQwOvgYmzOIsRScKa7TIelU4B2c1s2lI200k.jpg?width=640&crop=smart&auto=webp&s=c2c99cc38e139f58c99318ee4841ae51d54b9321" alt="Logo" width="80" height="80">
   </a>
+</div>
+
 
 <h3 align="center">The-FridgeMasters</h3>
 
