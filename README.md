@@ -23,7 +23,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="https://img.freepik.com/premium-vector/hand-drawn-trendy-cartoon-vector-illustration-happy-funny-fridge-hold-milk-apple-with-face_657235-304.jpg?w=996" alt="Logo" width="80" height="80">
+    <img src="https://media.istockphoto.com/id/614321268/vector/space-organization-in-freezer-flat-design-concept.jpg?s=612x612&w=0&k=20&c=Shl_rhv0_dt3Kuk0x0jmEeNKGBtmtFqG1rn-PEvOD9k=" alt="Logo" width="80" height="80">
   </a>
 </div>
 
