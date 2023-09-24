@@ -62,6 +62,7 @@
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://images.cooltext.com/5673070.png)
+<img src="https://images.cooltext.com/5673070.png">
 
 Senior Project The FridgeMaster 2023!
 
