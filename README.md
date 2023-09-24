@@ -23,7 +23,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="https://images.cooltext.com/5673070.png" alt="Logo" width="80" height="80">
+    <img src="https://en.pimg.jp/061/524/461/1/61524461.jpg" alt="Logo" width="80" height="80">
   </a>
 </div>
 
@@ -77,8 +77,7 @@ Senior Project The FridgeMaster 2023!
 
 * [Flutter](https://flutter.dev/)
 * [Dart](https://dart.dev/)
-* [AWS Amplify​]()
-* [SQL]()di
+* [MariaDB](https://mariadb.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
