@@ -23,7 +23,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="https://as1.ftcdn.net/v2/jpg/02/85/57/84/1000_F_285578407_B0p0cBOEj3vmZOe25QWRN3eqTQ4hSKoU.jpg" alt="Logo" width="80" height="80">
+    <img src="https://img.freepik.com/premium-vector/hand-drawn-trendy-cartoon-vector-illustration-happy-funny-fridge-hold-milk-apple-with-face_657235-304.jpg?w=996" alt="Logo" width="80" height="80">
   </a>
 </div>
 
@@ -67,7 +67,17 @@
 [product-screenshot]: https://images.cooltext.com/5673070.png
 
 
-Senior Project The FridgeMaster 2023!
+FridgeMasters is a cutting-edge mobile application developed as a senior project aimed at optimizing household and/or commercial fridge organization. This project serves as a culmination of our learning experiences, integrating various technological tools, platforms, and methodologies to deliver a solution that addresses real-world needs.
+
+Objectives
+• Efficiency & Sustainability: To assist users in minimizing food waste and effectively managing food storage through intelligent organization and reminders.
+• User Experience: To provide an intuitive and aesthetically pleasing user interface that ensures seamless navigation and interaction.
+Learning & Development: To offer a platform for the project team members to apply and enhance their technical skills and knowledge in a real-world scenario.
+
+Features
+• Inventory Management: Enables users to keep track of food items, their quantities, and expiration dates.
+• Smart Organization: Suggests optimal arrangement of items within the fridge to maximize space and preserve food quality.
+• Reminder Alerts: Sends notifications to users about approaching expiration dates to reduce food wastage.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
