@@ -23,7 +23,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="https://en.pimg.jp/061/524/461/1/61524461.jpg" alt="Logo" width="80" height="80">
+    <img src="https://as1.ftcdn.net/v2/jpg/02/85/57/84/1000_F_285578407_B0p0cBOEj3vmZOe25QWRN3eqTQ4hSKoU.jpg" alt="Logo" width="80" height="80">
   </a>
 </div>
 
