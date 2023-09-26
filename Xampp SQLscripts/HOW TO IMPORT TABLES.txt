@@ -1,0 +1,4 @@
+source /Path/To/SCRIPT
+
+
+Source C:/xampp/mysql/scripts/Scriptname.sql
