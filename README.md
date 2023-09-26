@@ -23,7 +23,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="https://external-preview.redd.it/4X4FyK0LQwOvgYmzOIsRScKa7TIelU4B2c1s2lI200k.jpg?width=640&crop=smart&auto=webp&s=c2c99cc38e139f58c99318ee4841ae51d54b9321" alt="Logo" width="80" height="80">
+    <img src="https://media.istockphoto.com/id/614321268/vector/space-organization-in-freezer-flat-design-concept.jpg?s=612x612&w=0&k=20&c=Shl_rhv0_dt3Kuk0x0jmEeNKGBtmtFqG1rn-PEvOD9k=" alt="Logo" width="80" height="80">
   </a>
 </div>
 
@@ -61,9 +61,33 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://images.cooltext.com/5673070.png)
 
-Senior Project The FridgeMaster 2023!
+<!-- Define the actual URL of the screenshot at the bottom or anywhere in the document -->
+[product-screenshot]: https://images.cooltext.com/5673070.png
+
+
+### Overview
+**Project Name:** FridgeMasters
+
+FridgeMasters is a cutting-edge mobile application developed as a senior project aimed at optimizing household and/or commercial fridge organization. This project serves as a culmination of our learning experiences, integrating various technological tools, platforms, and methodologies to deliver a solution that addresses real-world needs.
+
+### Objectives
+- **Efficiency & Sustainability:** 
+   - Assist users in minimizing food waste and effectively managing food storage through intelligent organization and reminders.
+- **User Experience:** 
+   - Provide an intuitive and aesthetically pleasing user interface that ensures seamless navigation and interaction.
+- **Learning & Development:** 
+   - Offer a platform for the project team members to apply and enhance their technical skills and knowledge in a real-world scenario.
+
+### Features
+- **Inventory Management:** 
+   - Enables users to keep track of food items, their quantities, and expiration dates.
+- **Smart Organization:** 
+   - Suggests optimal arrangement of items within the fridge to maximize space and preserve food quality.
+- **Reminder Alerts:** 
+   - Sends notifications to users about approaching expiration dates to reduce food wastage.
+     
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -73,8 +97,7 @@ Senior Project The FridgeMaster 2023!
 
 * [Flutter](https://flutter.dev/)
 * [Dart](https://dart.dev/)
-* [AWS Amplify​]()
-* [SQL]()di
+* [MariaDB](https://mariadb.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -109,7 +132,7 @@ This is an example of how to list things you need to use the software and how to
     choose master
 
     choose the name you are wanting your branch to be called.
-4.flutter Doctor-
+4.flutter doctor-
   This will ensure all checks are covered
 <p align="right">(<a href="#top">back to top</a>)</p>
 
