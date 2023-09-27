@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fridgemasters/foodentry.dart';
+import 'package:fridgemasters/homepage.dart';
+import 'package:fridgemasters/recipes.dart';
 
 class Taskbar extends StatelessWidget {
   final int currentIndex;
@@ -10,7 +13,26 @@ class Taskbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      onTap: onTabChanged,
+      onTap: (index){
+        switch(index){
+          case 0:
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()), );
+        
+       break;
+        case 1: 
+        Navigator.push(context, MaterialPageRoute(builder: (context) => foodentry()), );
+
+        break;
+         case 2:
+          Navigator.push(context, MaterialPageRoute(builder: (context) => recipes()), );
+        break;
+        default:
+        break;
+        }
+        onTabChanged(index);
+      },
+     
+       
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
@@ -18,7 +40,7 @@ class Taskbar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.kitchen),
-          label: 'Fridge',
+          label: 'Foodentry',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.book),
@@ -26,5 +48,6 @@ class Taskbar extends StatelessWidget {
         ),
       ],
     );
+    
   }
 }
