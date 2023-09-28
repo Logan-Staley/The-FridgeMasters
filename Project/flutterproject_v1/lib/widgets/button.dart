@@ -1,26 +1,38 @@
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  final VoidCallback onPressed;
+  final Future<bool> Function() onPressed;
   final String buttonText;
-  final Widget nextPage; // Add this line to accept the next page
+  final Widget nextPage;
 
-  Button(
-      {required this.onPressed,
-      required this.buttonText,
-      required this.nextPage}); // Modify the constructor
+  Button({
+    required this.onPressed,
+    required this.buttonText,
+    required this.nextPage,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        onPressed();
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => nextPage),
-        );
+    return FutureBuilder<bool>(
+      future: null,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator(); // Show a loading spinner
+        } else {
+          return ElevatedButton(
+            onPressed: () async {
+              bool success = await onPressed();
+              if (success) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => nextPage),
+                );
+              }
+            },
+            child: Text(buttonText),
+          );
+        }
       },
-      child: Text(buttonText),
     );
   }
 }

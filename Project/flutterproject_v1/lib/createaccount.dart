@@ -10,7 +10,7 @@ class CreateAccountPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<void> registerUser() async {
+  Future<void> registerUser(BuildContext context) async {
     final response = await http.post(
       Uri.parse('http://127.0.0.1/register.php'),
       body: jsonEncode(<String, String>{
@@ -27,16 +27,47 @@ class CreateAccountPage extends StatelessWidget {
       var data = jsonDecode(response.body);
       if (data["success"]) {
         // Handle successful registration
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Account created successfully!')),
+        );
+        // Clear the text fields
+        usernameController.clear();
+        emailController.clear();
+        passwordController.clear();
       } else {
-        // Handle error
+        // Handle error based on the message received from the server
+        if (data["message"] == "Account already exists") {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Account already exists!')),
+          );
+        } else if (data["message"] == "Username is already taken") {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Username is already taken!')),
+          );
+        } else if (data["message"] == "Invalid email") {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Invalid email!')),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Registration failed!')),
+          );
+        }
+        // Clear the text fields
+        usernameController.clear();
+        emailController.clear();
+        passwordController.clear();
       }
     } else {
       // Handle server connection error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to connect to the server.')),
+      );
     }
   }
 
-  void handleSubmit() {
-    registerUser();
+  void handleSubmit(BuildContext context) {
+    registerUser(context);
   }
 
   @override
@@ -56,7 +87,7 @@ class CreateAccountPage extends StatelessWidget {
                 InputTextBox(controller: passwordController, isPassword: true, hint: 'Create Password'),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: handleSubmit,
+                  onPressed: () => handleSubmit(context),
                   child: Text('Submit'),
                 ),
                 SizedBox(height: 20),

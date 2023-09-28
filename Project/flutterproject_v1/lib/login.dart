@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/homepage.dart';
 import 'package:fridgemasters/widgets/button.dart';
@@ -14,7 +13,14 @@ class LoginPage extends StatelessWidget {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<void> login(BuildContext context) async {
+  Future<bool> login(BuildContext context) async {
+    if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter both username and password.')),
+      );
+      return false;
+    }
+
     final response = await http.post(
       Uri.parse('http://127.0.0.1/register.php'), // Update this URL if needed
       body: jsonEncode(<String, String>{
@@ -29,20 +35,18 @@ class LoginPage extends StatelessWidget {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       if (data["success"]) {
-        // Handle successful login, e.g., navigate to the HomePage
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
+        return true; // Return true on successful login
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(data["message"])),
         );
+        return false; // Return false on failed login
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to connect to the server.')),
       );
+      return false; // Return false on server connection error
     }
   }
 
@@ -72,9 +76,8 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Button(
-                  onPressed: () {
-                    // Your login logic here
-                    login(context);
+                  onPressed: () async {
+                    return await login(context);
                   },
                   buttonText: 'Login',
                   nextPage: HomePage(),

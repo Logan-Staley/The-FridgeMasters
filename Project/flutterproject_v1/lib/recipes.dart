@@ -21,45 +21,46 @@ class Recipes extends StatelessWidget {
 
             // Recipe Buttons using the Button widget
             Button(
-              onPressed: () {
-                // Handle navigation or recipe action for the first recipe here
+              onPressed: () async {
+                return true;
               },
               buttonText: 'First Recipe',
-              nextPage: Recipesinstructions(), // Replace with the actual destination page
+              nextPage: Recipesinstructions(),
             ),
             SizedBox(height: 50),
 
             Button(
-              onPressed: () {
-                // Handle navigation or recipe action for the second recipe here
+              onPressed: () async {
+                return true;
               },
               buttonText: 'Second Recipe',
-              nextPage: Recipesinstructions(), // Replace with the actual destination page
+              nextPage: Recipesinstructions(),
             ),
             SizedBox(height: 50),
 
             Button(
-              onPressed: () {
-                // Handle navigation or recipe action for the third recipe here
+              onPressed: () async {
+                return true;
               },
               buttonText: 'Third Recipe',
-              nextPage: Recipesinstructions(), // Replace with the actual destination page
+              nextPage: Recipesinstructions(),
             ),
             SizedBox(height: 50),
 
             Button(
-              onPressed: () {
-                // Handle navigation or recipe action for the food item here
+              onPressed: () async {
+                return true;
               },
               buttonText: 'Fourth Recipe',
-              nextPage: Recipesinstructions(), // Replace with the actual destination page
+              nextPage: Recipesinstructions(),
             ),
             SizedBox(height: 50),
 
             // Back Button
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Recipesinstructions()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => Recipesinstructions()));
               },
               child: Text('Back'),
             )
