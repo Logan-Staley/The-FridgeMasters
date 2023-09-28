@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'widgets/inputtextbox.dart';
-import 'package:http/http.dart' as http;
 
+import 'package:fridgemasters/widgets/inputtextbox.dart';
+import 'package:fridgemasters/widgets/textonlybutton.dart'; // Import TextOnlyButton
+import 'package:fridgemasters/widgets/backgrounds.dart'; // Make sure the import path is correct
+import 'package:http/http.dart' as http;
 class CreateAccountPage extends StatelessWidget {
   // Step 1: Create TextEditingController instances
   final TextEditingController usernameController = TextEditingController();
@@ -44,27 +46,34 @@ class CreateAccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //appBar: AppBar(title: Text('Create Account')),
-      body: Center(
-        child: Column(
-          children: [
-            // Step 2: Provide the controllers to the InputTextBox widgets
-            InputTextBox(
-                controller: usernameController,
-                isPassword: false,
-                hint: 'Enter username'),
-            InputTextBox(
-                controller: emailController, isPassword: false, hint: 'E-Mail'),
-            InputTextBox(
-                controller: passwordController,
-                isPassword: true,
-                hint: 'Password'),
-
-            ElevatedButton(
-              onPressed: handleSubmit,
-              child: Text('Submit'),
+      body: Stack(
+        children: [
+          Background1(), // Use the Background1 widget
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InputTextBox(isPassword: false, hint: 'Create username',controller: usernameController,),
+                SizedBox(height: 20), // Add some spacing between the inputs
+                InputTextBox(controller: emailController, isPassword: false, hint: 'Enter E-Mail'),
+                SizedBox(height: 20), // Add some spacing between the inputs
+                InputTextBox(controller: passwordController, isPassword: true, hint: 'Create Password'),
+                SizedBox(height: 20), // Add some spacing between the inputs
+                TextOnlyButton(
+                  text: 'Return To Login',
+                  onPressed: () {
+                    // Navigate back to the previous page
+                    Navigator.pop(context);
+                  ElevatedButton(
+                    onPressed: handleSubmit,
+                    child: Text('Submit'),
+                    ),
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
