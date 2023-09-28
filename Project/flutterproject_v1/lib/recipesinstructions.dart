@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class RecipesList extends StatelessWidget {
+class Recipesinstructions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recipes List Page'),
+        title: Text('Recipe Instructions Page'),
       ),
       body: Center(
-        child: Text('This is the Recipes List page.'),
+        child: Text('This is the Recipe Instructions page.'),
       ),
     );
   }

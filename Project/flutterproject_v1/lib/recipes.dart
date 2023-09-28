@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fridgemasters/recipeslist.dart';
+import 'package:fridgemasters/recipesinstructions.dart';
 import 'package:fridgemasters/widgets/button.dart'; // Import your Button widget
 
 class Recipes extends StatelessWidget {
@@ -25,41 +25,41 @@ class Recipes extends StatelessWidget {
                 // Handle navigation or recipe action for the first recipe here
               },
               buttonText: 'First Recipe',
-              nextPage: RecipesList(), // Replace with the actual destination page
+              nextPage: Recipesinstructions(), // Replace with the actual destination page
             ),
-            SizedBox(height: 100),
+            SizedBox(height: 50),
 
             Button(
               onPressed: () {
                 // Handle navigation or recipe action for the second recipe here
               },
               buttonText: 'Second Recipe',
-              nextPage: RecipesList(), // Replace with the actual destination page
+              nextPage: Recipesinstructions(), // Replace with the actual destination page
             ),
-            SizedBox(height: 100),
+            SizedBox(height: 50),
 
             Button(
               onPressed: () {
                 // Handle navigation or recipe action for the third recipe here
               },
               buttonText: 'Third Recipe',
-              nextPage: RecipesList(), // Replace with the actual destination page
+              nextPage: Recipesinstructions(), // Replace with the actual destination page
             ),
-            SizedBox(height: 100),
+            SizedBox(height: 50),
 
             Button(
               onPressed: () {
                 // Handle navigation or recipe action for the food item here
               },
               buttonText: 'Fourth Recipe',
-              nextPage: RecipesList(), // Replace with the actual destination page
+              nextPage: Recipesinstructions(), // Replace with the actual destination page
             ),
-            SizedBox(height: 100),
+            SizedBox(height: 50),
 
             // Back Button
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RecipesList()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Recipesinstructions()));
               },
               child: Text('Back'),
             )
