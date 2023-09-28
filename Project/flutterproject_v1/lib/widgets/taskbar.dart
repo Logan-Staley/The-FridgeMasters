@@ -24,7 +24,7 @@ class Taskbar extends StatelessWidget {
 
         break;
          case 2:
-          Navigator.push(context, MaterialPageRoute(builder: (context) => recipes()), );
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Recipes()), );
         break;
         default:
         break;
