@@ -5,7 +5,7 @@ import 'package:fridgemasters/widgets/button.dart';
 import 'widgets/inputtextbox.dart';
 import 'widgets/textonlybutton.dart';
 import 'createaccount.dart';
-import 'widgets/background1.dart'; // Import the new Background1 widget
+import 'widgets/backgrounds.dart'; // Import the new Background1 widget
 
 class LoginPage extends StatelessWidget {
   @override

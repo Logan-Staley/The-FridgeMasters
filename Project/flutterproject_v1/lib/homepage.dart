@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
 import 'package:fridgemasters/notificationlist.dart'; // Import NotificationList
 import 'package:fridgemasters/settings.dart'; // Import Settings
+import 'package:fridgemasters/widgets/backgrounds.dart'; // Import Background1
 
 class HomePage extends StatelessWidget {
   @override
@@ -32,9 +33,14 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-          // No text here, so the body center is empty
-          ),
+      body: Stack(
+        children: [
+          Background1(), // This will be your background
+          Center(
+              // Your other widgets go here
+              ),
+        ],
+      ),
       bottomNavigationBar: Taskbar(
         currentIndex: 0,
         onTabChanged: (index) {

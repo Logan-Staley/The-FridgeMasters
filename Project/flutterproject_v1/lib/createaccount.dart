@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/widgets/inputtextbox.dart';
 import 'package:fridgemasters/widgets/textonlybutton.dart'; // Import TextOnlyButton
-import 'package:fridgemasters/widgets/background1.dart'; // Make sure the import path is correct
+import 'package:fridgemasters/widgets/backgrounds.dart'; // Make sure the import path is correct
 
 class CreateAccountPage extends StatelessWidget {
   @override

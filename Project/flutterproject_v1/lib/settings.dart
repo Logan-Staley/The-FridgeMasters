@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fridgemasters/widgets/backgrounds.dart'; // Import Background1
+import 'package:fridgemasters/login.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -20,44 +22,53 @@ class _SettingsState extends State<Settings> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Language',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      body: Stack(
+        children: [
+          Background1(), // This will be your background
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Language',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                RadioListTile<String>(
+                  title: const Text('English'),
+                  value: 'English',
+                  groupValue: _selectedLanguage,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _selectedLanguage = value!;
+                    });
+                  },
+                ),
+                RadioListTile<String>(
+                  title: const Text('Spanish'),
+                  value: 'Spanish',
+                  groupValue: _selectedLanguage,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _selectedLanguage = value!;
+                    });
+                  },
+                ),
+                Spacer(), // Pushes the Sign Out button to the end
+                ElevatedButton(
+                  onPressed: () {
+                    // Implement your sign-out logic here
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
+                  child: Text('Sign Out'),
+                ),
+              ],
             ),
-            RadioListTile<String>(
-              title: const Text('English'),
-              value: 'English',
-              groupValue: _selectedLanguage,
-              onChanged: (String? value) {
-                setState(() {
-                  _selectedLanguage = value!;
-                });
-              },
-            ),
-            RadioListTile<String>(
-              title: const Text('Spanish'),
-              value: 'Spanish',
-              groupValue: _selectedLanguage,
-              onChanged: (String? value) {
-                setState(() {
-                  _selectedLanguage = value!;
-                });
-              },
-            ),
-            Spacer(), // Pushes the Sign Out button to the end
-            ElevatedButton(
-              onPressed: () {
-                // Implement your sign-out logic here
-              },
-              child: Text('Sign Out'),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
