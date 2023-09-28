@@ -10,7 +10,18 @@ class TextOnlyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
-      child: Text(text),
+      child: Text(
+        text,
+        style: TextStyle(
+          shadows: [
+            Shadow(
+              blurRadius: 3.0,
+              color: Colors.white, // Changed the shadow color to white
+              offset: Offset(2.0, 2.0),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
