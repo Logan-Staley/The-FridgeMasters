@@ -15,10 +15,21 @@ class InputTextBox extends StatelessWidget {
     return Container(
       width: width,
       height: height,
+      decoration: BoxDecoration(
+        color: Colors.white
+            .withOpacity(0.3), // Nearly transparent white background
+        border: Border.all(
+          color: Colors.grey,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(4),
+      ),
       child: TextField(
         obscureText: isPassword, // If true, the text will be obscured with dots
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none, // Remove the default border
+          ),
           hintText: hint,
         ),
       ),
