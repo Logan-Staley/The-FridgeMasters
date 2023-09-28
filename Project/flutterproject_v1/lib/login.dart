@@ -8,6 +8,10 @@ import 'createaccount.dart';
 import 'widgets/backgrounds.dart'; // Import the new Background1 widget
 
 class LoginPage extends StatelessWidget {
+  // Create TextEditingController instances
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +24,18 @@ class LoginPage extends StatelessWidget {
               children: [
                 Image.asset('images/fridgemasters-logo.png'), // Logo Image
                 SizedBox(height: 20),
-                InputTextBox(isPassword: false, hint: 'Username or Email'),
+                // Provide the controllers to the InputTextBox widgets
+                InputTextBox(
+                  controller: usernameController,
+                  isPassword: false,
+                  hint: 'Username or Email',
+                ),
                 SizedBox(height: 20),
-                InputTextBox(isPassword: true, hint: 'Enter your password'),
+                InputTextBox(
+                  controller: passwordController,
+                  isPassword: true,
+                  hint: 'Enter your password',
+                ),
                 SizedBox(height: 20),
                 Button(
                   onPressed: () {

@@ -13,26 +13,33 @@ class Taskbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      onTap: (index){
-        switch(index){
+      onTap: (index) {
+        switch (index) {
           case 0:
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()), );
-        
-       break;
-        case 1: 
-        Navigator.push(context, MaterialPageRoute(builder: (context) => foodentry()), );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
 
-        break;
-         case 2:
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Recipes()), );
-        break;
-        default:
-        break;
+            break;
+          case 1:
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FoodEntry()),
+            );
+
+            break;
+          case 2:
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Recipes()),
+            );
+            break;
+          default:
+            break;
         }
         onTabChanged(index);
       },
-     
-       
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
@@ -48,6 +55,5 @@ class Taskbar extends StatelessWidget {
         ),
       ],
     );
-    
   }
 }
