@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/foodentry.dart';
 import 'package:fridgemasters/homepage.dart';
 import 'package:fridgemasters/recipes.dart';
+import 'package:fridgemasters/inventory.dart';
 
 class Taskbar extends StatelessWidget {
   final int currentIndex;
@@ -20,7 +21,7 @@ class Taskbar extends StatelessWidget {
         
        break;
         case 1: 
-        Navigator.push(context, MaterialPageRoute(builder: (context) => foodentry()), );
+        Navigator.push(context, MaterialPageRoute(builder: (context) => FoodEntry()),);
 
         break;
          case 2:
