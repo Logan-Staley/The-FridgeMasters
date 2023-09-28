@@ -40,7 +40,7 @@ class Taskbar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.kitchen),
-          label: 'Foodentry',
+          label: 'FoodEntry',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.book),
