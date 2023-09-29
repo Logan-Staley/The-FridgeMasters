@@ -4,7 +4,7 @@ class TextOnlyButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  TextOnlyButton({required this.text, required this.onPressed});
+  const TextOnlyButton({super.key, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class TextOnlyButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         text,
-        style: TextStyle(
+        style: const TextStyle(
           shadows: [
             Shadow(
               blurRadius: 3.0,

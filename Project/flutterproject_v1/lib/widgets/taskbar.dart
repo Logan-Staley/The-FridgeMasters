@@ -7,7 +7,7 @@ class Taskbar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTabChanged;
 
-  Taskbar({required this.currentIndex, required this.onTabChanged});
+  const Taskbar({super.key, required this.currentIndex, required this.onTabChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class Taskbar extends StatelessWidget {
           case 2:
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Recipes()),
+              MaterialPageRoute(builder: (context) => const Recipes()),
             );
             break;
           default:

@@ -16,26 +16,28 @@ class HomePage extends StatelessWidget {
     },
   );
 
+  HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.notifications),
+          icon: const Icon(Icons.notifications),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NotificationList()),
+              MaterialPageRoute(builder: (context) => const NotificationList()),
             );
           },
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Settings()),
+                MaterialPageRoute(builder: (context) => const Settings()),
               );
             },
           ),
@@ -43,7 +45,7 @@ class HomePage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Background1(),
+          const Background1(),
           Center(
             child: SizedBox(
               height: 300,
@@ -64,7 +66,7 @@ class HomePage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Card(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -100,13 +102,13 @@ class HomePage extends StatelessWidget {
 class ItemDetailPage extends StatelessWidget {
   final Map<String, dynamic> item;
 
-  ItemDetailPage({required this.item});
+  const ItemDetailPage({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Item Detail'),
+        title: const Text('Item Detail'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -2,10 +2,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class Background1 extends StatelessWidget {
+  const Background1({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('images/test-food-image.jpg'),
           fit: BoxFit.cover,

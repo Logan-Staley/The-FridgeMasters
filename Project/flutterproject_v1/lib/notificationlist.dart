@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NotificationList extends StatefulWidget {
+  const NotificationList({super.key});
+
   @override
   _NotificationListState createState() => _NotificationListState();
 }
@@ -19,7 +21,7 @@ class _NotificationListState extends State<NotificationList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifications'),
+        title: const Text('Notifications'),
       ),
       body: ListView.builder(
         itemCount: foodItems.length,
@@ -33,7 +35,7 @@ class _NotificationListState extends State<NotificationList> {
                   foodItems.removeAt(index);
                 });
               },
-              child: Text('Dismiss'),
+              child: const Text('Dismiss'),
             ),
           );
         },
