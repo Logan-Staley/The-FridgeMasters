@@ -3,6 +3,8 @@ import 'package:fridgemasters/widgets/backgrounds.dart'; // Import Background1
 import 'package:fridgemasters/login.dart';
 
 class Settings extends StatefulWidget {
+  const Settings({super.key});
+
   @override
   _SettingsState createState() => _SettingsState();
 }
@@ -14,9 +16,9 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context); // Go back to the previous page
           },
@@ -24,13 +26,13 @@ class _SettingsState extends State<Settings> {
       ),
       body: Stack(
         children: [
-          Background1(), // This will be your background
+          const Background1(), // This will be your background
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Language',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
@@ -54,7 +56,7 @@ class _SettingsState extends State<Settings> {
                     });
                   },
                 ),
-                Spacer(), // Pushes the Sign Out button to the end
+                const Spacer(), // Pushes the Sign Out button to the end
                 ElevatedButton(
                   onPressed: () {
                     // Implement your sign-out logic here
@@ -63,7 +65,7 @@ class _SettingsState extends State<Settings> {
                       MaterialPageRoute(builder: (context) => LoginPage()),
                     );
                   },
-                  child: Text('Sign Out'),
+                  child: const Text('Sign Out'),
                 ),
               ],
             ),

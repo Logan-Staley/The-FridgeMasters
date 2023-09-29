@@ -5,7 +5,7 @@ class Button extends StatelessWidget {
   final String buttonText;
   final Widget nextPage;
 
-  Button({
+  const Button({super.key, 
     required this.onPressed,
     required this.buttonText,
     required this.nextPage,
@@ -17,7 +17,7 @@ class Button extends StatelessWidget {
       future: null,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator(); // Show a loading spinner
+          return const CircularProgressIndicator(); // Show a loading spinner
         } else {
           return ElevatedButton(
             onPressed: () async {

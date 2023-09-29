@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ScrollableTextBox extends StatelessWidget {
   final String text;
 
-  ScrollableTextBox({required this.text});
+  const ScrollableTextBox({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class ScrollableTextBox extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Text(
             text,
-            style: TextStyle(fontSize: 16.0),
+            style: const TextStyle(fontSize: 16.0),
             textAlign: TextAlign.justify,
           ),
         ),

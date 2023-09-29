@@ -3,21 +3,23 @@ import 'package:fridgemasters/recipesinstructions.dart';
 import 'package:fridgemasters/widgets/button.dart'; // Import your Button widget
 
 class Recipes extends StatelessWidget {
+  const Recipes({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recipes Page'),
+        title: const Text('Recipes Page'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'AI Generated recipes based on your fridge food items',
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 100),
+            const SizedBox(height: 100),
 
             // Recipe Buttons using the Button widget
             Button(
@@ -25,44 +27,44 @@ class Recipes extends StatelessWidget {
                 return true;
               },
               buttonText: 'First Recipe',
-              nextPage: Recipesinstructions(),
+              nextPage: const Recipesinstructions(),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
 
             Button(
               onPressed: () async {
                 return true;
               },
               buttonText: 'Second Recipe',
-              nextPage: Recipesinstructions(),
+              nextPage: const Recipesinstructions(),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
 
             Button(
               onPressed: () async {
                 return true;
               },
               buttonText: 'Third Recipe',
-              nextPage: Recipesinstructions(),
+              nextPage: const Recipesinstructions(),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
 
             Button(
               onPressed: () async {
                 return true;
               },
               buttonText: 'Fourth Recipe',
-              nextPage: Recipesinstructions(),
+              nextPage: const Recipesinstructions(),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
 
             // Back Button
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => Recipesinstructions()));
+                    builder: (context) => const Recipesinstructions()));
               },
-              child: Text('Back'),
+              child: const Text('Back'),
             )
           ],
         ),

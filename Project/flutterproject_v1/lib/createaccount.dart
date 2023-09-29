@@ -10,6 +10,8 @@ class CreateAccountPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  CreateAccountPage({super.key});
+
   Future<void> registerUser(BuildContext context) async {
     final response = await http.post(
       Uri.parse('http://127.0.0.1/register.php'),
@@ -28,7 +30,7 @@ class CreateAccountPage extends StatelessWidget {
       if (data["success"]) {
         // Handle successful registration
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Account created successfully!')),
+          const SnackBar(content: Text('Account created successfully!')),
         );
         // Clear the text fields
         usernameController.clear();
@@ -38,19 +40,19 @@ class CreateAccountPage extends StatelessWidget {
         // Handle error based on the message received from the server
         if (data["message"] == "Account already exists") {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Account already exists!')),
+            const SnackBar(content: Text('Account already exists!')),
           );
         } else if (data["message"] == "Username is already taken") {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Username is already taken!')),
+            const SnackBar(content: Text('Username is already taken!')),
           );
         } else if (data["message"] == "Invalid email") {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Invalid email!')),
+            const SnackBar(content: Text('Invalid email!')),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Registration failed!')),
+            const SnackBar(content: Text('Registration failed!')),
           );
         }
         // Clear the text fields
@@ -61,7 +63,7 @@ class CreateAccountPage extends StatelessWidget {
     } else {
       // Handle server connection error
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to connect to the server.')),
+        const SnackBar(content: Text('Failed to connect to the server.')),
       );
     }
   }
@@ -75,22 +77,22 @@ class CreateAccountPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Background1(),
+          const Background1(),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InputTextBox(controller: usernameController, isPassword: false, hint: 'Create username'),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 InputTextBox(controller: emailController, isPassword: false, hint: 'Enter E-Mail'),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 InputTextBox(controller: passwordController, isPassword: true, hint: 'Create Password'),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () => handleSubmit(context),
-                  child: Text('Submit'),
+                  child: const Text('Submit'),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextOnlyButton(
                   text: 'Return To Login',
                   onPressed: () {

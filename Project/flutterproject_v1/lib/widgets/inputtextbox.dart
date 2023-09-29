@@ -9,7 +9,7 @@ class InputTextBox extends StatelessWidget {
   final double width = 300.0;
   final double height = 50.0;
 
-  InputTextBox({
+  const InputTextBox({super.key, 
     required this.isPassword,
     required this.hint,
     required this.controller, // Add this line
@@ -33,7 +33,7 @@ class InputTextBox extends StatelessWidget {
         controller: controller, // Add this line
         obscureText: isPassword, // If true, the text will be obscured with dots
         decoration: InputDecoration(
-          border: OutlineInputBorder(
+          border: const OutlineInputBorder(
             borderSide: BorderSide.none, // Remove the default border
           ),
           hintText: hint,
