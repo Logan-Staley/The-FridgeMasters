@@ -5,7 +5,7 @@ class Button extends StatelessWidget {
   final String buttonText;
   final Widget nextPage;
 
-  const Button({super.key, 
+  Button({
     required this.onPressed,
     required this.buttonText,
     required this.nextPage,
@@ -13,26 +13,17 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: null,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator(); // Show a loading spinner
-        } else {
-          return ElevatedButton(
-            onPressed: () async {
-              bool success = await onPressed();
-              if (success) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => nextPage),
-                );
-              }
-            },
-            child: Text(buttonText),
+    return ElevatedButton(
+      onPressed: () async {
+        bool success = await onPressed();
+        if (success) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => nextPage),
           );
         }
       },
+      child: Text(buttonText),
     );
   }
 }

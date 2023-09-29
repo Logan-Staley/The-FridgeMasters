@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
     }
 
     final response = await http.post(
-      Uri.parse('http://127.0.0.1/register.php'), // Update this URL if needed
+      Uri.parse('http://127.0.0.1/login.php'), // Update this URL if needed
       body: jsonEncode(<String, String>{
         'username': usernameController.text,
         'password': passwordController.text,
@@ -78,9 +78,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Button(
-                  onPressed: () async {
-                    return await login(context);
-                  },
+                  onPressed: () => login(context),
                   buttonText: 'Login',
                   nextPage: HomePage(),
                 ),
