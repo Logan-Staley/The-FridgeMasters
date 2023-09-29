@@ -18,9 +18,11 @@ class LoginPage extends StatelessWidget {
   Future<bool> login(BuildContext context) async {
     if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter both username and password.')),
+        const SnackBar(
+            content: Text('Please enter both username and password.')),
       );
-      return false;
+      return true;
+      //Change this from TRUE -> to verfiy password/username is correct 
     }
 
     final response = await http.post(
