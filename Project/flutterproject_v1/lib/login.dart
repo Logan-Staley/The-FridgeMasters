@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
             content: Text('Please enter both username and password.')),
       );
       return true;
-      //Change this from TRUE -> to verfiy password/username is correct 
+      //Change this from TRUE -> to verfiy password/username is correct
     }
 
     final response = await http.post(
@@ -87,6 +87,17 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 TextOnlyButton(
                   text: 'Create Account',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateAccountPage()),
+                    );
+                  },
+                ),
+                const SizedBox(height: 20),
+                TextOnlyButton(
+                  text: 'Forgot Password',
                   onPressed: () {
                     Navigator.push(
                       context,
