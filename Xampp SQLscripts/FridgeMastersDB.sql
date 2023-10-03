@@ -1,3 +1,17 @@
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,    -- Assuming auto-incrementing ID
+    Username VARCHAR(255) NOT NULL,
+    Password VARCHAR(255) NOT NULL,           -- Assuming hashed & salted password storage
+    Email VARCHAR(255) UNIQUE NOT NULL,       -- UNIQUE ensures no two users have the same email
+    DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
+    LastLogin DATETIME,
+    LastSeen DATETIME,
+    AccountStatus ENUM('active', 'deactivated') DEFAULT 'active',
+    ProfileImage VARCHAR(255),                -- This can be a link to where the image is stored, perhaps on AWS S3
+    ProfileDescription TEXT,                  -- TEXT type is useful for longer descriptions
+    DietaryRestrictions TEXT,                 -- Can store as comma-separated values, or consider normalizing further
+    Allergens TEXT                            -- Similar to DietaryRestrictions
+);
 CREATE TABLE NutritionalValues (
     NutritionalValueID INT AUTO_INCREMENT PRIMARY KEY,
     Calories DECIMAL(10, 2),
@@ -27,20 +41,7 @@ CREATE TABLE InventoryItems (
     FOREIGN KEY (NutritionalValueID) REFERENCES NutritionalValues(NutritionalValueID) -- Assumes you have a NutritionalValues table.
 );
 
-CREATE TABLE Users (
-    UserID INT AUTO_INCREMENT PRIMARY KEY,    -- Assuming auto-incrementing ID
-    Username VARCHAR(255) NOT NULL,
-    Password VARCHAR(255) NOT NULL,           -- Assuming hashed & salted password storage
-    Email VARCHAR(255) UNIQUE NOT NULL,       -- UNIQUE ensures no two users have the same email
-    DateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
-    LastLogin DATETIME,
-    LastSeen DATETIME,
-    AccountStatus ENUM('active', 'deactivated') DEFAULT 'active',
-    ProfileImage VARCHAR(255),                -- This can be a link to where the image is stored, perhaps on AWS S3
-    ProfileDescription TEXT,                  -- TEXT type is useful for longer descriptions
-    DietaryRestrictions TEXT,                 -- Can store as comma-separated values, or consider normalizing further
-    Allergens TEXT                            -- Similar to DietaryRestrictions
-);
+
 
 CREATE TABLE Recipes (
     RecipeID INT AUTO_INCREMENT PRIMARY KEY,

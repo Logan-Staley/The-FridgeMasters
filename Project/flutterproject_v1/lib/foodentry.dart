@@ -9,55 +9,57 @@ class FoodEntry extends StatelessWidget {
   final TextEditingController purchaseDateController = TextEditingController();
   final TextEditingController expirationDateController = TextEditingController();
 
+  FoodEntry({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add to Inventory'),
+        title: const Text('Add to Inventory'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Food Item'),
+            const Text('Food Item'),
             InputTextBox(
               controller: foodItemController,
               isPassword: false,
               hint: 'Ex: Strawberries, Milk, Cheese',
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            Text('Quantity'),
+            const Text('Quantity'),
             InputTextBox(
               controller: quantityController,
               isPassword: false,
               hint: 'Ex: 20',
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            Text('Date of Purchase'),
+            const Text('Date of Purchase'),
             InputTextBox(
               controller: purchaseDateController,
               isPassword: false,
               hint: 'Ex: 12/21/2023',
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            Text('Expiration Date'),
+            const Text('Expiration Date'),
             InputTextBox(
               controller: expirationDateController,
               isPassword: false,
               hint: 'Ex: 12/21/2023',
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => FoodEntry()));
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextOnlyButton(
               text: 'Cancel',
               onPressed: () {
