@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/widgets/inputtextbox.dart';
 
-
 class ForgotPasswordPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
 
@@ -32,13 +31,10 @@ class ForgotPasswordPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
+            InputTextBox(
               controller: emailController,
-              decoration: InputDecoration(
-                labelText: 'Enter your email',
-                hintText: 'example@example.com',
-              ),
-              keyboardType: TextInputType.emailAddress,
+              isPassword: true,
+              hint: 'Enter your password',
             ),
             SizedBox(height: 20),
             ElevatedButton(
