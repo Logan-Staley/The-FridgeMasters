@@ -17,13 +17,13 @@ class FoodItem {
 class inventory extends StatelessWidget {
   final List<FoodItem> foodItemList;
 
-  inventory({required this.foodItemList});
+  const inventory({super.key, required this.foodItemList});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inventory Log'),
+        title: const Text('Inventory Log'),
       ),
       body: ListView.builder(
         itemCount: foodItemList.length,

@@ -6,6 +6,8 @@ import 'inventory.dart';
 
 
 class FoodEntry extends StatefulWidget {
+  const FoodEntry({super.key});
+
   @override
   _FoodEntryState createState() => _FoodEntryState();
 }
@@ -41,53 +43,53 @@ class _FoodEntryState extends State<FoodEntry> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add to Inventory'),
+        title: const Text('Add to Inventory'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Food Item'),
+            const Text('Food Item'),
             InputTextBox(
               isPassword: false,
               hint: 'Ex: Strawberries, Milk, Cheese',
               controller: foodItemNameController,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            Text('Quantity'),
+            const Text('Quantity'),
             InputTextBox(
               isPassword: false,
               hint: 'Ex: 20',
               controller: quantityController,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            Text('Date of Purchase'),
+            const Text('Date of Purchase'),
             InputTextBox(
               isPassword: false,
               hint: 'Ex: 12/21/2023',
               controller: dateOfPurchaseController,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            Text('Expiration Date'),
+            const Text('Expiration Date'),
             InputTextBox(
               isPassword: false,
               hint: 'Ex: 12/21/2023',
               controller: expirationDateController,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             ElevatedButton(
               onPressed: () {
                 saveToInventory();
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
 
 
-             SizedBox(height: 20),
+             const SizedBox(height: 20),
                        ElevatedButton(
               onPressed: () {
                 // Navigate to the inventory page when the button is pressed
@@ -96,10 +98,10 @@ class _FoodEntryState extends State<FoodEntry> {
                   MaterialPageRoute(builder: (context) => inventory(foodItemList: foodItemList)), // Replace with your actual InventoryPage
                 );
               },
-              child: Text('Go to Inventory'), // Button text
+              child: const Text('Go to Inventory'), // Button text
             ),
             
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextOnlyButton(
               text: 'Cancel',
               onPressed: () {

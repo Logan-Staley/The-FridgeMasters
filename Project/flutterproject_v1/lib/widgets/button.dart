@@ -5,7 +5,7 @@ class Button extends StatelessWidget {
   final String buttonText;
   final Widget nextPage;
 
-  Button({
+  const Button({super.key, 
     required this.onPressed,
     required this.buttonText,
     required this.nextPage,

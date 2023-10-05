@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'widgets/paragraphtext.dart'; // Import the ParagraphTextBox component
 
 class NutritionPage extends StatelessWidget {
+  const NutritionPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nutrition Page'),
+        title: const Text('Nutrition Page'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
