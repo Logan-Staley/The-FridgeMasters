@@ -46,3 +46,4 @@ app.*.map.json
 
 # Enviroment Variables
 .env
+subdir/.env
