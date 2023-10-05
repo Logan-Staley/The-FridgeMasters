@@ -4,6 +4,7 @@
 *.pyc
 *.swp
 .DS_Store
+.env
 .atom/
 .buildlog/
 .history
@@ -45,3 +46,4 @@ app.*.map.json
 
 # Enviroment Variables
 .env
+subdir/.env
