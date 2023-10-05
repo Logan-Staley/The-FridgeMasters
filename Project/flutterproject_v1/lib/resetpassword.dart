@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:fridgemasters/homepage.dart';
+import 'package:fridgemasters/login.dart';
 import 'package:fridgemasters/widgets/button.dart';
-import 'package:fridgemasters/resetpassword.dart';
 import 'widgets/inputtextbox.dart';
-import 'widgets/textonlybutton.dart';
-import 'createaccount.dart';
 import 'widgets/backgrounds.dart'; // Import the new Background1 widget
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class LoginPage extends StatelessWidget {
+class resetpassword extends StatelessWidget {
   // Create TextEditingController instances
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  LoginPage({super.key});
+  resetpassword({super.key});
 
   Future<bool> login(BuildContext context) async {
     if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
@@ -23,7 +20,7 @@ class LoginPage extends StatelessWidget {
             content: Text('Please enter both username and password.')),
       );
       return true;
-      //Change this from TRUE -> to verfiy password/username is correct 
+      //Change this from TRUE -> to verfiy password/username is correct
     }
 
     final response = await http.post(
@@ -71,41 +68,15 @@ class LoginPage extends StatelessWidget {
                 InputTextBox(
                   controller: usernameController,
                   isPassword: false,
-                  hint: 'Username or Email',
+                  hint: 'Email',
                 ),
-                const SizedBox(height: 20),
-                InputTextBox(
-                  controller: passwordController,
-                  isPassword: true,
-                  hint: 'Enter your password',
-                ),
-                const SizedBox(height: 20),
+
                 Button(
-                  onPressed: () => login(context),
-                  buttonText: 'Login',
-                  nextPage: HomePage(),
-                ),
-                const SizedBox(height: 20),
-                TextOnlyButton(
-                  text: 'Create Account',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CreateAccountPage()),
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                TextOnlyButton(
-                  text: 'Forgot Password?',
-                  onPressed: () {
-                     Navigator.push(
-                       context,
-                       MaterialPageRoute(
-                           builder: (context) => resetpassword()),
-                     );
-                  },
+                  onPressed:
+                      //logic for password reset
+                      () => login(context),
+                  buttonText: 'Reset',
+                  nextPage: LoginPage(),
                 ),
               ],
             ),
