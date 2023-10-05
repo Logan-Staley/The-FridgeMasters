@@ -8,12 +8,13 @@ import 'createaccount.dart';
 import 'widgets/backgrounds.dart'; // Import the new Background1 widget
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:fridgemasters/ForgotPasswordPage.dart';
 
 class LoginPage extends StatelessWidget {
   // Create TextEditingController instances
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+
 
   LoginPage({super.key});
 

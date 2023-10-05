@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
-import 'package:fridgemasters/notificationlist.dart';
-import 'package:fridgemasters/settings.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/nutritionpage.dart'; // Replace with the actual path to nutritionpage.dart
 import 'package:fridgemasters/widgets/textonlybutton.dart'; // Replace with the actual path to textonlybutton.dart
@@ -58,7 +56,7 @@ class HomePage extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => NutritionPage(),
+                                      builder: (context) => const NutritionPage(),
                                     ),
                                   );
                                 },
