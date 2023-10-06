@@ -8,15 +8,24 @@ import 'createaccount.dart';
 import 'widgets/backgrounds.dart'; // Import the new Background1 widget
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LoginPage extends StatelessWidget {
   // Create TextEditingController instances
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-
-
   LoginPage({super.key});
+  Future<String> checkApiConnection() async {
+    try {
+      final response = await http.get(Uri.parse('YOUR_API_URL'));
+      return response.statusCode == 200
+          ? "Connected to API successfully"
+          : "API connection failed";
+    } catch (e) {
+      return "API connection failed";
+    }
+  }
 
   Future<bool> login(BuildContext context) async {
     if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
@@ -102,13 +111,27 @@ class LoginPage extends StatelessWidget {
                 TextOnlyButton(
                   text: 'Forgot Password?',
                   onPressed: () {
-                     Navigator.push(
-                       context,
-                       MaterialPageRoute(
-                           builder: (context) => resetpassword()),
-                     );
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => resetpassword()),
+                    );
                   },
+                ),
+                Positioned(
+                  bottom: 20,
+                  left: 20,
+                  child: FutureBuilder<String>(
+                    future: checkApiConnection(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text("Checking API connection...");
+                      } else if (snapshot.hasError) {
+                        return Text("API connection failed");
+                      } else {
+                        return Text(snapshot.data ?? "API connection failed");
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
