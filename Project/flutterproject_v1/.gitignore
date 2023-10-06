@@ -45,5 +45,5 @@ app.*.map.json
 /android/app/release
 
 # Enviroment Variables
-.env
+edamam.env
 subdir/.env
