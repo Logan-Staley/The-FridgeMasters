@@ -14,59 +14,35 @@ class CreateAccountPage extends StatelessWidget {
 
   Future<void> registerUser(BuildContext context) async {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1/register.php'),
-      body: jsonEncode(<String, String>{
+      Uri.parse('http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/create_account.php'),
+      body: {
         'username': usernameController.text,
         'email': emailController.text,
         'password': passwordController.text,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
       },
     );
 
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      if (data["success"]) {
+    var data = jsonDecode(response.body);
+    if (data["success"]) {
         // Handle successful registration
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Account created successfully!')),
+          SnackBar(content: Text(data["message"])),
         );
         // Clear the text fields
         usernameController.clear();
         emailController.clear();
         passwordController.clear();
-      } else {
+    } else {
         // Handle error based on the message received from the server
-        if (data["message"] == "Account already exists") {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Account already exists!')),
-          );
-        } else if (data["message"] == "Username is already taken") {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Username is already taken!')),
-          );
-        } else if (data["message"] == "Invalid email") {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Invalid email!')),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Registration failed!')),
-          );
-        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data["message"])),
+        );
         // Clear the text fields
         usernameController.clear();
         emailController.clear();
         passwordController.clear();
-      }
-    } else {
-      // Handle server connection error
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to connect to the server.')),
-      );
     }
-  }
+}
 
   void handleSubmit(BuildContext context) {
     registerUser(context);
