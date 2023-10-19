@@ -16,53 +16,35 @@ class LoginPage extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
 
   LoginPage({super.key});
-  Future<String> checkApiConnection() async {
-    try {
-      final response = await http.get(Uri.parse('YOUR_API_URL'));
-      return response.statusCode == 200
-          ? "Connected to API successfully"
-          : "API connection failed";
-    } catch (e) {
-      return "API connection failed";
-    }
-  }
 
   Future<bool> login(BuildContext context) async {
-    if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Please enter both username and password.')),
+    try {
+      final response = await http.post(
+        Uri.parse(
+            'http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/login.php'),
+        body: {
+          'username_or_email': usernameController.text,
+          'password': passwordController.text,
+        },
       );
-      return true;
-      //Change this from TRUE -> to verfiy password/username is correct
-    }
 
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1/login.php'), // Update this URL if needed
-      body: jsonEncode(<String, String>{
-        'username': usernameController.text,
-        'password': passwordController.text,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-
-    if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       if (data["success"]) {
-        return true; // Return true on successful login
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data["message"])),
+        );
+        return true;
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(data["message"])),
         );
-        return false; // Return false on failed login
+        return false;
       }
-    } else {
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to connect to the server.')),
+        SnackBar(content: Text("An error occurred")),
       );
-      return false; // Return false on server connection error
+      return false;
     }
   }
 
@@ -116,22 +98,6 @@ class LoginPage extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => resetpassword()),
                     );
                   },
-                ),
-                Positioned(
-                  bottom: 20,
-                  left: 20,
-                  child: FutureBuilder<String>(
-                    future: checkApiConnection(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Text("Checking API connection...");
-                      } else if (snapshot.hasError) {
-                        return Text("API connection failed");
-                      } else {
-                        return Text(snapshot.data ?? "API connection failed");
-                      }
-                    },
-                  ),
                 ),
               ],
             ),
