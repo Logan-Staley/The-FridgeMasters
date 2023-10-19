@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fridgemasters/widgets/backgrounds.dart'; // Import Background1
+import 'package:fridgemasters/widgets/backgrounds.dart'; 
 import 'package:fridgemasters/login.dart';
+import 'package:fridgemasters/widgets/account_settings.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -10,7 +11,55 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  String _selectedLanguage = 'English'; // Default selected language
+  String _selectedLanguage = 'English';
+
+  Future<void> _showConfirmationDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text('Confirm Sign Out'),
+          content: Text('Do you really want to sign out?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop(); // Dismiss the dialog
+              },
+            ),
+            TextButton(
+              child: Text('Yes'),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _navigateToSetting(String category) {
+    Widget? nextPage;
+    switch (category) {
+      case 'Account':
+        nextPage = AccountSettings();
+        break;
+      // Add more cases for other categories here...
+    }
+
+    if (nextPage != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => nextPage!),
+      );
+    }
+    print("Navigating to $category settings");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,52 +69,67 @@ class _SettingsState extends State<Settings> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // Go back to the previous page
+            Navigator.pop(context);
           },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              // TODO: Implement search functionality
+              print("Search pressed");
+            },
+          ),
+        ],
       ),
       body: Stack(
         children: [
-          const Background1(), // This will be your background
+          const Background1(),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
               children: [
-                const Text(
-                  'Language',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ListTile(
+                  title: Text('Account'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('Account'),
                 ),
-                RadioListTile<String>(
-                  title: const Text('English'),
-                  value: 'English',
-                  groupValue: _selectedLanguage,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _selectedLanguage = value!;
-                    });
-                  },
+                ListTile(
+                  title: Text('Display and Brightness'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('Display and Brightness'),
                 ),
-                RadioListTile<String>(
-                  title: const Text('Spanish'),
-                  value: 'Spanish',
-                  groupValue: _selectedLanguage,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _selectedLanguage = value!;
-                    });
-                  },
+                ListTile(
+                  title: Text('Notifications'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('Notifications'),
                 ),
-                const Spacer(), // Pushes the Sign Out button to the end
+                ListTile(
+                  title: Text('System'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('System'),
+                ),
+                ListTile(
+                  title: Text('FAQs'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('FAQs'),
+                ),
+                ListTile(
+                  title: Text('About'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('About'),
+                ),
+                SizedBox(height: 20), // Spacer doesn't work in ListView. Replacing with SizedBox.
                 ElevatedButton(
                   onPressed: () {
-                    // Implement your sign-out logic here
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                    );
+                    _showConfirmationDialog(context);
                   },
                   child: const Text('Sign Out'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.red),
+                    padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0)),
+                  ),
                 ),
               ],
             ),
