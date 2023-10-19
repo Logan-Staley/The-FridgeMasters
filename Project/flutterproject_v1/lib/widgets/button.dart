@@ -4,12 +4,15 @@ class Button extends StatelessWidget {
   final Future<bool> Function() onPressed;
   final String buttonText;
   final Widget nextPage;
+  final Color color; // Added the color property
 
-  const Button({super.key, 
+  const Button({
+    Key? key, 
     required this.onPressed,
     required this.buttonText,
     required this.nextPage,
-  });
+    this.color = Colors.blue, // Set a default color
+  }) : super(key: key); // Updated to include key in the super constructor
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +27,9 @@ class Button extends StatelessWidget {
         }
       },
       child: Text(buttonText),
+      style: ElevatedButton.styleFrom(
+        primary: color, // Used the color property here
+      ),
     );
   }
 }
