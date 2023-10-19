@@ -70,12 +70,19 @@ class resetpassword extends StatelessWidget {
                   isPassword: false,
                   hint: 'Email',
                 ),
-
                 Button(
                   onPressed:
                       //logic for password reset
                       () => login(context),
                   buttonText: 'Reset',
+                  nextPage: LoginPage(),
+                ),
+                // Added the "Back" button below the "Reset" button
+                Button(
+                  onPressed:
+                      //logic for going back, replace with your desired logic
+                      () => login(context),
+                  buttonText: 'Back',
                   nextPage: LoginPage(),
                 ),
               ],
