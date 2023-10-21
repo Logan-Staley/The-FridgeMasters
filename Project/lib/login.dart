@@ -10,25 +10,21 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:fridgemasters/widgets/animated_logo.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'main.dart';
 
 class LoginPage extends StatefulWidget {
-  @override
+  LoginPage({super.key});
   
+  @override
   _LoginPageState createState() => _LoginPageState();
-  final player = AudioPlayer();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer player = AudioPlayer();
   bool _showAnimation = true;
   
-class LoginPage extends StatelessWidget {
   // Create TextEditingController instances
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
-  LoginPage({super.key});
 
   Future<bool> login(BuildContext context) async {
     try {
@@ -43,11 +39,11 @@ class LoginPage extends StatelessWidget {
 
       var data = jsonDecode(response.body);
       if (data["success"]) {
+        print("Login was successful!");  // Add this
+        player.play('sounds/login_sound.mp3');  // <-- Play the sound
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(data["message"])),
+            SnackBar(content: Text(data["message"])),
         );
-
-      _changeToAfterLoginMusic();  // Change music after successful login
         return true;
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -63,16 +59,32 @@ class LoginPage extends StatelessWidget {
     }
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          const Background1(), // Use the Background1 widget
+          const Background1(),
           Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+            child: _showAnimation
+                ? AnimatedLogo(
+                    onAnimationCompleted: () {
+                      setState(() {
+                        _showAnimation = false;
+                      });
+                    },
+                  )
+                : _buildLoginContent(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLoginContent() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
         Image.asset('images/fridgemasters-logo.png'),
         const SizedBox(height: 20),
         InputTextBox(
