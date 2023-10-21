@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'login.dart'; // Import the LoginPage widget
+import 'splash_screen.dart'; // Import the SplashScreen widget
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'audio_manager.dart';
 
 void main() async {
   await dotenv.load(fileName: 'edamam.env');
@@ -8,13 +9,11 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My App',
-      home: LoginPage(), // Set LoginPage as the initial screen
+      home: SplashScreen(), // Set SplashScreen as the initial screen
     );
   }
 }
