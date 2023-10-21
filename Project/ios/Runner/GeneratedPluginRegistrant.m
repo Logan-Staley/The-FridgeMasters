@@ -6,23 +6,30 @@
 
 #import "GeneratedPluginRegistrant.h"
 
+#if __has_include(<audioplayers/AudioplayersPlugin.h>)
+#import <audioplayers/AudioplayersPlugin.h>
+#else
+@import audioplayers;
+#endif
+
 #if __has_include(<flutter_barcode_scanner/SwiftFlutterBarcodeScannerPlugin.h>)
 #import <flutter_barcode_scanner/SwiftFlutterBarcodeScannerPlugin.h>
 #else
 @import flutter_barcode_scanner;
 #endif
 
-#if __has_include(<shared_preferences_foundation/SharedPreferencesPlugin.h>)
-#import <shared_preferences_foundation/SharedPreferencesPlugin.h>
+#if __has_include(<path_provider_foundation/PathProviderPlugin.h>)
+#import <path_provider_foundation/PathProviderPlugin.h>
 #else
-@import shared_preferences_foundation;
+@import path_provider_foundation;
 #endif
 
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
+  [AudioplayersPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioplayersPlugin"]];
   [SwiftFlutterBarcodeScannerPlugin registerWithRegistrar:[registry registrarForPlugin:@"SwiftFlutterBarcodeScannerPlugin"]];
-  [SharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"SharedPreferencesPlugin"]];
+  [PathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"PathProviderPlugin"]];
 }
 
 @end

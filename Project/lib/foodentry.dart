@@ -4,7 +4,6 @@ import 'widgets/textonlybutton.dart';
 import 'inventory.dart';
 
 
-
 class FoodEntry extends StatefulWidget {
   const FoodEntry({super.key});
 
