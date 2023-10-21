@@ -66,7 +66,7 @@ class _AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderSt
                     scale: meteorScale,
                     child: Image.asset(
                       'images/fridgemasters-logo.png',
-                      width: 450,
+                      width: 250,
                     ),
                   ),
                 ),
