@@ -39,9 +39,6 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   flutter_dotenv: ^5.0.2
   mysql1: ^0.20.0
-  audioplayers: ^0.20.1
-  animated_text_kit: ^4.2.2
-   
 dev_dependencies:
   flutter_test:
     sdk: flutter
