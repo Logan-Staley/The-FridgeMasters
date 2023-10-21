@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  shared_preferences: ^2.2.2
+
   http: ^0.13.3
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -39,6 +39,8 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   flutter_dotenv: ^5.0.2
   mysql1: ^0.20.0
+  audioplayers: ^0.20.1
+   
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -65,7 +67,12 @@ flutter:
   assets:
      - images/test-food-image.jpg
      - images/fridgemasters-logo.png
+#    - sounds/app_launch.mp3
+#    - sounds/click_sound.mp3
+     - sounds/login_sound.mp3
      - edamam.env
+     - sounds/background_before_login.mp3
+     #- sounds/background_after_login.mp3
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
