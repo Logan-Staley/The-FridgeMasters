@@ -11,7 +11,7 @@ class AudioManager with WidgetsBindingObserver {
   final AudioPlayer _audioPlayer = AudioPlayer();
 
   Future<void> startBackgroundMusic() async {
-    await _audioPlayer.play('sounds/background_before_login.mp3', volume: 0.025, isLocal: false);
+    await _audioPlayer.play('sounds/background_before_login.mp3', volume: 0.02, isLocal: false);
   }
 
   Future<void> stopBackgroundMusic() async {
