@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'widgets/inputtextbox.dart';
 import 'widgets/textonlybutton.dart';
 import 'inventory.dart';
+import 'package:fridgemasters/widgets/backgrounds.dart';
 
 
 class FoodEntry extends StatefulWidget {
@@ -44,7 +45,10 @@ class _FoodEntryState extends State<FoodEntry> {
       appBar: AppBar(
         title: const Text('Add to Inventory'),
       ),
-      body: Center(
+      body: Stack(
+        children: [
+          Background1(),
+      Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -110,6 +114,9 @@ class _FoodEntryState extends State<FoodEntry> {
           ],
         ),
       ),
+        ],
+      ),
+    
     );
   }
 }
