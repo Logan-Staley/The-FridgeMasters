@@ -8,7 +8,8 @@
             "name": "flutterproject_v1",
             "cwd": "Project\\flutterproject_v1",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program":"Project/lib/main.dart"
         },
         {
             "name": "flutterproject_v1 (profile mode)",
