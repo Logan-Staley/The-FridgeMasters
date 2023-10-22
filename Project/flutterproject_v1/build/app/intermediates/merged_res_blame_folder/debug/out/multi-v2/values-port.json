@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.fridgemasters.app-mergeDebugResources-21:/values-port/values-port.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Gaming-Rig\\.gradle\\caches\\transforms-3\\09a71f45a2f110948b735c42a8fac7af\\transformed\\appcompat-1.2.0\\res\\values-port\\values-port.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}

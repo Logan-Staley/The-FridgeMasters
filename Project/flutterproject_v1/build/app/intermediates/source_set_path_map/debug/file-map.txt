@@ -1,0 +1,26 @@
+com.example.fridgemasters.app-recyclerview-1.1.0-0 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\00dbb69018761a8167f8d9d07423c2e1\transformed\recyclerview-1.1.0\res
+com.example.fridgemasters.app-appcompat-1.2.0-1 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\09a71f45a2f110948b735c42a8fac7af\transformed\appcompat-1.2.0\res
+com.example.fridgemasters.app-jetified-play-services-base-17.4.0-2 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\1a7d33a1dd6289df9ecade9fe9e3ac6f\transformed\jetified-play-services-base-17.4.0\res
+com.example.fridgemasters.app-constraintlayout-2.0.1-3 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\21656ca58ebc2f5b695d36d1899076be\transformed\constraintlayout-2.0.1\res
+com.example.fridgemasters.app-jetified-window-1.0.0-beta04-4 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\res
+com.example.fridgemasters.app-cardview-1.0.0-5 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\391dbc4c601d40f71df8c0bc4da55bcb\transformed\cardview-1.0.0\res
+com.example.fridgemasters.app-material-1.3.0-6 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\5cc8db564d46f28c055925bb471009a5\transformed\material-1.3.0\res
+com.example.fridgemasters.app-jetified-annotation-experimental-1.1.0-7 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\6c0c163cc77ae6c91f9f7dfcd179c29c\transformed\jetified-annotation-experimental-1.1.0\res
+com.example.fridgemasters.app-core-1.6.0-8 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\7e9df2ac2213a6bd3cef0f2f27870d79\transformed\core-1.6.0\res
+com.example.fridgemasters.app-jetified-window-java-1.0.0-beta04-9 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\ae81e06d24c799147c26814497a2a305\transformed\jetified-window-java-1.0.0-beta04\res
+com.example.fridgemasters.app-transition-1.2.0-10 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\cb1c3a5af7c82b5af321d06f2b3c2969\transformed\transition-1.2.0\res
+com.example.fridgemasters.app-coordinatorlayout-1.1.0-11 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\d071ef144612d1d729b2e1496f805d8b\transformed\coordinatorlayout-1.1.0\res
+com.example.fridgemasters.app-jetified-appcompat-resources-1.2.0-12 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\d1e7acf1aa2051d3be77ae7ecbe61dff\transformed\jetified-appcompat-resources-1.2.0\res
+com.example.fridgemasters.app-media-1.0.0-13 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\d9fefd3231d7c549dee86f94a8a71d09\transformed\media-1.0.0\res
+com.example.fridgemasters.app-jetified-viewpager2-1.0.0-14 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\e049ddff91b1b01ee52b6e0ceef1dfeb\transformed\jetified-viewpager2-1.0.0\res
+com.example.fridgemasters.app-jetified-play-services-basement-17.4.0-15 C:\Users\Gaming-Rig\.gradle\caches\transforms-3\e400f5504a9bef5c23ec6dbeeb3aa8aa\transformed\jetified-play-services-basement-17.4.0\res
+com.example.fridgemasters.app-debug-16 D:\Synology Drive Shared\SynologyDrive\School Stuff\Senior Project\Freddie\Flutter Apps\The-FridgeMasters\Project\flutterproject_v1\android\app\src\debug\res
+com.example.fridgemasters.app-main-17 D:\Synology Drive Shared\SynologyDrive\School Stuff\Senior Project\Freddie\Flutter Apps\The-FridgeMasters\Project\flutterproject_v1\android\app\src\main\res
+com.example.fridgemasters.app-pngs-18 D:\Synology Drive Shared\SynologyDrive\School Stuff\Senior Project\Freddie\Flutter Apps\The-FridgeMasters\Project\flutterproject_v1\build\app\generated\res\pngs\debug
+com.example.fridgemasters.app-resValues-19 D:\Synology Drive Shared\SynologyDrive\School Stuff\Senior Project\Freddie\Flutter Apps\The-FridgeMasters\Project\flutterproject_v1\build\app\generated\res\resValues\debug
+com.example.fridgemasters.app-rs-20 D:\Synology Drive Shared\SynologyDrive\School Stuff\Senior Project\Freddie\Flutter Apps\The-FridgeMasters\Project\flutterproject_v1\build\app\generated\res\rs\debug
+com.example.fridgemasters.app-mergeDebugResources-21 D:\Synology Drive Shared\SynologyDrive\School Stuff\Senior Project\Freddie\Flutter Apps\The-FridgeMasters\Project\flutterproject_v1\build\app\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.example.fridgemasters.app-mergeDebugResources-22 D:\Synology Drive Shared\SynologyDrive\School Stuff\Senior Project\Freddie\Flutter Apps\The-FridgeMasters\Project\flutterproject_v1\build\app\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.example.fridgemasters.app-merged_res-23 D:\Synology Drive Shared\SynologyDrive\School Stuff\Senior Project\Freddie\Flutter Apps\The-FridgeMasters\Project\flutterproject_v1\build\app\intermediates\merged_res\debug
+com.example.fridgemasters.app-packaged_res-24 D:\Synology Drive Shared\SynologyDrive\School Stuff\Senior Project\Freddie\Flutter Apps\The-FridgeMasters\Project\flutterproject_v1\build\flutter_barcode_scanner\intermediates\packaged_res\debug
+com.example.fridgemasters.app-packaged_res-25 D:\Synology Drive Shared\SynologyDrive\School Stuff\Senior Project\Freddie\Flutter Apps\The-FridgeMasters\Project\flutterproject_v1\build\flutter_plugin_android_lifecycle\intermediates\packaged_res\debug
