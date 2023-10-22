@@ -13,7 +13,7 @@ import 'package:audioplayers/audioplayers.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
-  
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -21,7 +21,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final AudioPlayer player = AudioPlayer();
   bool _showAnimation = true;
-  
+
   // Create TextEditingController instances
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -39,10 +39,11 @@ class _LoginPageState extends State<LoginPage> {
 
       var data = jsonDecode(response.body);
       if (data["success"]) {
-        print("Login was successful!");  // Add this
-        player.play('sounds/login_sound.mp3');  // <-- Play the sound
+        print("Login was successful!"); // Add this
+        player
+            .play(AssetSource('sounds/login_sound.mp3')); // <-- Play the sound
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(data["message"])),
+          SnackBar(content: Text(data["message"])),
         );
         return true;
       } else {
@@ -59,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(

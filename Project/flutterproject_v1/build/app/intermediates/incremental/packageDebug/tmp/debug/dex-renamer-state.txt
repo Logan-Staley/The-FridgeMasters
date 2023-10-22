@@ -1,4 +1,0 @@
-#Mon Oct 09 12:39:05 CDT 2023
-base.0=D\:\\Synology Drive Shared\\SynologyDrive\\School Stuff\\Senior Project\\Freddie\\Flutter Apps\\The-FridgeMasters\\Project\\flutterproject_v1\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-path.0=classes.dex
-renamed.0=classes.dex
