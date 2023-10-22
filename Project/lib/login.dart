@@ -19,7 +19,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final AudioPlayer player = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  
   bool _showAnimation = true;
   
   // Create TextEditingController instances
@@ -40,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       var data = jsonDecode(response.body);
       if (data["success"]) {
         print("Login was successful!");  // Add this
-        player.play('sounds/login_sound.mp3');  // <-- Play the sound
+        _audioPlayer.play(UrlSource('sounds/login_sound.mp3'));  // <-- Play the sound
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(data["message"])),
         );
