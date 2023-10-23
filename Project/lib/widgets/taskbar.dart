@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/foodentry.dart';
 import 'package:fridgemasters/homepage.dart';
 import 'package:fridgemasters/recipes.dart';
+import 'package:fridgemasters/audio_manager.dart';
 
 class Taskbar extends StatelessWidget {
   final int currentIndex;
@@ -14,6 +15,7 @@ class Taskbar extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: (index) {
+        AudioManager().playClickSound();  // Play the click sound
         switch (index) {
           case 0:
             Navigator.push(

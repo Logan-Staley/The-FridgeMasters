@@ -68,8 +68,9 @@ flutter:
      - images/test-food-image.jpg
      - images/fridgemasters-logo.png
 #    - sounds/app_launch.mp3
-#    - sounds/click_sound.mp3
+     - sounds/click_sound.mp3
      - sounds/login_sound.mp3
+     - sounds/logout_sound.mp3
      - edamam.env
      - sounds/background_before_login.mp3
      #- sounds/background_after_login.mp3
