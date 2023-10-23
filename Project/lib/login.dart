@@ -10,7 +10,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:fridgemasters/widgets/animated_logo.dart';
 import 'package:audioplayers/audioplayers.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
@@ -28,6 +28,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
 
   Future<bool> login(BuildContext context) async {
+
+    final storage = FlutterSecureStorage();  // Initialize secure storage
     try {
       final response = await http.post(
         Uri.parse(
@@ -41,6 +43,10 @@ class _LoginPageState extends State<LoginPage> {
       var data = jsonDecode(response.body);
       if (data["success"]) {
         print("Login was successful!");  // Add this
+
+        // Store the token securely
+        await storage.write(key: 'jwt_token', value: data["token"]);
+
         _audioPlayer.play(UrlSource('sounds/login_sound.mp3'));  // <-- Play the sound
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(data["message"])),
