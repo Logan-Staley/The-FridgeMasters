@@ -3,621 +3,373 @@
   "packages": [
     {
       "name": "archive",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.4.6",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.4.6",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "async",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.11.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.11.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "audioplayers",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers-5.2.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers-5.2.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "audioplayers_android",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_android-4.0.2",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_android-4.0.2",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "audioplayers_darwin",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_darwin-5.0.2",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_darwin-5.0.2",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "audioplayers_linux",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_linux-3.1.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_linux-3.1.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "audioplayers_platform_interface",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_platform_interface-6.1.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_platform_interface-6.1.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "audioplayers_web",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_web-4.1.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_web-4.1.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "audioplayers_windows",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_windows-3.1.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_windows-3.1.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "boolean_selector",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "characters",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "clock",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/clock-1.1.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/clock-1.1.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "collection",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.2",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.2",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "convert",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/convert-3.1.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/convert-3.1.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "crypto",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "cupertino_icons",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.6",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.6",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "fake_async",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "ffi",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/ffi-2.1.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/ffi-2.1.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "file",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/file-7.0.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/file-7.0.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "flutter",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/flutter/packages/flutter",
-=======
-      "rootUri": "file:///C:/Users/logan/OneDrive/Desktop/Senior%20Project/Flutter%20SDK/flutter/packages/flutter",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "flutter_barcode_scanner",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_barcode_scanner-2.0.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_barcode_scanner-2.0.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "flutter_dotenv",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_dotenv-5.1.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_dotenv-5.1.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "flutter_lints",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.3",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.3",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "flutter_plugin_android_lifecycle",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.16",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.16",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "flutter_test",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/flutter/packages/flutter_test",
-=======
-      "rootUri": "file:///C:/Users/logan/OneDrive/Desktop/Senior%20Project/Flutter%20SDK/flutter/packages/flutter_test",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "flutter_web_plugins",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/flutter/packages/flutter_web_plugins",
-=======
-      "rootUri": "file:///C:/Users/logan/OneDrive/Desktop/Senior%20Project/Flutter%20SDK/flutter/packages/flutter_web_plugins",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "http",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.6",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.6",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "http_parser",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "js",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.7",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.7",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "lints",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.1.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.1.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "logging",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/logging-1.2.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/logging-1.2.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "lottie",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-2.7.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-2.7.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
     {
       "name": "matcher",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.16",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.16",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "material_color_utilities",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/material_color_utilities-0.5.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/material_color_utilities-0.5.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "meta",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.9.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.9.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "mysql1",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/mysql1-0.20.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/mysql1-0.20.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "path",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "path_provider",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider-2.1.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider-2.1.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "path_provider_android",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.2.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.2.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "path_provider_foundation",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.3.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.3.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "path_provider_linux",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_linux-2.2.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_linux-2.2.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "path_provider_platform_interface",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_platform_interface-2.1.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_platform_interface-2.1.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "path_provider_windows",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_windows-2.2.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_windows-2.2.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "platform",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/platform-3.1.3",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/platform-3.1.3",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "plugin_platform_interface",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.6",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.6",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "pointycastle",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/pointycastle-3.7.3",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/pointycastle-3.7.3",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
     {
       "name": "pool",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/pool-1.5.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/pool-1.5.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "sky_engine",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/flutter/bin/cache/pkg/sky_engine",
-=======
-      "rootUri": "file:///C:/Users/logan/OneDrive/Desktop/Senior%20Project/Flutter%20SDK/flutter/bin/cache/pkg/sky_engine",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "source_span",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.10.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.10.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "sprintf",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/sprintf-7.0.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/sprintf-7.0.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "stack_trace",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "stream_channel",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/stream_channel-2.1.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/stream_channel-2.1.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
     {
       "name": "string_scanner",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/string_scanner-1.2.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/string_scanner-1.2.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "synchronized",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/synchronized-3.1.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/synchronized-3.1.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "term_glyph",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/term_glyph-1.2.1",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/term_glyph-1.2.1",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "test_api",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.6.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.6.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "typed_data",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.3.2",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.3.2",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "uuid",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.1.0",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.1.0",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
     {
       "name": "vector_math",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
     {
       "name": "web",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/web-0.1.4-beta",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/web-0.1.4-beta",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.1"
     },
     {
       "name": "win32",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/win32-5.0.9",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/win32-5.0.9",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "xdg_directories",
-<<<<<<< HEAD
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/xdg_directories-1.0.3",
-=======
-      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/xdg_directories-1.0.3",
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -628,13 +380,7 @@
       "languageVersion": "3.1"
     }
   ],
-<<<<<<< HEAD
-  "generated": "2023-10-23T02:06:20.970812Z",
+  "generated": "2023-10-23T02:48:30.584683Z",
   "generator": "pub",
   "generatorVersion": "3.1.4"
-=======
-  "generated": "2023-10-23T01:17:03.563582Z",
-  "generator": "pub",
-  "generatorVersion": "3.1.3"
->>>>>>> 918af430867eef7c59db7fe1cb2a90bf396d315b
 }

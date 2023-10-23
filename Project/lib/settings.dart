@@ -128,7 +128,7 @@ class _SettingsState extends State<Settings> {
                 SizedBox(height: 20), // Spacer doesn't work in ListView. Replacing with SizedBox.
                 ElevatedButton(
                   onPressed: () {
-                    AudioManager().playClickSound();
+                //    AudioManager().playClickSound(); - don't feel it's necessary here
                     _showConfirmationDialog(context);
                   },
                   child: const Text('Sign Out'),
