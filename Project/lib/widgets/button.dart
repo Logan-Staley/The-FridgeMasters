@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fridgemasters/audio_manager.dart'; // Import the AudioManager
 
 class Button extends StatelessWidget {
   final Future<bool> Function() onPressed;
@@ -18,6 +19,8 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
+        // Play click sound
+        //AudioManager().playClickSound();
         bool success = await onPressed();
         if (success) {
           Navigator.pushReplacement(
