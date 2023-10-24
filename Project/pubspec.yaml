@@ -41,6 +41,7 @@ dependencies:
   mysql1: ^0.20.0
   audioplayers: ^5.2.0
   flutter_secure_storage: ^5.0.2
+  intl: ^0.18.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
