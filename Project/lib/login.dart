@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
         Button(
           onPressed: () => login(context),
           buttonText: 'Login',
-          nextPage: HomePage(),
+          nextPage: HomePage(fridgeItems: [],),
         ),
         const SizedBox(height: 20),
         TextOnlyButton(
