@@ -4,8 +4,8 @@ import 'package:fridgemasters/login.dart';
 import 'package:fridgemasters/widgets/account_settings.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:fridgemasters/audio_manager.dart';
-import 'package:fridgemasters/FAQpage.dart';
-import 'package:fridgemasters/Aboutpage.dart';
+//import 'package:fridgemasters/FAQpage.dart';
+//import 'package:fridgemasters/Aboutpage.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -57,12 +57,7 @@ class _SettingsState extends State<Settings> {
       case 'Account':
         nextPage = AccountSettings();
         break;
-      case 'FAQs':
-        nextPage = FAQpage();
-        break;
-      case 'About':
-        nextPage = Aboutpage();
-        break;
+      
    
    
       
