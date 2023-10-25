@@ -1,30 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:fridgemasters/inventory.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
-import 'package:fridgemasters/nutritionpage.dart'; // Replace with the actual path to nutritionpage.dart
-import 'package:fridgemasters/widgets/textonlybutton.dart'; // Replace with the actual path to textonlybutton.dart
-import 'package:fridgemasters/settings.dart'; // Replace with the actual path to settings.dart
-import 'package:fridgemasters/notificationlist.dart'; // Replace with the actual path to notificationlist.dart
+//import 'package:fridgemasters/nutritionpage.dart';
+//import 'package:fridgemasters/widgets/textonlybutton.dart';
+import 'package:fridgemasters/settings.dart';
+import 'package:fridgemasters/notificationlist.dart';
+import 'package:fridgemasters/foodentry.dart'; // Import the food entry page
 
-class HomePage extends StatelessWidget {
-  // Sample data for fridge items
-  final List<Map<String, dynamic>> fridgeItems = List.generate(
-    20,
-    (index) => {
-      'name': 'Item $index',
-      'expirationDate': '2023-10-${10 + index}',
-      'quantity': '${index + 1} liter',
-      'purchaseDate': '2023-09-${10 + index}'
-    },
+class HomePage extends StatefulWidget {
+  final List<Map<String, dynamic>> fridgeItems;
+
+  const HomePage({super.key, required this.fridgeItems});
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<Map<String, dynamic>> fridgeItems = [];
+  final TextEditingController _searchController = TextEditingController();
+
+  void _navigateToAddItem() async {
+  final FoodItem? newFoodItem = await Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => FoodEntry(onFoodItemAdded: (foodItem) {
+        Navigator.pop(context, foodItem); // Return the food item back to this page
+      }),
+    ),
   );
 
-  HomePage({super.key});
+  if (newFoodItem != null) {
+    setState(() {
+      widget.fridgeItems.add({
+        'name': newFoodItem.name,
+        'quantity': '${newFoodItem.quantity} units',
+        'purchaseDate': newFoodItem.dateOfPurchase.toString(),
+        'expirationDate': newFoodItem.expirationDate.toString(),
+        'imageUrl': 'default_url',
+      });
+    });
+  }
+}
+
+  Color _getExpirationColor(String expirationDate) {
+    final expiryDate = DateTime.parse(expirationDate);
+    final currentDate = DateTime.now();
+    final daysLeft = expiryDate.difference(currentDate).inDays;
+    if (daysLeft < 0) {
+      return Colors.red;
+    } else if (daysLeft < 7) {
+      return Colors.yellow;
+    } else {
+      return const Color.fromARGB(255, 35, 205, 40);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Added leading and actions for Notifications and Settings buttons
         leading: IconButton(
           icon: Icon(Icons.notifications),
           onPressed: () {
@@ -49,53 +85,237 @@ class HomePage extends StatelessWidget {
             },
           ),
         ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(60),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Filter based on food items',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                prefixIcon: Icon(Icons.search),
+              ),
+            ),
+          ),
+        ),
       ),
       body: Stack(
         children: [
           const Background1(),
           Center(
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: fridgeItems.length,
-              itemBuilder: (context, index) {
-                final item = fridgeItems[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Name: ${item['name']}'),
-                          Text('Expiration Date: ${item['expirationDate']}'),
-                          Text('Quantity: ${item['quantity']}'),
-                          Text('Purchase Date: ${item['purchaseDate']}'),
-                          TextOnlyButton(
-                            text: 'Nutrition Facts',
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const NutritionPage(),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+  child: widget.fridgeItems.isEmpty
+    ? Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Add Items to your fridge!'),
+          Icon(Icons.arrow_downward, color: Colors.red),
+        ],
+      )
+    : ListView.builder(
+  itemCount: widget.fridgeItems.length,
+  itemBuilder: (context, index) {
+    final item = widget.fridgeItems[index];
+
+    Color _getPastelColor(int index) {
+      final r = (100 + (index * 50) % 155).toDouble();
+      final g = (150 + (index * 90) % 105).toDouble();
+      final b = (200 + (index * 30) % 55).toDouble();
+      return Color.fromRGBO(r.toInt(), g.toInt(), b.toInt(), 0.9); // Set opacity to 0.7 for transparency
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        color: _getPastelColor(index),
+        child: Container(
+          height: 180, // Reduced the height
+          child: Stack(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.brown), // Adding the border
+                    image: DecorationImage(
+                      image: NetworkImage(item['imageUrl']),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                );
-              },
-            ),
+                  width: 100,
+                  height: 100,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 7,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                TextSpan(text: 'Name: ', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 12)), // Descriptor size
+                TextSpan(text: '${item['name']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 214, 213, 213))), // User-entered text size
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Center(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: DefaultTextStyle.of(context).style,
+                                      children: <TextSpan>[
+                                        TextSpan(text: 'Expiry: ', style: TextStyle(fontWeight: FontWeight.normal)),
+                                        TextSpan(
+                                          text: '${item['expirationDate']}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: _getExpirationColor(item['expirationDate']),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: DefaultTextStyle.of(context).style,
+                                      children: <TextSpan>[
+                                        TextSpan(text: 'Qty: ', style: TextStyle(fontWeight: FontWeight.normal)),
+                                        TextSpan(text: '${item['quantity']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 214, 213, 213))),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Center(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: DefaultTextStyle.of(context).style,
+                                      children: <TextSpan>[
+                                        TextSpan(text: 'Purchased: ', style: TextStyle(fontWeight: FontWeight.normal)),
+                                        TextSpan(text: '${item['purchaseDate']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 214, 213, 213))),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                top: 0,
+                right: 0,
+                child: IconButton(
+                  icon: Icon(Icons.delete, size: 20), 
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        bool isChecked = false;
+                        return AlertDialog(
+                          title: Text('Delete Item'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text('Are you sure you want to delete this item?'),
+                              Row(
+                                children: [
+                                  Checkbox(
+                                    value: isChecked,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        isChecked = value!;
+                                      });
+                                    },
+                                  ),
+                                  Text("This has expired"),
+                                ],
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  widget.fridgeItems.removeAt(index);
+                                });
+                                Navigator.of(context).pop(); // Close the dialog
+                                // Add logic to handle database update here
+                              },
+                              child: Text('Delete'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
+        ),
+      ),
+    );
+  },
+)
+
+
+
+
+
+
+
+
+
+
+),
         ],
       ),
       bottomNavigationBar: Taskbar(
         currentIndex: 0,
         onTabChanged: (index) {},
+        onFoodItemAdded: (foodItem) {
+          // You need to provide this callback
+        },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _navigateToAddItem,
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blue,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

@@ -9,9 +9,11 @@ class AudioManager with WidgetsBindingObserver {
   }
 
   final AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer _clickSoundPlayer = AudioPlayer();
 
   Future<void> startBackgroundMusic() async {
-    await _audioPlayer.setVolume(0.2);
+    await _audioPlayer.setVolume(0.12);
+ //   await _audioPlayer.setLoopMode(LoopMode.one);
     await _audioPlayer.play(UrlSource('sounds/background_before_login.mp3'));
   }
 
@@ -19,6 +21,10 @@ class AudioManager with WidgetsBindingObserver {
     await _audioPlayer.stop();
   }
 
+  Future<void> playClickSound() async {
+    await _clickSoundPlayer.play(UrlSource('sounds/click_sound.mp3'));
+  }
+  
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.inactive) {
@@ -31,5 +37,6 @@ class AudioManager with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _audioPlayer.dispose();
+    _clickSoundPlayer.dispose();
   }
 }

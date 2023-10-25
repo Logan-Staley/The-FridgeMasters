@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart'; 
 import 'package:fridgemasters/login.dart';
 import 'package:fridgemasters/widgets/account_settings.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:fridgemasters/audio_manager.dart';
+import 'package:fridgemasters/FAQpage.dart';
+import 'package:fridgemasters/Aboutpage.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -12,7 +16,10 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   String _selectedLanguage = 'English';
-
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  Future<void> _playLogoutSound() async {
+  await _audioPlayer.play(UrlSource('sounds/logout_sound.mp3'));
+}
   Future<void> _showConfirmationDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -30,7 +37,8 @@ class _SettingsState extends State<Settings> {
             ),
             TextButton(
               child: Text('Yes'),
-              onPressed: () {
+              onPressed: () async {
+                await _playLogoutSound();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),
@@ -49,8 +57,19 @@ class _SettingsState extends State<Settings> {
       case 'Account':
         nextPage = AccountSettings();
         break;
+      case 'FAQs':
+        nextPage = FAQpage();
+        break;
+      case 'About':
+        nextPage = Aboutpage();
+        break;
+   
+   
+      
+      
       // Add more cases for other categories here...
     }
+     
 
     if (nextPage != null) {
       Navigator.push(
@@ -122,6 +141,7 @@ class _SettingsState extends State<Settings> {
                 SizedBox(height: 20), // Spacer doesn't work in ListView. Replacing with SizedBox.
                 ElevatedButton(
                   onPressed: () {
+                //    AudioManager().playClickSound(); - don't feel it's necessary here
                     _showConfirmationDialog(context);
                   },
                   child: const Text('Sign Out'),
