@@ -260,6 +260,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "nested",
+      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/nested-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "path",
       "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3",
       "packageUri": "lib/",
@@ -322,6 +328,12 @@
     {
       "name": "pool",
       "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/pool-1.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "provider",
+      "rootUri": "file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/provider-6.0.5",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -422,7 +434,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-10-25T03:12:02.803647Z",
+  "generated": "2023-10-25T03:27:17.922261Z",
   "generator": "pub",
   "generatorVersion": "3.1.4"
 }

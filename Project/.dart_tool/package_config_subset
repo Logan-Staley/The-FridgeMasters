@@ -158,6 +158,10 @@ mysql1
 2.12
 file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/mysql1-0.20.0/
 file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/mysql1-0.20.0/lib/
+nested
+2.12
+file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/nested-1.0.0/
+file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/nested-1.0.0/lib/
 path
 2.12
 file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3/
@@ -202,6 +206,10 @@ pool
 2.12
 file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/pool-1.5.1/
 file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/pool-1.5.1/lib/
+provider
+2.12
+file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/provider-6.0.5/
+file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/provider-6.0.5/lib/
 source_span
 2.18
 file:///C:/Users/logan/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.10.0/
