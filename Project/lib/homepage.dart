@@ -123,15 +123,16 @@ class _HomePageState extends State<HomePage> {
       final r = (100 + (index * 50) % 155).toDouble();
       final g = (150 + (index * 90) % 105).toDouble();
       final b = (200 + (index * 30) % 55).toDouble();
-      return Color.fromRGBO(r.toInt(), g.toInt(), b.toInt(), 0.9); // Set opacity to 0.7 for transparency
+      return Color.fromRGBO(r.toInt(), g.toInt(), b.toInt(), 0.9); 
     }
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
         color: _getPastelColor(index),
+        elevation: 4.0, // Added shadow
         child: Container(
-          height: 180, // Reduced the height
+          height: 180,
           child: Stack(
             children: [
               Row(
@@ -139,16 +140,19 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     flex: 3,
-                    child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.brown), // Adding the border
-                    image: DecorationImage(
-                      image: NetworkImage(item['imageUrl']),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  width: 100,
-                  height: 100,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0), // Image padding
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.brown, width: 3), // Increased border width
+                          image: DecorationImage(
+                            image: NetworkImage(item['imageUrl']),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        width: 100,
+                        height: 100,
+                      ),
                     ),
                   ),
                   Expanded(
@@ -166,7 +170,7 @@ class _HomePageState extends State<HomePage> {
               style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
                 TextSpan(text: 'Name: ', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 12)), // Descriptor size
-                TextSpan(text: '${item['name']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 214, 213, 213))), // User-entered text size
+                TextSpan(text: '${item['name']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Color.fromARGB(255, 206, 55, 9))), // User-entered text size
                                       ],
                                     ),
                                   ),
@@ -178,11 +182,8 @@ class _HomePageState extends State<HomePage> {
                                     text: TextSpan(
                                       style: DefaultTextStyle.of(context).style,
                                       children: <TextSpan>[
-                                        TextSpan(text: 'Expiry: ', style: TextStyle(fontWeight: FontWeight.normal)),
-                                        TextSpan(
-                                          text: '${item['expirationDate']}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: _getExpirationColor(item['expirationDate']),
-                                          ),
-                                        ),
+                                        TextSpan(text: 'Purchased: ', style: TextStyle(fontWeight: FontWeight.normal)),
+                                        TextSpan(text: '${item['purchaseDate']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19, color: Color.fromARGB(255, 214, 213, 213))),
                                       ],
                                     ),
                                   ),
@@ -201,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                                       style: DefaultTextStyle.of(context).style,
                                       children: <TextSpan>[
                                         TextSpan(text: 'Qty: ', style: TextStyle(fontWeight: FontWeight.normal)),
-                                        TextSpan(text: '${item['quantity']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 214, 213, 213))),
+                                        TextSpan(text: '${item['quantity']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color.fromARGB(255, 214, 213, 213))),
                                       ],
                                     ),
                                   ),
@@ -213,8 +214,11 @@ class _HomePageState extends State<HomePage> {
                                     text: TextSpan(
                                       style: DefaultTextStyle.of(context).style,
                                       children: <TextSpan>[
-                                        TextSpan(text: 'Purchased: ', style: TextStyle(fontWeight: FontWeight.normal)),
-                                        TextSpan(text: '${item['purchaseDate']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color.fromARGB(255, 214, 213, 213))),
+                                        TextSpan(text: 'Expiry: ', style: TextStyle(fontWeight: FontWeight.normal)),
+                                        TextSpan(
+                                          text: '${item['expirationDate']}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: _getExpirationColor(item['expirationDate']),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -232,7 +236,7 @@ class _HomePageState extends State<HomePage> {
                 top: 0,
                 right: 0,
                 child: IconButton(
-                  icon: Icon(Icons.delete, size: 20), 
+                  icon: Icon(Icons.delete, size: 26), 
                   onPressed: () {
                     showDialog(
                       context: context,
