@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/inventory.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
-//import 'package:fridgemasters/nutritionpage.dart';
-//import 'package:fridgemasters/widgets/textonlybutton.dart';
+import 'package:fridgemasters/nutritionpage.dart';
+import 'package:fridgemasters/widgets/textonlybutton.dart';
 import 'package:fridgemasters/settings.dart';
 import 'package:fridgemasters/notificationlist.dart';
 import 'package:fridgemasters/foodentry.dart'; // Import the food entry page
