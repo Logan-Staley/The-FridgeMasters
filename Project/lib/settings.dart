@@ -3,14 +3,12 @@ import 'package:fridgemasters/Aboutpage.dart';
 import 'package:fridgemasters/FAQpage.dart';
 import 'package:fridgemasters/System.dart';
 import 'package:fridgemasters/widgets/DisplayandBrightness.dart';
-import 'package:fridgemasters/widgets/backgrounds.dart'; 
+import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/login.dart';
 import 'package:fridgemasters/widgets/account_settings.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:fridgemasters/audio_manager.dart';
 import 'package:fridgemasters/Notificationspage.dart';
-
-
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -23,8 +21,9 @@ class _SettingsState extends State<Settings> {
   String _selectedLanguage = 'English';
   final AudioPlayer _audioPlayer = AudioPlayer();
   Future<void> _playLogoutSound() async {
-  await _audioPlayer.play(UrlSource('sounds/logout_sound.mp3'));
-}
+    await _audioPlayer.play(UrlSource('sounds/logout_sound.mp3'));
+  }
+
   Future<void> _showConfirmationDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -60,29 +59,26 @@ class _SettingsState extends State<Settings> {
     Widget? nextPage;
     switch (category) {
       case 'Account':
-      nextPage = AccountSettings();
-      break;
+        nextPage = AccountSettings();
+        break;
       case 'Display and Brightness':
-      nextPage = DisplayandBrightness();
-      break;
+        nextPage = DisplayandBrightness();
+        break;
       case 'Notifications':
-      nextPage = Notificationspage();
-      break;
+        nextPage = Notificationspage();
+        break;
       case 'System':
-      nextPage = System();
-      break;
+        nextPage = System();
+        break;
       case 'FAQs':
-      nextPage = FAQpage();
-      break;
+        nextPage = FAQpage();
+        break;
       case 'About':
-      nextPage = Aboutpage();
-      break;
-   
-      
-      
+        nextPage = Aboutpage();
+        break;
+
       // Add more cases for other categories here...
     }
-     
 
     if (nextPage != null) {
       Navigator.push(
@@ -151,10 +147,12 @@ class _SettingsState extends State<Settings> {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('About'),
                 ),
-                SizedBox(height: 20), // Spacer doesn't work in ListView. Replacing with SizedBox.
+                SizedBox(
+                    height:
+                        20), // Spacer doesn't work in ListView. Replacing with SizedBox.
                 ElevatedButton(
                   onPressed: () {
-                //    AudioManager().playClickSound(); - don't feel it's necessary here
+                    //    AudioManager().playClickSound(); - don't feel it's necessary here
                     _showConfirmationDialog(context);
                   },
                   child: const Text('Sign Out'),
