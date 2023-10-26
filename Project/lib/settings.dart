@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fridgemasters/widgets/backgrounds.dart'; 
+import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/login.dart';
 import 'package:fridgemasters/widgets/account_settings.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:fridgemasters/audio_manager.dart';
+//import 'package:fridgemasters/FAQpage.dart';
+//import 'package:fridgemasters/Aboutpage.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -55,8 +57,14 @@ class _SettingsState extends State<Settings> {
       case 'Account':
         nextPage = AccountSettings();
         break;
+      
+   
+   
+      
+      
       // Add more cases for other categories here...
     }
+     
 
     if (nextPage != null) {
       Navigator.push(
@@ -125,7 +133,9 @@ class _SettingsState extends State<Settings> {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('About'),
                 ),
-                SizedBox(height: 20), // Spacer doesn't work in ListView. Replacing with SizedBox.
+                SizedBox(
+                    height:
+                        20), // Spacer doesn't work in ListView. Replacing with SizedBox.
                 ElevatedButton(
                   onPressed: () {
                 //    AudioManager().playClickSound(); - don't feel it's necessary here
