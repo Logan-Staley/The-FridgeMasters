@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/Aboutpage.dart';
 import 'package:fridgemasters/FAQpage.dart';
 import 'package:fridgemasters/System.dart';
-import 'package:fridgemasters/widgets/DisplayandBrightness.dart';
+import 'package:fridgemasters/widgets/language.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/login.dart';
 import 'package:fridgemasters/widgets/account_settings.dart';
@@ -61,8 +61,8 @@ class _SettingsState extends State<Settings> {
       case 'Account':
         nextPage = AccountSettings();
         break;
-      case 'Display and Brightness':
-        nextPage = DisplayandBrightness();
+      case 'Language':
+        nextPage = Language();
         break;
       case 'Notifications':
         nextPage = Notificationspage();
@@ -123,9 +123,9 @@ class _SettingsState extends State<Settings> {
                   onTap: () => _navigateToSetting('Account'),
                 ),
                 ListTile(
-                  title: Text('Display and Brightness'),
+                  title: Text('Language'),
                   trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () => _navigateToSetting('Display and Brightness'),
+                  onTap: () => _navigateToSetting('Language'),
                 ),
                 ListTile(
                   title: Text('Notifications'),
