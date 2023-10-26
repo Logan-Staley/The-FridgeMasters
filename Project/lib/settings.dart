@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:fridgemasters/widgets/backgrounds.dart'; 
+import 'package:fridgemasters/Aboutpage.dart';
+import 'package:fridgemasters/FAQpage.dart';
+import 'package:fridgemasters/System.dart';
+import 'package:fridgemasters/widgets/language.dart';
+import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/login.dart';
 import 'package:fridgemasters/widgets/account_settings.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:fridgemasters/audio_manager.dart';
+import 'package:fridgemasters/Notificationspage.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -16,8 +21,9 @@ class _SettingsState extends State<Settings> {
   String _selectedLanguage = 'English';
   final AudioPlayer _audioPlayer = AudioPlayer();
   Future<void> _playLogoutSound() async {
-  await _audioPlayer.play(UrlSource('sounds/logout_sound.mp3'));
-}
+    await _audioPlayer.play(UrlSource('sounds/logout_sound.mp3'));
+  }
+
   Future<void> _showConfirmationDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -55,6 +61,22 @@ class _SettingsState extends State<Settings> {
       case 'Account':
         nextPage = AccountSettings();
         break;
+      case 'Language':
+        nextPage = Language();
+        break;
+      case 'Notifications':
+        nextPage = Notificationspage();
+        break;
+      case 'System':
+        nextPage = System();
+        break;
+      case 'FAQs':
+        nextPage = FAQpage();
+        break;
+      case 'About':
+        nextPage = Aboutpage();
+        break;
+
       // Add more cases for other categories here...
     }
 
@@ -101,9 +123,9 @@ class _SettingsState extends State<Settings> {
                   onTap: () => _navigateToSetting('Account'),
                 ),
                 ListTile(
-                  title: Text('Display and Brightness'),
+                  title: Text('Language'),
                   trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () => _navigateToSetting('Display and Brightness'),
+                  onTap: () => _navigateToSetting('Language'),
                 ),
                 ListTile(
                   title: Text('Notifications'),
@@ -125,10 +147,12 @@ class _SettingsState extends State<Settings> {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('About'),
                 ),
-                SizedBox(height: 20), // Spacer doesn't work in ListView. Replacing with SizedBox.
+                SizedBox(
+                    height:
+                        20), // Spacer doesn't work in ListView. Replacing with SizedBox.
                 ElevatedButton(
                   onPressed: () {
-                //    AudioManager().playClickSound(); - don't feel it's necessary here
+                    //    AudioManager().playClickSound(); - don't feel it's necessary here
                     _showConfirmationDialog(context);
                   },
                   child: const Text('Sign Out'),
