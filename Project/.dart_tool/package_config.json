@@ -141,7 +141,7 @@
     },
     {
       "name": "flutter_plugin_android_lifecycle",
-      "rootUri": "file:///C:/Users/Gaming-Rig/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.16",
+      "rootUri": "file:///C:/Users/caste/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.16",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -165,7 +165,7 @@
     },
     {
       "name": "http_parser",
-      "rootUri": "file:///C:/Users/Gaming-Rig/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2",
+      "rootUri": "file:///C:/Users/caste/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -213,7 +213,7 @@
     },
     {
       "name": "mysql1",
-      "rootUri": "file:///C:/Users/Gaming-Rig/AppData/Local/Pub/Cache/hosted/pub.dev/mysql1-0.20.0",
+      "rootUri": "file:///C:/Users/caste/AppData/Local/Pub/Cache/hosted/pub.dev/mysql1-0.20.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -231,7 +231,7 @@
     },
     {
       "name": "path_provider_android",
-      "rootUri": "file:///C:/Users/Gaming-Rig/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.2.0",
+      "rootUri": "file:///C:/Users/caste/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -279,7 +279,7 @@
     },
     {
       "name": "pool",
-      "rootUri": "file:///C:/Users/Gaming-Rig/AppData/Local/Pub/Cache/hosted/pub.dev/pool-1.5.1",
+      "rootUri": "file:///C:/Users/caste/AppData/Local/Pub/Cache/hosted/pub.dev/pool-1.5.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -380,7 +380,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-10-26T00:40:15.813796Z",
+  "generated": "2023-10-22T03:40:27.132642Z",
   "generator": "pub",
-  "generatorVersion": "3.1.1"
+  "generatorVersion": "3.1.3"
 }
