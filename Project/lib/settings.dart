@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fridgemasters/widgets/backgrounds.dart'; 
+import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/login.dart';
 import 'package:fridgemasters/widgets/account_settings.dart';
 
@@ -119,7 +119,9 @@ class _SettingsState extends State<Settings> {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('About'),
                 ),
-                SizedBox(height: 20), // Spacer doesn't work in ListView. Replacing with SizedBox.
+                SizedBox(
+                    height:
+                        20), // Spacer doesn't work in ListView. Replacing with SizedBox.
                 ElevatedButton(
                   onPressed: () {
                     _showConfirmationDialog(context);

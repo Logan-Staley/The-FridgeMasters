@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/recipesinstructions.dart';
 import 'package:fridgemasters/widgets/button.dart'; // Import your Button widget
+import 'package:fridgemasters/widgets/backgrounds.dart';
 
 class Recipes extends StatelessWidget {
   const Recipes({super.key});
@@ -11,7 +12,10 @@ class Recipes extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Recipes Page'),
       ),
-      body: Center(
+      body: Stack(
+        children: [
+          Background1(),
+      Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -68,6 +72,8 @@ class Recipes extends StatelessWidget {
             )
           ],
         ),
+      ),
+        ],
       ),
     );
   }
