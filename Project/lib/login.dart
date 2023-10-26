@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fridgemasters/Services/fetchinventoryItems.dart';
 import 'package:fridgemasters/homepage.dart';
 import 'package:fridgemasters/widgets/button.dart';
 import 'package:fridgemasters/resetpassword.dart';
@@ -113,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
         Button(
           onPressed: () => login(context),
           buttonText: 'Login',
-          nextPage: HomePage(fridgeItems: [],),
+          nextPage: HomePage( fridgeItems: []),
         ),
         const SizedBox(height: 20),
         TextOnlyButton(
