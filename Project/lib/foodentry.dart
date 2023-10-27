@@ -6,7 +6,7 @@ import 'widgets/textonlybutton.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
-
+import "Services/storage_service.dart";
 
 class FoodEntry extends StatefulWidget {
   final Function(FoodItem) onFoodItemAdded;
@@ -22,7 +22,7 @@ class _FoodEntryState extends State<FoodEntry> {
   TextEditingController dateOfPurchaseController = TextEditingController();
   TextEditingController expirationDateController = TextEditingController();
 
-String formatDateString(String dateStr) {
+  String formatDateString(String dateStr) {
     try {
       DateFormat inputFormat = DateFormat("MM/dd/yyyy");
       DateTime date = inputFormat.parse(dateStr);
@@ -35,16 +35,25 @@ String formatDateString(String dateStr) {
   }
 
   void saveToInventory() async {
-    final storage = FlutterSecureStorage();  // Initialize secure storage
+    final storage = FlutterSecureStorage(); // Initialize secure storage
     String? storedToken = await storage.read(key: 'jwt_token');
-    
+    final storageService = StorageService();
+
+    String? getStoredToken = await storageService.getStoredToken();
+    String? getStoredUserId = await storageService.getStoredUserId();
+    //Both of these are pulled from Storage_service.dart
+
+
+
     if (storedToken == null) {
-        print("Error: JWT token not found");
-        return;
+      print("Error: JWT token not found");
+      return;
     }
 
-    final formattedDateOfPurchase = formatDateString(dateOfPurchaseController.text);
-    final formattedExpirationDate = formatDateString(expirationDateController.text);
+    final formattedDateOfPurchase =
+        formatDateString(dateOfPurchaseController.text);
+    final formattedExpirationDate =
+        formatDateString(expirationDateController.text);
 
     final foodItem = FoodItem(
       name: foodItemNameController.text,
@@ -55,11 +64,13 @@ String formatDateString(String dateStr) {
 
     // HTTP request with Authorization header
     final response = await http.post(
-      Uri.parse('http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/insert_inventory.php'),
+      Uri.parse(
+          'http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/insert_inventory.php'),
       headers: {
-        'Authorization': 'Bearer $storedToken',
+        'Authorization': 'Bearer $getStoredToken',
       },
       body: {
+        'userId': getStoredUserId,
         'productName': foodItem.name,
         'quantity': foodItem.quantity.toString(),
         'dateOfPurchase': foodItem.dateOfPurchase,
@@ -74,9 +85,7 @@ String formatDateString(String dateStr) {
     }
 
     widget.onFoodItemAdded(foodItem);
-}
-
-
+  }
 
   void clearFields() {
     showDialog(

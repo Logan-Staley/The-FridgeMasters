@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:fridgemasters/widgets/animated_logo.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import "Services/storage_service.dart";
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
@@ -30,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
 
   Future<bool> login(BuildContext context) async {
-    final storage = FlutterSecureStorage(); // Initialize secure storage
+    final storageService = StorageService();
     try {
       final response = await http.post(
         Uri.parse(
@@ -43,13 +44,17 @@ class _LoginPageState extends State<LoginPage> {
 
       var data = jsonDecode(response.body);
       if (data["success"]) {
-        //print("Login was successful!");  // Add this
         // Store the token securely
-        print(data["token"]);
-        await storage.write(key: 'jwt_token', value: data["token"]);
+        // Store the token securely
+        await storageService.setStoredToken(data["token"]);
 
-        String? storedToken = await storage.read(key: 'jwt_token');
+        // Store the UserID securely
+        await storageService.setStoredUserId(data["userId"].toString());
+
+        String? storedToken = await storageService.getStoredToken();
+        String? storedUserId = await storageService.getStoredUserId();
         print("Stored Token: $storedToken");
+        print("Stored UserID: $storedUserId");
 
         _audioPlayer
             .play(UrlSource('sounds/login_sound.mp3')); // <-- Play the sound
@@ -114,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
         Button(
           onPressed: () => login(context),
           buttonText: 'Login',
-          nextPage: HomePage( fridgeItems: []),
+          nextPage: HomePage(fridgeItems: []),
         ),
         const SizedBox(height: 20),
         TextOnlyButton(
