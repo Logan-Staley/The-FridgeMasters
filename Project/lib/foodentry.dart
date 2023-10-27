@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'inventory.dart';
 import 'widgets/inputtextbox.dart';
 import 'widgets/textonlybutton.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+
 
 class FoodEntry extends StatefulWidget {
   final Function(FoodItem) onFoodItemAdded;
@@ -31,7 +34,15 @@ String formatDateString(String dateStr) {
     }
   }
 
-  void saveToInventory() {
+  void saveToInventory() async {
+    final storage = FlutterSecureStorage();  // Initialize secure storage
+    String? storedToken = await storage.read(key: 'jwt_token');
+    
+    if (storedToken == null) {
+        print("Error: JWT token not found");
+        return;
+    }
+
     final formattedDateOfPurchase = formatDateString(dateOfPurchaseController.text);
     final formattedExpirationDate = formatDateString(expirationDateController.text);
 
@@ -42,9 +53,30 @@ String formatDateString(String dateStr) {
       expirationDate: formattedExpirationDate,
     );
 
-    print("Adding to fridge: ${foodItem.name}");
+    // HTTP request with Authorization header
+    final response = await http.post(
+      Uri.parse('http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/insert_inventory.php'),
+      headers: {
+        'Authorization': 'Bearer $storedToken',
+      },
+      body: {
+        'productName': foodItem.name,
+        'quantity': foodItem.quantity.toString(),
+        'dateOfPurchase': foodItem.dateOfPurchase,
+        'expirationDate': foodItem.expirationDate,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print("Data sent successfully!");
+    } else {
+      print("Error sending data: ${response.body}");
+    }
+
     widget.onFoodItemAdded(foodItem);
-  }
+}
+
+
 
   void clearFields() {
     showDialog(

@@ -183,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                                       style: DefaultTextStyle.of(context).style,
                                       children: <TextSpan>[
                                         TextSpan(text: 'Purchased: ', style: TextStyle(fontWeight: FontWeight.normal)),
-                                        TextSpan(text: '${item['purchaseDate']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19, color: Color.fromARGB(255, 214, 213, 213))),
+                                        TextSpan(text: '${item['purchaseDate']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19, color: Color.fromARGB(255, 255, 255, 255))),
                                       ],
                                     ),
                                   ),
@@ -202,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                                       style: DefaultTextStyle.of(context).style,
                                       children: <TextSpan>[
                                         TextSpan(text: 'Qty: ', style: TextStyle(fontWeight: FontWeight.normal)),
-                                        TextSpan(text: '${item['quantity']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color.fromARGB(255, 214, 213, 213))),
+                                        TextSpan(text: '${item['quantity']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color.fromARGB(255, 255, 255, 255))),
                                       ],
                                     ),
                                   ),
