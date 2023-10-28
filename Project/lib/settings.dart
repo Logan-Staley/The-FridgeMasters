@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 <<<<<<<<< Temporary merge branch 1
-import 'package:fridgemasters/widgets/backgrounds.dart';
+//import 'package:fridgemasters/widgets/backgrounds.dart';
 =========
-import 'package:fridgemasters/Aboutpage.dart';
-import 'package:fridgemasters/FAQpage.dart';
-import 'package:fridgemasters/System.dart';
-import 'package:fridgemasters/widgets/DisplayandBrightness.dart';
-import 'package:fridgemasters/widgets/backgrounds.dart'; 
+//import 'package:fridgemasters/Aboutpage.dart';
+//import 'package:fridgemasters/FAQpage.dart';
+//import 'package:fridgemasters/System.dart';
+//import 'package:fridgemasters/widgets/DisplayandBrightness.dart';
+//import 'package:fridgemasters/widgets/backgrounds.dart'; 
 >>>>>>>>> Temporary merge branch 2
 import 'package:fridgemasters/login.dart';
 import 'package:fridgemasters/widgets/account_settings.dart';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:fridgemasters/audio_manager.dart';
+//import 'package:audioplayers/audioplayers.dart';
+//import 'package:fridgemasters/audio_manager.dart';
 import 'package:fridgemasters/Notificationspage.dart';
-
 class Settings extends StatefulWidget {
   const Settings({super.key});
 
