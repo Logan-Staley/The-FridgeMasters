@@ -113,8 +113,13 @@ setState(() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(220, 160, 48, 48),
-        leading: IconButton(
+        backgroundColor: Color.fromARGB(180, 160, 48, 48),
+        elevation: 0,  // Removes the default shadow
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: const Color.fromARGB(255, 215, 215, 215), width: 2), // Blue border
+        
+        
+           ),leading: IconButton(
           icon: Icon(Icons.notifications),
           onPressed: () {
             Navigator.push(
@@ -187,7 +192,7 @@ setState(() {
         color: _getPastelColor(index),
         elevation: 4.0, // Added shadow
         child: Container(
-          height: 180,
+          height: 137,
           child: Stack(
             children: [
               Row(
@@ -226,7 +231,7 @@ setState(() {
               style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
                 TextSpan(text: 'Name: ', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 12)), // Descriptor size
-                TextSpan(text: '${item['name']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Color.fromARGB(255, 206, 55, 9))), // User-entered text size
+                TextSpan(text: '${item['name']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Color.fromARGB(255, 145, 139, 138))), // User-entered text size
                                       ],
                                     ),
                                   ),
