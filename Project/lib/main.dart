@@ -32,7 +32,7 @@ child: Consumer2<ThemeNotifier, UserProvider>(
             theme: themeNotifier.themeData,
             initialRoute: '/',
             routes: {
-              '/': (context) => SplashScreen(), // Or LoginPage() if you want to start with the login page
+              '/': (context) => LoginPage(), // Or LoginPage() if you want to start with the login page
               '/home': (context) => HomePage(
                     fridgeItems: [],
                   ), 
