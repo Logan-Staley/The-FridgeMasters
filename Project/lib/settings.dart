@@ -8,7 +8,13 @@ import 'package:fridgemasters/login.dart';
 import 'package:fridgemasters/widgets/account_settings.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:fridgemasters/audio_manager.dart';
+
+import 'package:fridgemasters/widgets/display_and_brightness.dart';
+//import 'package:fridgemasters/FAQpage.dart';
+//import 'package:fridgemasters/Aboutpage.dart';
 import 'package:fridgemasters/Notificationspage.dart';
+
+
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -61,6 +67,7 @@ class _SettingsState extends State<Settings> {
       case 'Account':
         nextPage = AccountSettings();
         break;
+
       case 'Language':
         nextPage = Language();
         break;
@@ -76,6 +83,9 @@ class _SettingsState extends State<Settings> {
       case 'About':
         nextPage = Aboutpage();
         break;
+case 'Display and Brightness':
+      nextPage = DisplayBrightnessPage();
+      break;
 
       // Add more cases for other categories here...
     }
@@ -127,6 +137,7 @@ class _SettingsState extends State<Settings> {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Language'),
                 ),
+          
                 ListTile(
                   title: Text('Notifications'),
                   trailing: Icon(Icons.arrow_forward_ios),
