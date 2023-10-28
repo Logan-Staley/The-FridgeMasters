@@ -231,7 +231,7 @@ setState(() {
               style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
                 TextSpan(text: 'Name: ', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 12)), // Descriptor size
-                TextSpan(text: '${item['name']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Color.fromARGB(255, 145, 139, 138))), // User-entered text size
+                TextSpan(text: '${item['name']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color.fromARGB(255, 255, 255, 255))), // User-entered text size
                                       ],
                                     ),
                                   ),
@@ -244,7 +244,7 @@ setState(() {
                                       style: DefaultTextStyle.of(context).style,
                                       children: <TextSpan>[
                                         TextSpan(text: 'Purchased: ', style: TextStyle(fontWeight: FontWeight.normal)),
-                                        TextSpan(text: convertToDisplayFormat(item['purchaseDate']), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19, color: Color.fromARGB(255, 255, 255, 255))),
+                                        TextSpan(text: convertToDisplayFormat(item['purchaseDate']), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5, color: Color.fromARGB(255, 255, 255, 255))),
                                       ],
                                     ),
                                   ),
@@ -263,7 +263,7 @@ setState(() {
                                       style: DefaultTextStyle.of(context).style,
                                       children: <TextSpan>[
                                         TextSpan(text: 'Qty: ', style: TextStyle(fontWeight: FontWeight.normal)),
-                                        TextSpan(text: '${item['quantity']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color.fromARGB(255, 255, 255, 255))),
+                                        TextSpan(text: '${item['quantity']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5, color: Color.fromARGB(255, 255, 255, 255))),
                                       ],
                                     ),
                                   ),
@@ -277,7 +277,7 @@ setState(() {
                                       children: <TextSpan>[
                                         TextSpan(text: 'Expiry: ', style: TextStyle(fontWeight: FontWeight.normal)),
                                         TextSpan(
-                                          text: convertToDisplayFormat(item['expirationDate']), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: _getExpirationColor(item['expirationDate']),
+                                          text: convertToDisplayFormat(item['expirationDate']), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: _getExpirationColor(item['expirationDate']),
                                           ),
                                         ),
                                       ],
@@ -294,13 +294,13 @@ setState(() {
                 ],
               ),
               Positioned(
-      bottom: 10, // adjust as needed
-      right: 10,   // adjust as needed
+      bottom: 5, // adjust as needed
+      left: 30,   // adjust as needed
       child: Text(
-        'Item Number: 5', // replace with dynamic data if needed
+        'Click Image for Nutritional Insights!', // replace with dynamic data if needed
         style: TextStyle(
           fontSize: 12, 
-          color: Colors.black, // or any color you prefer
+          color: Color.fromARGB(255, 255, 255, 255), // or any color you prefer
         ),
       ),
               ),
@@ -308,7 +308,7 @@ setState(() {
                 top: 0,
                 right: 0,
                 child: IconButton(
-                  icon: Icon(Icons.delete, size: 26), 
+                  icon: Icon(Icons.delete, size: 20), 
                   onPressed: () {
                     showDialog(
                       context: context,
