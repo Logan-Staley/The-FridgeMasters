@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fridgemasters/Services/storage_service.dart';
 import 'inventory.dart';
 import 'widgets/inputtextbox.dart';
 import 'widgets/textonlybutton.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
-import "Services/storage_service.dart";
+import 'package:fridgemasters/widgets/taskbar.dart';
+
 
 class FoodEntry extends StatefulWidget {
   final Function(FoodItem) onFoodItemAdded;
@@ -22,7 +23,7 @@ class _FoodEntryState extends State<FoodEntry> {
   TextEditingController dateOfPurchaseController = TextEditingController();
   TextEditingController expirationDateController = TextEditingController();
 
-  String formatDateString(String dateStr) {
+String formatDateString(String dateStr) {
     try {
       DateFormat inputFormat = DateFormat("MM/dd/yyyy");
       DateTime date = inputFormat.parse(dateStr);
@@ -35,57 +36,47 @@ class _FoodEntryState extends State<FoodEntry> {
   }
 
   void saveToInventory() async {
-    final storage = FlutterSecureStorage(); // Initialize secure storage
-    String? storedToken = await storage.read(key: 'jwt_token');
-    final storageService = StorageService();
+  final formattedDateOfPurchase = formatDateString(dateOfPurchaseController.text);
+  final formattedExpirationDate = formatDateString(expirationDateController.text);
 
-    String? getStoredToken = await storageService.getStoredToken();
-    String? getStoredUserId = await storageService.getStoredUserId();
-    //Both of these are pulled from Storage_service.dart
+  final foodItem = FoodItem(
+    name: foodItemNameController.text,
+    quantity: int.tryParse(quantityController.text) ?? 0,
+    dateOfPurchase: formattedDateOfPurchase,
+    expirationDate: formattedExpirationDate,
+  );
 
+  // Retrieve the userID from storage
+  final storageService = StorageService();
+  final userId = await storageService.getStoredUserId();
 
-
-    if (storedToken == null) {
-      print("Error: JWT token not found");
-      return;
-    }
-
-    final formattedDateOfPurchase =
-        formatDateString(dateOfPurchaseController.text);
-    final formattedExpirationDate =
-        formatDateString(expirationDateController.text);
-
-    final foodItem = FoodItem(
-      name: foodItemNameController.text,
-      quantity: int.tryParse(quantityController.text) ?? 0,
-      dateOfPurchase: formattedDateOfPurchase,
-      expirationDate: formattedExpirationDate,
-    );
-
-    // HTTP request with Authorization header
-    final response = await http.post(
-      Uri.parse(
-          'http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/insert_inventory.php'),
-      headers: {
-        'Authorization': 'Bearer $getStoredToken',
-      },
-      body: {
-        'userId': getStoredUserId,
-        'productName': foodItem.name,
-        'quantity': foodItem.quantity.toString(),
-        'dateOfPurchase': foodItem.dateOfPurchase,
-        'expirationDate': foodItem.expirationDate,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      print("Data sent successfully!");
-    } else {
-      print("Error sending data: ${response.body}");
-    }
-
-    widget.onFoodItemAdded(foodItem);
+  // Make sure you have a valid userID before sending the data
+  if (userId == null || userId.isEmpty) {
+    print("UserID is missing or empty.");
+    return;
   }
+
+  // HTTP request
+  final response = await http.post(
+    Uri.parse('http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/insert_inventory.php'),
+    body: {
+      'productName': foodItem.name,
+      'quantity': foodItem.quantity.toString(),
+      'dateOfPurchase': foodItem.dateOfPurchase,
+      'expirationDate': foodItem.expirationDate,
+      'userId': userId, // Include the userID in the request
+    },
+  );
+
+  if (response.statusCode == 200) {
+    print("Data sent successfully!");
+    widget.onFoodItemAdded(foodItem);
+  } else {
+    print("Error sending data: ${response.body}");
+  }
+}
+
+
 
   void clearFields() {
     showDialog(
@@ -123,7 +114,17 @@ class _FoodEntryState extends State<FoodEntry> {
       appBar: AppBar(
         title: const Text('Add to Inventory'),
       ),
-      body: Stack(
+      bottomNavigationBar: Taskbar(
+    currentIndex: 1,  // Assuming this is the second tab
+    backgroundColor: Color.fromARGB(255, 233, 232, 232),
+    onTabChanged: (index) {
+      // Handle tab change if necessary
+    },
+    // If you don't need food item addition functionality in this page, you can remove this callback or make it optional in the Taskbar widget
+    onFoodItemAdded: (foodItem) {
+      // Handle food item addition if required
+    },
+  ),body: Stack(
         children: [
           Background1(),
           Center(
@@ -175,3 +176,5 @@ class _FoodEntryState extends State<FoodEntry> {
     );
   }
 }
+
+

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/recipesinstructions.dart';
 import 'package:fridgemasters/widgets/button.dart'; // Import your Button widget
 import 'package:fridgemasters/widgets/backgrounds.dart';
+import 'package:fridgemasters/widgets/taskbar.dart';
 
 class Recipes extends StatelessWidget {
   const Recipes({super.key});
@@ -12,7 +13,17 @@ class Recipes extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Recipes Page'),
       ),
-      body: Stack(
+      bottomNavigationBar: Taskbar(
+    currentIndex: 2,  // Assuming this is the second tab
+    backgroundColor: Color.fromARGB(255, 233, 232, 232),
+    onTabChanged: (index) {
+      // Handle tab change if necessary
+    },
+    // If you don't need food item addition functionality in this page, you can remove this callback or make it optional in the Taskbar widget
+    onFoodItemAdded: (foodItem) {
+      // Handle food item addition if required
+    },
+  ),body: Stack(
         children: [
           Background1(),
       Center(
