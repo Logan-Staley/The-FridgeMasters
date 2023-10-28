@@ -14,8 +14,6 @@ import 'package:fridgemasters/widgets/display_and_brightness.dart';
 //import 'package:fridgemasters/Aboutpage.dart';
 import 'package:fridgemasters/Notificationspage.dart';
 
-
-
 class Settings extends StatefulWidget {
   const Settings({super.key});
 
@@ -83,9 +81,9 @@ class _SettingsState extends State<Settings> {
       case 'About':
         nextPage = Aboutpage();
         break;
-case 'Display and Brightness':
-      nextPage = DisplayBrightnessPage();
-      break;
+      case 'Display and Brightness':
+        nextPage = DisplayBrightnessPage();
+        break;
 
       // Add more cases for other categories here...
     }
@@ -137,7 +135,7 @@ case 'Display and Brightness':
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Language'),
                 ),
-          
+
                 ListTile(
                   title: Text('Notifications'),
                   trailing: Icon(Icons.arrow_forward_ios),
@@ -157,6 +155,11 @@ case 'Display and Brightness':
                   title: Text('About'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('About'),
+                ),
+                ListTile(
+                  title: Text('Display and Brightness'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('Display and Brightness'),
                 ),
                 SizedBox(
                     height:
