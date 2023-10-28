@@ -129,7 +129,7 @@ This is an example of how to list things you need to use the software and how to
 
     Search for Git: Create branch from
 
-    choose master
+    choose origin/master
 
     choose the name you are wanting your branch to be called.
 4.flutter doctor-
