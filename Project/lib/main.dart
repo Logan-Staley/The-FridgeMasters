@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:fridgemasters/homepage.dart';
 import 'package:fridgemasters/login.dart';
 import 'splash_screen.dart'; // Import the SplashScreen widget
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'audio_manager.dart';
 import 'package:provider/provider.dart';
