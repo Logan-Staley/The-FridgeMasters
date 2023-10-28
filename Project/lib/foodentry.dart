@@ -17,6 +17,19 @@ class FoodEntry extends StatefulWidget {
 }
 
 class _FoodEntryState extends State<FoodEntry> {
+  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
+  DateTime? pickedDate = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2101),
+  );
+
+  if (pickedDate != null) {
+    controller.text = DateFormat('MM/dd/yyyy').format(pickedDate);
+  }
+}
+
   TextEditingController foodItemNameController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
   TextEditingController dateOfPurchaseController = TextEditingController();
@@ -145,18 +158,30 @@ class _FoodEntryState extends State<FoodEntry> {
                 ),
                 const SizedBox(height: 20),
                 const Text('Date of Purchase'),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: 12/21/2023',
-                  controller: dateOfPurchaseController,
-                ),
-                const SizedBox(height: 20),
-                const Text('Expiration Date'),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: 12/21/2023',
-                  controller: expirationDateController,
-                ),
+GestureDetector(
+  onTap: () => _selectDate(context, dateOfPurchaseController),
+  child: AbsorbPointer(
+    child: InputTextBox(
+      isPassword: false,
+      hint: 'Ex: 12/21/2023',
+      controller: dateOfPurchaseController,
+    ),
+  ),
+),
+const SizedBox(height: 20),
+const Text('Expiration Date'),
+GestureDetector(
+  onTap: () => _selectDate(context, expirationDateController),
+  child: AbsorbPointer(
+    child: InputTextBox(
+      isPassword: false,
+      hint: 'Ex: 12/21/2023',
+      controller: expirationDateController,
+    ),
+  ),
+),
+
+               
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: saveToInventory,
