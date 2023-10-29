@@ -22,6 +22,7 @@ class AudioManager with WidgetsBindingObserver {
   }
 
   Future<void> playClickSound() async {
+    await _audioPlayer.setVolume(0.05);
     await _clickSoundPlayer.play(UrlSource('sounds/click_sound.mp3'));
   }
   
