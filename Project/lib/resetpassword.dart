@@ -57,7 +57,7 @@ class resetpassword extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          const Background1(), // Use the Background1 widget
+          const Background(type: 'Background1'), // Use the Background1 widget
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

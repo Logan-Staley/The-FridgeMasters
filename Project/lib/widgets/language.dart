@@ -29,8 +29,8 @@ class _LanguageState extends State<Language> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Background1(),
-          ),
+              child: Background(type: 'Background1') // for Background1
+              ),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
