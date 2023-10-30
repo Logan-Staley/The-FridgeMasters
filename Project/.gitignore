@@ -61,3 +61,4 @@ ios/Runner/GeneratedPluginRegistrant.m
 # Additions
 Project/.dart_tool/package_config.json
 Project/android/local.properties
+Project/.flutter-plugins-dependencies
