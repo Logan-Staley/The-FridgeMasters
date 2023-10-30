@@ -169,13 +169,12 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Stack(
         children: [
-          const Background(type: 'Background1'), // for Background1
+          const Background(type: 'Background1'),
           Center(
               child: widget.fridgeItems.isEmpty
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-<<<<<<< HEAD
                         Text('Add Items to your fridge!'),
                         Icon(Icons.arrow_downward, color: Colors.red),
                       ],
@@ -225,66 +224,6 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                             width: 100,
                                             height: 100,
-=======
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Center(
-                                  child: RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              style: DefaultTextStyle.of(context).style,
-              children: <TextSpan>[
-                TextSpan(text: 'Name: ', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 12)), // Descriptor size
-                TextSpan(text: '${item['name']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color.fromARGB(255, 255, 255, 255))), // User-entered text size
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Center(
-                                  child: RichText(
-                                    text: TextSpan(
-                                      style: DefaultTextStyle.of(context).style,
-                                      children: <TextSpan>[
-                                        TextSpan(text: 'Purchased: ', style: TextStyle(fontWeight: FontWeight.normal)),
-                                        TextSpan(text: convertToDisplayFormat(item['purchaseDate']), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5, color: Color.fromARGB(255, 255, 255, 255))),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Center(
-                                  child: RichText(
-                                    text: TextSpan(
-                                      style: DefaultTextStyle.of(context).style,
-                                      children: <TextSpan>[
-                                        TextSpan(text: 'Qty: ', style: TextStyle(fontWeight: FontWeight.normal)),
-                                        TextSpan(text: '${item['quantity']}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5, color: Color.fromARGB(255, 255, 255, 255))),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Center(
-                                  child: RichText(
-                                    text: TextSpan(
-                                      style: DefaultTextStyle.of(context).style,
-                                      children: <TextSpan>[
-                                        TextSpan(text: 'Expiry: ', style: TextStyle(fontWeight: FontWeight.normal)),
-                                        TextSpan(
-                                          text: convertToDisplayFormat(item['expirationDate']), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: _getExpirationColor(item['expirationDate']),
->>>>>>> 20e675ddfdd6ee35ecbe4366468d3645c6629d5b
                                           ),
                                         ),
                                       ),
@@ -321,13 +260,13 @@ class _HomePageState extends State<HomePage> {
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
-                                                                        20,
+                                                                        18,
                                                                     color: Color
                                                                         .fromARGB(
                                                                             255,
-                                                                            145,
-                                                                            139,
-                                                                            138))), // User-entered text size
+                                                                            255,
+                                                                            255,
+                                                                            255))), // User-entered text size
                                                           ],
                                                         ),
                                                       ),
@@ -357,7 +296,7 @@ class _HomePageState extends State<HomePage> {
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
-                                                                        19,
+                                                                        17.5,
                                                                     color: Color
                                                                         .fromARGB(
                                                                             255,
@@ -397,7 +336,7 @@ class _HomePageState extends State<HomePage> {
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
-                                                                        18,
+                                                                        17.5,
                                                                     color: Color
                                                                         .fromARGB(
                                                                             255,
@@ -432,7 +371,7 @@ class _HomePageState extends State<HomePage> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
-                                                                fontSize: 20,
+                                                                fontSize: 17,
                                                                 color: _getExpirationColor(
                                                                     item[
                                                                         'expirationDate']),
@@ -452,23 +391,22 @@ class _HomePageState extends State<HomePage> {
                                     ],
                                   ),
                                   Positioned(
-                                    bottom: 10, // adjust as needed
-                                    right: 10, // adjust as needed
+                                    bottom: 5, // adjust as needed
+                                    left: 30, // adjust as needed
                                     child: Text(
-                                      'Item Number: 5', // replace with dynamic data if needed
+                                      'Click Image for Nutritional Insights!', // replace with dynamic data if needed
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: Colors
-                                            .black, // or any color you prefer
+                                        color: Color.fromARGB(255, 255, 255,
+                                            255), // or any color you prefer
                                       ),
                                     ),
                                   ),
-<<<<<<< HEAD
                                   Positioned(
                                     top: 0,
                                     right: 0,
                                     child: IconButton(
-                                      icon: Icon(Icons.delete, size: 26),
+                                      icon: Icon(Icons.delete, size: 20),
                                       onPressed: () {
                                         showDialog(
                                           context: context,
@@ -523,54 +461,6 @@ class _HomePageState extends State<HomePage> {
                                         );
                                       },
                                     ),
-=======
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Positioned(
-      bottom: 5, // adjust as needed
-      left: 30,   // adjust as needed
-      child: Text(
-        'Click Image for Nutritional Insights!', // replace with dynamic data if needed
-        style: TextStyle(
-          fontSize: 12, 
-          color: Color.fromARGB(255, 255, 255, 255), // or any color you prefer
-        ),
-      ),
-              ),
-              Positioned(
-                top: 0,
-                right: 0,
-                child: IconButton(
-                  icon: Icon(Icons.delete, size: 20), 
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        bool isChecked = false;
-                        return AlertDialog(
-                          title: Text('Delete Item'),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text('Are you sure you want to delete this item?'),
-                              Row(
-                                children: [
-                                  Checkbox(
-                                    value: isChecked,
-                                    onChanged: (bool? value) {
-                                      setState(() {
-                                        isChecked = value!;
-                                      });
-                                    },
->>>>>>> 20e675ddfdd6ee35ecbe4366468d3645c6629d5b
                                   ),
                                 ],
                               ),
