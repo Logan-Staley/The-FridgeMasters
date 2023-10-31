@@ -30,7 +30,7 @@ class _FoodEntryState extends State<FoodEntry> {
     controller.text = DateFormat('MM/dd/yyyy').format(pickedDate);
   }
 }
-
+  TextEditingController ItemID = TextEditingController();
   TextEditingController foodItemNameController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
   TextEditingController dateOfPurchaseController = TextEditingController();
@@ -53,6 +53,7 @@ String formatDateString(String dateStr) {
   final formattedExpirationDate = formatDateString(expirationDateController.text);
 
   final foodItem = FoodItem(
+    itemId: ItemID.text,
     name: foodItemNameController.text,
     quantity: int.tryParse(quantityController.text) ?? 0,
     dateOfPurchase: formattedDateOfPurchase,

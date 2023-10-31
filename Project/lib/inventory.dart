@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class FoodItem {
+  final String itemId;
   final String name;
   final int quantity;
   final String dateOfPurchase;
   final String expirationDate;
 
   FoodItem({
+    required this.itemId,
     required this.name,
     required this.quantity,
     required this.dateOfPurchase,
@@ -41,6 +43,7 @@ class _InventoryState extends State<Inventory> {
     if (responseData['status'] == 'success') {
       final List<dynamic> data = responseData['data'];
       return data.map((item) => FoodItem(
+        itemId: item['ItemID'],
         name: item['name'],
         quantity: int.parse(item['quantity']),
         dateOfPurchase: item['dateOfPurchase'],
