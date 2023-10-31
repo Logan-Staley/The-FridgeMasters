@@ -9,6 +9,7 @@ Future<List<FoodItem>> fetchInventoryItems() async {
     // If the server returns an OK response, parse the JSON
     List<dynamic> jsonResponse = json.decode(response.body);
     return jsonResponse.map((item) => FoodItem(
+      itemId: item['ItemID'],
       name: item['name'],
       quantity: item['quantity'],
       dateOfPurchase: item['dateOfPurchase'],

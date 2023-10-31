@@ -26,11 +26,11 @@ class _FoodEntryState extends State<FoodEntry> {
       lastDate: DateTime(2101),
     );
 
-    if (pickedDate != null) {
-      controller.text = DateFormat('MM/dd/yyyy').format(pickedDate);
-    }
+  if (pickedDate != null) {
+    controller.text = DateFormat('MM/dd/yyyy').format(pickedDate);
   }
-
+}
+  TextEditingController ItemID = TextEditingController();
   TextEditingController foodItemNameController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
   TextEditingController dateOfPurchaseController = TextEditingController();
@@ -54,12 +54,13 @@ class _FoodEntryState extends State<FoodEntry> {
     final formattedExpirationDate =
         formatDateString(expirationDateController.text);
 
-    final foodItem = FoodItem(
-      name: foodItemNameController.text,
-      quantity: int.tryParse(quantityController.text) ?? 0,
-      dateOfPurchase: formattedDateOfPurchase,
-      expirationDate: formattedExpirationDate,
-    );
+  final foodItem = FoodItem(
+    itemId: ItemID.text,
+    name: foodItemNameController.text,
+    quantity: int.tryParse(quantityController.text) ?? 0,
+    dateOfPurchase: formattedDateOfPurchase,
+    expirationDate: formattedExpirationDate,
+  );
 
     // Retrieve the userID from storage
     final storageService = StorageService();
