@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Stack(
         children: [
-          const Background1(),
+          const Background(type: 'Background1'), // for Background1
           Center(
             child: _showAnimation
                 ? AnimatedLogo(

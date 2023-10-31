@@ -120,7 +120,7 @@ class _SettingsState extends State<Settings> {
       ),
       body: Stack(
         children: [
-          const Background1(),
+          const Background(type: 'Background1'), // for Background1
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ListView(

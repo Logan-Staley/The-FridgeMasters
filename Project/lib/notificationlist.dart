@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fridgemasters/widgets/backgrounds.dart';
 
 class NotificationList extends StatefulWidget {
   const NotificationList({super.key});
@@ -23,22 +24,28 @@ class _NotificationListState extends State<NotificationList> {
       appBar: AppBar(
         title: const Text('Notifications'),
       ),
-      body: ListView.builder(
-        itemCount: foodItems.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(foodItems[index]),
-            trailing: ElevatedButton(
-              onPressed: () {
-                // Remove the item from the list
-                setState(() {
-                  foodItems.removeAt(index);
-                });
-              },
-              child: const Text('Dismiss'),
-            ),
-          );
-        },
+      body: Stack(
+        children: [
+          // Here you can call Background2 by using Background(type: 'Background2')
+          Background(type: 'Background2'),
+          ListView.builder(
+            itemCount: foodItems.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(foodItems[index]),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    // Remove the item from the list
+                    setState(() {
+                      foodItems.removeAt(index);
+                    });
+                  },
+                  child: const Text('Dismiss'),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

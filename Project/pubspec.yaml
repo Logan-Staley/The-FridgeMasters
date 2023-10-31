@@ -68,6 +68,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - images/test-food-image.jpg
+     - images/bell-notifications.jpg
      - images/fridgemasters-logo.png
 #    - sounds/app_launch.mp3
      - sounds/click_sound.mp3

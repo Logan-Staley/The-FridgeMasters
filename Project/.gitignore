@@ -57,4 +57,8 @@ local.properties
 android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
 ios/Runner/GeneratedPluginRegistrant.m
 .flutter-plugins-dependencies
-package_config.json
+
+# Additions
+Project/.dart_tool/package_config.json
+Project/android/local.properties
+Project/.flutter-plugins-dependencies
