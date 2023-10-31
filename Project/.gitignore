@@ -62,3 +62,8 @@ ios/Runner/GeneratedPluginRegistrant.m
 Project/.dart_tool/package_config.json
 Project/android/local.properties
 Project/.flutter-plugins-dependencies
+
+
+# Custom files to ignore
+.dart_tool/package_config.json
+android/local.properties
