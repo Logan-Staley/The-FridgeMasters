@@ -10,6 +10,7 @@ import 'package:fridgemasters/foodentry.dart'; // Import the food entry page
 import 'package:fridgemasters/database_service.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
 
+
 String convertToDisplayFormat(String date) {
   var parts = date.split('-');
   if (parts.length == 3) {
@@ -18,7 +19,35 @@ String convertToDisplayFormat(String date) {
   return date; // Return the original string if the format isn't as expected
 }
 
+
+class YourWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Get today's date
+    String currentDate = DateTime.now().toString().split(' ')[0]; // YYYY-MM-DD format
+
+    return Column(
+      children: [
+        // Today's Date Centered
+        Text(
+          'Today\'s Date: $currentDate',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: 10), // Spacing
+
+        // Legend
+      ],
+    );
+  }
+}
+
 class HomePage extends StatefulWidget {
+
+  
   final List<Map<String, dynamic>> fridgeItems;
 
   const HomePage({Key? key, required this.fridgeItems}) : super(key: key);
@@ -31,6 +60,7 @@ class _HomePageState extends State<HomePage> {
   final List<Map<String, dynamic>> fridgeItems = [];
   final TextEditingController _searchController = TextEditingController();
   final DatabaseService dbService = DatabaseService();
+
 
   @override
   void initState() {
@@ -60,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                 .split(" ")[0], // Only take the date part, exclude the time
 
             'imageUrl':
-                'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASIAAACuCAMAAAClZfCTAAAAYFBMVEX///95h4h8iot3hYZ/jI2ep6j3+PiIlJWapKTo6urt7++Klpf19vb6+/vv8fGDj5CSnZ6yurvCyMjQ1NTg4+O7wcKutrba3t6lrq/Izc6Vn6DT19evt7e3vr5xgIHEyss9CNc0AAAKJUlEQVR4nO2dC5equg6ATVve0CJvZBz+/788SUFErZ6zZ+5VN+Zba29nBDslJmlakrLbMQzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDML8iy17dg/cm/kqU8dpXd+ONKRVYGtakO7RCQFfsA4CvV3flTclyISp89Q8Cqld35j2pJPT2h1TB/sV9eVN6EHr6yYPwtV15V3pQ6fSTB4fXduVdaSUM9ofMQPPivrwpfiACq0YNCDY0NwUIU7RlCDT4v7oz70knUDYSQ8fQA1m8ujfviFbCC4WEpM78XMx+iVnTA0aMOopp9hEroaJXd+j9OEB+/qWSItCv68t7EgOs/Q/q1IFns5fUcGlaR+Bh7YrketbRAdSv6cqbUsE8iV2gYa18TWfekwbMtXvWZlodYSx+4PA8FayHtSzV/jO79G4M4IoVS4Ach7VMV+XRS5Qy+f5zo6UOjGuIr3G2Vne5EXBCNOnTO/cWaMf6h26LLlfKSkdKc/jqy8LDn5P4FT18OT3IlWNOq35/MHZGi2pj8q5oTy5JYygQfKQehZDY1zQa6i4RZ+HUQ3TlowsA7wU9fDWxgCPaVYOqM6ESb99X2jkD+brQuM9AVw0oM91mlGAOzdjGD6ZnqfmkmUkWlXsczEGgU5YSAg/t6t/nro179Nsg+piQXKxdBd6+/A/CmcAY6iOio+xoR3MRhM1Y/dnKUPQZc7c0RPF4xc149V/wDRz/9z16NzKUUPhja8k/wV8f4Td3EztINu+vNRrZLz4+3i6cbI4j/Or+RiW3n12T/1vqh46i+L4j1/J6hXJzYHz8aFW6bXKjhDJhfW9Ov/0EJK0eaEGbwJnO7XPCzScgoYjGO4f8TgowXTG0ZR1icCmcstxDsPE12iy5l/CZ5gBBf7r8uBFCukyqlGLr62r3DCVDCXXrBbMqEdLhtiqQW0/O3kPiNJQOxJXSaGeOiC9g68k1PSiXoQygRH4VMGkjHOJMNj8FqaTrllCWCyVu9GOQDo3p1lkkmyR1GkoLMPZKSO9ypD84ZmQFmI0PaW5D+QKR7Soa0y5UrITb6cYAcuuras7M6tze2si+MDJaxwSpulW5SMitr6rVYG5uhuG0ZBLFYACSlZI4lof8YPOraoMUN4YSCzkbmPZArOJvV73D9qcgkbxdfo5BLj5opNTrk9fuHFbZQPD/691b4Fp+vpjcRsnZa4eO268jwNZvW+e3l43+ZRVaZw16bft7FjiWPtrt35Jt5pv4a7zL98hrU6yNE7Lb0evheso2GEHcGEp/FeyQ1xYjTujU7apRlmy+2qh1LD9rc219BXlt9y387desxcJhKPubbL4qEUI51/I/YlXt1lBSI8xVuJQdhNuiSriNrDaG55qrtyDUpcrUQrhvK1bO/NFNsQfheLfHsLo+G1DkYXTkXuHHmdvWc/tLkK5rpw0fkrpKs12mh07gsH9vkfoDVtXuLD9HoaSUmjxPbFLf8a5PPmw+5VGbe8vPbTjnykr19eA+xwekhzy4RD3UTbcfq0fpH5+QZPTL5Wd3RcS2qJfNHX7EYfOh42+TOo+fUKb+q6ROnKps/S7Rzu4M8jN/m+kywOBp6ytqxJ8HNllq69IoG9nbfCYf0fxJUqdP9TNLXVq+9TtEM6P7xv41mW7H5hBMwpnq0rY+xV+I5N1ErBm0q30YnDLWlK1L23w28QWJK+djgurSvHNdWuLV5U/y/P96BumYg/jxVJc2188k4d26tI+gA+hWuqGrfh8ml3Vpn6g6a/wDQFDENF7ZIvPZI0PiqPf8VLLOWtNSYy5MuC8rFs4F7WESjwjIrj4iHvxzorI+/qwujWEYhmEYhmEYhmEYhmGYH1Ak9W6XxfHliqWOz7cxbw4+k7QoapsE3Na1K3MxqovfVmpgE8Wj29MRCBntIikv69OMlIuMbg4+kxhA2hvzX1K69m8ov+VvyxAayg59oASxAoh3kbjaECkQ5/0gbg4+k1ioafuPPTj3gil//VyYLKE/8UiN2qZ1SCEQ6n1EZJ+Ss4jIj9YL9bOI0tTfZdomBOlZIWiDotNZ9F6aTvlCvr7UmBZEZ+wVZvMp8ys2MJ3p+/5ZCkuzKCKNDdu+LCLK9PN9EorI2L2EZhGlHaq9Oj9HcBJRJYXXGrxWu/FOiBeobY5QYJWDqs7z0giqRfMbPC1Zp3k2AFUuqDDLD6ZHgxQAx11LyRAir6YnGWWzFFbN0skegKEsr1lE2Z7Kkp9dxRYLkeMFRLOI0gQEPTRn8T+LiLDvQkFDAqTEq+jbnkjJ6ZV9yg4qY0K77QO9v6rQI7nQprL0Dv4NsulcoO8ZsQE6NaUzzElEq2bx3QS9mJLeIqJQ2safnCJJWjTQwygmETUgvKjNz1s5nESkoGs7lFHe1miaehcdyqr17MOZDijlsjBWRHvUtKg1q8KYlvalG6bN6SL7Etsm+26ohkTI/kKLVs0GKPRjuxcK5TUdLKQIqwpF99wMQBQR0Nca1SQiHx1rTKmw4qRGi4jwi9Z4NCIlQKWzIkDlCncaFJlPj/a18xNSCNr0Ycmxaui5DtoIm3+MhzU9QgVtxTZQk8mtRXRuFkVkq2i+6PubDub0aTTTJ2/rY0VEX3JPIqrAOpRYidOGHouhhbvZInYeiWini64LBb6Nxyj1NSItipUKuq7Lz89tyAIBmj5jx7SCstHDSQ2iI56orkR0bpYGfZJzK/Drsgd9Iww2fnj286BIRD7tOtSISUR0uVotynwlIrwWvETse0vZMULdikhJuzHvSUQtOikl6J8VAEDjT8+YqaVtgFR3JaJzs6e4qFpElBrUYmr9+xUiitQ0rkVABkXdOjmTeyJKhDjqgQ7GknwTnZjsUvTN5VAOw3CKGxqYtt7HP0DDtQdJCdDurHmWqXWAaxGdmyVDI1H0NI6eDqpxKLH15/sin9ysIhFhmEd+ojlvjnpHRKj0GNhNB/GyvKqc3DVtgpVRiuP88Qzfbo5IMEWPAxjPip/GSOtoLkSUrpoNsMEoQ++MH5xERGMBxQ5PLu+fRWSVGEe0HlWCfMES+9/TInQ34dFYi2jpsYNSWBHhtUDiheY0l2mtJHbT5e1s7ayy+ewaz+8adW1oq2ZpRFO5sgo9HUzxlyAMgycH2jhH+yaj6L/BztFqciRSLGPGNEer7P++kQpFdJA462zRlXyHYCdwbQ7yFDq2Cg/I79NcppNy0sf2e5qn4YRtKuUnXyRDOnNqdpqprpo1UuDghQFXtExjo8A2/uQqNn8cC+t28NXKJa6bpl/VthZjSeMM/Z/1I0W25TiiusdF3fr2bTzZT8l/2ZqOrDwe6/YUFvVjMQ3/WTFSvh+1N0fHVV1HcYF/dGo2He1ywLnZfhyzuP6yfZkPoqHWx3r4+xKZhkMZaQo3t14M/HOGb7BziScHvX8Trc2wloePKVr4AelQHIutb7TDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzzOv4BOUp0wCNOxZsAAAAASUVORK5CYII=', // Keep as default or adjust as necessary
+                'images/default_image.png', // Keep as default or adjust as necessary
           };
         }).toList();
 
@@ -95,24 +125,84 @@ class _HomePageState extends State<HomePage> {
           'purchaseDate': newFoodItem.dateOfPurchase.toString(),
           'expirationDate': newFoodItem.expirationDate.toString(),
           'imageUrl':
-              'data:image/png;base64,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',
+              'images/default_image.png',
         });
       });
     }
   }
 
-  Color _getExpirationColor(String expirationDate) {
-    final expiryDate = DateTime.parse(expirationDate);
-    final currentDate = DateTime.now();
-    final daysLeft = expiryDate.difference(currentDate).inDays;
-    if (daysLeft < 0) {
-      return Colors.red;
-    } else if (daysLeft < 7) {
-      return Colors.yellow;
-    } else {
-      return Color.fromARGB(255, 20, 220, 27);
-    }
+ Color _getExpirationColor(String expirationDate, String purchaseDate) {
+  final expiryDate = DateTime.parse(expirationDate);
+  final currentDate = DateTime.now();
+  final purchaseDateParsed = DateTime.parse(purchaseDate);
+  final daysLeft = expiryDate.difference(currentDate).inDays;
+
+  // Condition 1: If the expiration date is before the current date.
+  if (expiryDate.isBefore(currentDate)) {
+    return Color.fromARGB(255, 177, 21, 21);
   }
+  // Condition 2: If the expiration date is before the purchase date.
+  else if (expiryDate.isBefore(purchaseDateParsed)) {
+    return Color.fromARGB(255, 177, 21, 21);
+  }
+  else if (daysLeft < 7) {
+    return Colors.yellow;
+  } else {
+    return Color.fromARGB(255, 20, 220, 27);
+  }
+}
+Widget _nonExpiringBorder(Widget child) {
+  return Container(
+    decoration: BoxDecoration(
+      border: Border.all(color: Color.fromARGB(255, 20, 220, 27), width: 2.0),
+    ),
+    child: child,
+  );
+}
+Widget _closeToExpiringBorder(Widget child) {
+  return TweenAnimationBuilder(
+    tween: ColorTween(begin: Colors.yellow[700], end: Colors.yellow[300]),
+    duration: Duration(seconds: 3),
+    builder: (context, color, _) {
+      return Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: color as Color, width: 2.0),
+        ),
+        child: child,
+      );
+    },
+    onEnd: () {
+      // This will ensure the animation keeps cycling
+      _closeToExpiringBorder(child);
+    },
+  );
+}
+Widget _expiredBorder(Widget child) {
+  return Container(
+    decoration: BoxDecoration(
+      border: Border.all(color: Color.fromARGB(255, 177, 21, 21), width: 2.0),
+    ),
+    child: child,
+  );
+}
+Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget child) {
+  final expiryDate = DateTime.parse(expirationDate);
+  final currentDate = DateTime.now();
+  final purchaseDateParsed = DateTime.parse(purchaseDate);
+  final daysLeft = expiryDate.difference(currentDate).inDays;
+
+  // Condition 1: If the expiration date is before the current date.
+  if (expiryDate.isBefore(currentDate) || expiryDate.isBefore(purchaseDateParsed)) {
+    return _expiredBorder(child);
+  }
+  // Condition 2: If the expiration date is within 7 days from the current date.
+  else if (daysLeft <= 7) {
+    return _closeToExpiringBorder(child);
+  } else {
+    return _nonExpiringBorder(child);
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +215,7 @@ class _HomePageState extends State<HomePage> {
               color: const Color.fromARGB(255, 215, 215, 215),
               width: 2), // Blue border
         ),
+        
         leading: IconButton(
           icon: Icon(Icons.notifications),
           onPressed: () {
@@ -180,9 +271,76 @@ class _HomePageState extends State<HomePage> {
                       ],
                     )
                   : ListView.builder(
-                      itemCount: widget.fridgeItems.length,
-                      itemBuilder: (context, index) {
-                        final item = widget.fridgeItems[index];
+                      itemCount: widget.fridgeItems.length + 1, // +1 for the header (date and legend)
+  itemBuilder: (context, index) {
+    // This is for the header, which contains the date and legend
+    if (index == 0) {
+      return Column(
+  children: [
+    SizedBox(height: 10),
+    Center(
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: 'Today\'s Date: ',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+              ),
+            ),
+            TextSpan(
+              text:
+                  '${DateTime.now().month}/${DateTime.now().day}/${DateTime.now().year}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+    SizedBox(height: 5),
+          Center(
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Expiry Legend: ',
+                    style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(
+                    text: '🟢Green - Safe to Eat (>1wk) ',
+                    style: TextStyle(color: Color.fromARGB(255, 4, 114, 8), fontSize: 16, fontWeight: FontWeight.bold), 
+                  ),
+                  TextSpan(
+                    text: '| ',
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
+                  ),
+                  TextSpan(
+                    text: '🟡 Yellow - Nearing Expiry (≤1wk) ',
+                    style: TextStyle(color: Color.fromARGB(255, 250, 228, 28), fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(
+                    text: '| ',
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
+                  ),
+                  TextSpan(
+                    text: '🔴 Red - Expired',
+                    style: TextStyle(color: Color.fromARGB(255, 226, 50, 50), fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+        ],
+      );
+    } 
+                        final item = widget.fridgeItems[index-1];
 
                         Color _getPastelColor(int index) {
                           final r = (70 + (index * 50) % 135).toDouble();
@@ -197,7 +355,9 @@ class _HomePageState extends State<HomePage> {
                           child: Card(
                             color: _getPastelColor(index),
                             elevation: 4.0, // Added shadow
-                            child: Container(
+                            child: _getExpirationBorder(
+  item['expirationDate'], 
+  item['purchaseDate'],Container(
                               height: 137,
                               child: Stack(
                                 children: [
@@ -218,7 +378,7 @@ class _HomePageState extends State<HomePage> {
                                               image: DecorationImage(
                                                 image: NetworkImage(item[
                                                         'imageUrl'] ??
-                                                    'data:image/png;base64,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'), // Explicit Null Check for imageUrl
+                                                    'images/default_image.png'), // Explicit Null Check for imageUrl
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
@@ -266,7 +426,7 @@ class _HomePageState extends State<HomePage> {
                                                                             255,
                                                                             255,
                                                                             255,
-                                                                            255))), // User-entered text size
+                                                                            255),decoration: TextDecoration.underline)), // User-entered text size
                                                           ],
                                                         ),
                                                       ),
@@ -296,7 +456,7 @@ class _HomePageState extends State<HomePage> {
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
-                                                                        17.5,
+                                                                        17,
                                                                     color: Color
                                                                         .fromARGB(
                                                                             255,
@@ -372,9 +532,8 @@ class _HomePageState extends State<HomePage> {
                                                                     FontWeight
                                                                         .bold,
                                                                 fontSize: 17,
-                                                                color: _getExpirationColor(
-                                                                    item[
-                                                                        'expirationDate']),
+                                                                color: _getExpirationColor(item['expirationDate'], item['purchaseDate'])
+
                                                               ),
                                                             ),
                                                           ],
@@ -465,6 +624,7 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                             ),
+                          )
                           ),
                         );
                       },
