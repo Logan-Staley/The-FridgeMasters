@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/inventory.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
@@ -10,7 +11,7 @@ import 'package:fridgemasters/foodentry.dart'; // Import the food entry page
 import 'package:fridgemasters/database_service.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
 import 'package:fridgemasters/Services/deleteitem.dart';
-
+import 'package:path_drawing/path_drawing.dart';
 
 String convertToDisplayFormat(String date) {
   var parts = date.split('-');
@@ -20,6 +21,169 @@ String convertToDisplayFormat(String date) {
   return date; // Return the original string if the format isn't as expected
 }
 
+class CyclingBorderPainter extends CustomPainter {
+  final Animation<double> animation;
+  final Color borderColor;
+  final double borderWidth;
+
+  CyclingBorderPainter({
+    required this.animation,
+    required this.borderColor,
+    required this.borderWidth,
+  }) : super(repaint: animation);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color = borderColor
+      ..strokeWidth = borderWidth
+      ..style = PaintingStyle.stroke;
+
+    final double perimeter = 2 * (size.width + size.height);
+    final double offset = (1 - animation.value) * perimeter;
+
+    final Path path = Path();
+
+    // Start at the top left corner
+    path.moveTo(0, 0);
+
+    // Top side
+    if (offset < size.width) {
+      path.relativeLineTo(offset, 0);
+    } else {
+      path.lineTo(size.width, 0);
+      double remaining = offset - size.width;
+
+      // Right side
+      if (remaining < size.height) {
+        path.relativeLineTo(0, remaining);
+      } else {
+        path.lineTo(size.width, size.height);
+        remaining -= size.height;
+
+        // Bottom side
+        if (remaining < size.width) {
+          path.relativeLineTo(-remaining, 0);
+        } else {
+          path.lineTo(0, size.height);
+          remaining -= size.width;
+
+          // Left side
+          path.relativeLineTo(0, -remaining);
+        }
+      }
+    }
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+}
+class ExpiringItemTile extends StatefulWidget {
+  final String expirationDate;
+  final String purchaseDate;
+  final Widget child;
+
+  ExpiringItemTile({
+    required this.expirationDate,
+    required this.purchaseDate,
+    required this.child,
+  });
+
+  @override
+  _ExpiringItemTileState createState() => _ExpiringItemTileState();
+}
+
+class _ExpiringItemTileState extends State<ExpiringItemTile> with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 14),
+      vsync: this,
+    )..repeat(reverse: false);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  Widget _nonExpiringBorder(Widget child) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Color.fromARGB(255, 20, 220, 27), width: 2.0),
+      ),
+      child: child,
+    );
+  }
+
+  Widget _closeToExpiringBorder(Widget child) {
+  return AnimatedBuilder(
+    animation: _animationController,
+    builder: (context, _) {
+      return Stack(
+        children: [
+          child,
+          Positioned.fill(
+            child: CustomPaint(
+              painter: CyclingBorderPainter(
+                animation: _animationController,
+                borderColor: Colors.yellow,
+                borderWidth: 2.0,
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
+ Widget _expiredBorder(Widget child) {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, _) {
+        final color = ColorTween(
+          begin: Color.fromARGB(255, 177, 21, 21),
+          end: Color.fromARGB(255, 103, 98, 30),
+        ).lerp(_animationController.value);
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: color!, width: 2.0),
+          ),
+          child: child,
+        );
+      },
+    );
+  }
+
+  Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget child) {
+    final expiryDate = DateTime.parse(expirationDate);
+    final currentDate = DateTime.now();
+    final currentDateAtMidnight = DateTime(currentDate.year, currentDate.month, currentDate.day);
+    final purchaseDateParsed = DateTime.parse(purchaseDate);
+    final daysLeft = expiryDate.difference(currentDateAtMidnight).inDays;
+
+    if (expiryDate.isBefore(currentDateAtMidnight) || expiryDate.isBefore(purchaseDateParsed)) {
+      return _expiredBorder(child);
+    } else if (daysLeft <= 7) {
+      return _closeToExpiringBorder(child);
+    } else {
+      return _nonExpiringBorder(child);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _getExpirationBorder(widget.expirationDate, widget.purchaseDate, widget.child);
+  }
+}
 
 class YourWidget extends StatelessWidget {
   @override
@@ -61,7 +225,6 @@ class _HomePageState extends State<HomePage> {
   final List<Map<String, dynamic>> fridgeItems = [];
   final TextEditingController _searchController = TextEditingController();
   final DatabaseService dbService = DatabaseService();
-
 
   @override
   void initState() {
@@ -136,24 +299,25 @@ class _HomePageState extends State<HomePage> {
  Color _getExpirationColor(String expirationDate, String purchaseDate) {
   final expiryDate = DateTime.parse(expirationDate);
   final currentDate = DateTime.now();
+  final currentDateAtMidnight = DateTime(currentDate.year, currentDate.month, currentDate.day);
   final purchaseDateParsed = DateTime.parse(purchaseDate);
-  final daysLeft = expiryDate.difference(currentDate).inDays;
+  final daysLeft = expiryDate.difference(currentDateAtMidnight).inDays;
 
   // Condition 1: If the expiration date is before the current date.
-  if (expiryDate.isBefore(currentDate)) {
+  if (expiryDate.isBefore(currentDateAtMidnight)) {
     return Color.fromARGB(255, 177, 21, 21);
-  }
+  } 
   // Condition 2: If the expiration date is before the purchase date.
   else if (expiryDate.isBefore(purchaseDateParsed)) {
     return Color.fromARGB(255, 177, 21, 21);
   }
-  else if (daysLeft < 7) {
+  else if (daysLeft <= 7) {
     return Colors.yellow;
   } else {
     return Color.fromARGB(255, 20, 220, 27);
   }
 }
-final ValueNotifier<bool> _animationToggle = ValueNotifier<bool>(true);
+
 Widget _nonExpiringBorder(Widget child) {
   return Container(
     decoration: BoxDecoration(
@@ -162,74 +326,6 @@ Widget _nonExpiringBorder(Widget child) {
     child: child,
   );
 }
-Widget _closeToExpiringBorder(Widget child) {
-  return ValueListenableBuilder<bool>(
-    valueListenable: _animationToggle,
-    builder: (context, value, _) {
-      return TweenAnimationBuilder(
-        tween: ColorTween(begin: Colors.yellow[700], end: Color.fromARGB(255, 41, 30, 103)),
-        duration: Duration(seconds: 1),
-        builder: (context, color, __) {
-          return Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: color as Color, width: 2.0),
-            ),
-            child: child,
-          );
-        },
-        onEnd: () {
-          // Toggle the value to restart the animation.
-          _animationToggle.value = !_animationToggle.value;
-        },
-      );
-    },
-  );
-}
-
-final ValueNotifier<bool> _expiredAnimationToggle = ValueNotifier<bool>(true);
-
-Widget _expiredBorder(Widget child) {
-  return ValueListenableBuilder<bool>(
-    valueListenable: _expiredAnimationToggle,
-    builder: (context, value, _) {
-      return TweenAnimationBuilder(
-        tween: ColorTween(begin: Color.fromARGB(255, 177, 21, 21), end: Colors.transparent),
-        duration: Duration(seconds: 1),  // Adjust the duration as needed
-        builder: (context, color, __) {
-          return Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: color as Color, width: 2.0),
-            ),
-            child: child,
-          );
-        },
-        onEnd: () {
-          // Toggle the value to restart the animation.
-          _expiredAnimationToggle.value = !_expiredAnimationToggle.value;
-        },
-      );
-    },
-  );
-}
-
-Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget child) {
-  final expiryDate = DateTime.parse(expirationDate);
-  final currentDate = DateTime.now();
-  final purchaseDateParsed = DateTime.parse(purchaseDate);
-  final daysLeft = expiryDate.difference(currentDate).inDays;
-
-  // Condition 1: If the expiration date is before the current date.
-  if (expiryDate.isBefore(currentDate) || expiryDate.isBefore(purchaseDateParsed)) {
-    return _expiredBorder(child);
-  }
-  // Condition 2: If the expiration date is within 7 days from the current date.
-  else if (daysLeft <= 7) {
-    return _closeToExpiringBorder(child);
-  } else {
-    return _nonExpiringBorder(child);
-  }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -377,14 +473,16 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                               r.toInt(), g.toInt(), b.toInt(), 0.9);
                         }
 
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                            color: _getPastelColor(index),
-                            elevation: 4.0, // Added shadow
-                            child: _getExpirationBorder(
-  item['expirationDate'], 
-  item['purchaseDate'],Container(
+                       
+                           return Padding(
+  padding: const EdgeInsets.all(8.0),
+  child: Card(
+    color: _getPastelColor(index),
+    elevation: 4.0, // Added shadow
+    child:  ExpiringItemTile(
+      expirationDate: item['expirationDate'],
+      purchaseDate: item['purchaseDate'],
+      child: Container(
                               height: 137,
                               child: Stack(
                                 children: [
@@ -652,8 +750,8 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                               ),
                             ),
                           )
-                          ),
-                        );
+                           )
+                         );
                       },
                     )),
         ],
@@ -675,3 +773,5 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
     );
   }
 }
+
+
