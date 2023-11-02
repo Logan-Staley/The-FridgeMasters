@@ -47,3 +47,23 @@ app.*.map.json
 # Enviroment Variables
 edamam.env
 subdir/.env
+
+# Custom Flutter changes to be ignored
+/.flutter-plugins.
+/.flutter-plugins-dependencies
+package_config.subset
+package_config.json
+local.properties
+android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+ios/Runner/GeneratedPluginRegistrant.m
+.flutter-plugins-dependencies
+
+# Additions
+Project/.dart_tool/package_config.json
+Project/android/local.properties
+Project/.flutter-plugins-dependencies
+
+
+# Custom files to ignore
+.dart_tool/package_config.json
+android/local.properties
