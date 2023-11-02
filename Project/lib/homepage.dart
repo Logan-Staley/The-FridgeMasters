@@ -151,6 +151,7 @@ class _HomePageState extends State<HomePage> {
     return Color.fromARGB(255, 20, 220, 27);
   }
 }
+final ValueNotifier<bool> _animationToggle = ValueNotifier<bool>(true);
 Widget _nonExpiringBorder(Widget child) {
   return Container(
     decoration: BoxDecoration(
@@ -160,31 +161,55 @@ Widget _nonExpiringBorder(Widget child) {
   );
 }
 Widget _closeToExpiringBorder(Widget child) {
-  return TweenAnimationBuilder(
-    tween: ColorTween(begin: Colors.yellow[700], end: Colors.yellow[300]),
-    duration: Duration(seconds: 3),
-    builder: (context, color, _) {
-      return Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: color as Color, width: 2.0),
-        ),
-        child: child,
+  return ValueListenableBuilder<bool>(
+    valueListenable: _animationToggle,
+    builder: (context, value, _) {
+      return TweenAnimationBuilder(
+        tween: ColorTween(begin: Colors.yellow[700], end: Color.fromARGB(255, 41, 30, 103)),
+        duration: Duration(seconds: 1),
+        builder: (context, color, __) {
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: color as Color, width: 2.0),
+            ),
+            child: child,
+          );
+        },
+        onEnd: () {
+          // Toggle the value to restart the animation.
+          _animationToggle.value = !_animationToggle.value;
+        },
       );
     },
-    onEnd: () {
-      // This will ensure the animation keeps cycling
-      _closeToExpiringBorder(child);
+  );
+}
+
+final ValueNotifier<bool> _expiredAnimationToggle = ValueNotifier<bool>(true);
+
+Widget _expiredBorder(Widget child) {
+  return ValueListenableBuilder<bool>(
+    valueListenable: _expiredAnimationToggle,
+    builder: (context, value, _) {
+      return TweenAnimationBuilder(
+        tween: ColorTween(begin: Color.fromARGB(255, 177, 21, 21), end: Colors.transparent),
+        duration: Duration(seconds: 1),  // Adjust the duration as needed
+        builder: (context, color, __) {
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: color as Color, width: 2.0),
+            ),
+            child: child,
+          );
+        },
+        onEnd: () {
+          // Toggle the value to restart the animation.
+          _expiredAnimationToggle.value = !_expiredAnimationToggle.value;
+        },
+      );
     },
   );
 }
-Widget _expiredBorder(Widget child) {
-  return Container(
-    decoration: BoxDecoration(
-      border: Border.all(color: Color.fromARGB(255, 177, 21, 21), width: 2.0),
-    ),
-    child: child,
-  );
-}
+
 Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget child) {
   final expiryDate = DateTime.parse(expirationDate);
   final currentDate = DateTime.now();
