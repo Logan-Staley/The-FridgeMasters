@@ -21,67 +21,7 @@ String convertToDisplayFormat(String date) {
   return date; // Return the original string if the format isn't as expected
 }
 
-class CyclingBorderPainter extends CustomPainter {
-  final Animation<double> animation;
-  final Color borderColor;
-  final double borderWidth;
 
-  CyclingBorderPainter({
-    required this.animation,
-    required this.borderColor,
-    required this.borderWidth,
-  }) : super(repaint: animation);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = borderColor
-      ..strokeWidth = borderWidth
-      ..style = PaintingStyle.stroke;
-
-    final double perimeter = 2 * (size.width + size.height);
-    final double offset = (1 - animation.value) * perimeter;
-
-    final Path path = Path();
-
-    // Start at the top left corner
-    path.moveTo(0, 0);
-
-    // Top side
-    if (offset < size.width) {
-      path.relativeLineTo(offset, 0);
-    } else {
-      path.lineTo(size.width, 0);
-      double remaining = offset - size.width;
-
-      // Right side
-      if (remaining < size.height) {
-        path.relativeLineTo(0, remaining);
-      } else {
-        path.lineTo(size.width, size.height);
-        remaining -= size.height;
-
-        // Bottom side
-        if (remaining < size.width) {
-          path.relativeLineTo(-remaining, 0);
-        } else {
-          path.lineTo(0, size.height);
-          remaining -= size.width;
-
-          // Left side
-          path.relativeLineTo(0, -remaining);
-        }
-      }
-    }
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
-}
 class ExpiringItemTile extends StatefulWidget {
   final String expirationDate;
   final String purchaseDate;
@@ -104,7 +44,7 @@ class _ExpiringItemTileState extends State<ExpiringItemTile> with SingleTickerPr
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(seconds: 14),
+      duration: const Duration(seconds: 2),
       vsync: this,
     )..repeat(reverse: false);
   }
@@ -126,25 +66,21 @@ class _ExpiringItemTileState extends State<ExpiringItemTile> with SingleTickerPr
 
   Widget _closeToExpiringBorder(Widget child) {
   return AnimatedBuilder(
-    animation: _animationController,
-    builder: (context, _) {
-      return Stack(
-        children: [
-          child,
-          Positioned.fill(
-            child: CustomPaint(
-              painter: CyclingBorderPainter(
-                animation: _animationController,
-                borderColor: Colors.yellow,
-                borderWidth: 2.0,
-              ),
-            ),
+      animation: _animationController,
+      builder: (context, _) {
+        final color = ColorTween(
+          begin: Colors.yellow,
+          end: Color.fromARGB(255, 103, 98, 30),
+        ).lerp(_animationController.value);
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: color!, width: 2.0),
           ),
-        ],
-      );
-    },
-  );
-}
+          child: child,
+        );
+      },
+    );
+  }
  Widget _expiredBorder(Widget child) {
     return AnimatedBuilder(
       animation: _animationController,
@@ -331,7 +267,7 @@ Widget _nonExpiringBorder(Widget child) {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(180, 160, 48, 48),
+        backgroundColor: Color.fromARGB(220, 48, 141, 160),
         elevation: 0, // Removes the default shadow
         shape: RoundedRectangleBorder(
           side: BorderSide(
@@ -410,6 +346,7 @@ Widget _nonExpiringBorder(Widget child) {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 15,
+                fontWeight: FontWeight.bold
               ),
             ),
             TextSpan(
@@ -431,29 +368,30 @@ Widget _nonExpiringBorder(Widget child) {
               textAlign: TextAlign.center,
               text: TextSpan(
                 children: [
+                  
                   TextSpan(
-                    text: 'Expiry Legend: ',
-                    style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+                    text: '🟡',
+                    style: TextStyle(color: Color.fromARGB(255, 4, 114, 8), fontSize: 17, fontWeight: FontWeight.bold), 
                   ),
                   TextSpan(
-                    text: '🟢Green - Safe to Eat (>1wk) ',
-                    style: TextStyle(color: Color.fromARGB(255, 4, 114, 8), fontSize: 16, fontWeight: FontWeight.bold), 
-                  ),
-                  TextSpan(
-                    text: '| ',
+                    text: ' - Safe to Eat (>1wk) | ',
                     style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
                   ),
                   TextSpan(
-                    text: '🟡 Yellow - Nearing Expiry (≤1wk) ',
-                    style: TextStyle(color: Color.fromARGB(255, 250, 228, 28), fontSize: 16, fontWeight: FontWeight.bold),
+                    text: '🟡',
+                    style: TextStyle(color: Color.fromARGB(255, 250, 228, 28), fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
-                    text: '| ',
+                    text: ' - Nearing Expiry (≤1wk) | ',
                     style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
                   ),
                   TextSpan(
-                    text: '🔴 Red - Expired',
-                    style: TextStyle(color: Color.fromARGB(255, 226, 50, 50), fontSize: 16, fontWeight: FontWeight.bold),
+                    text: '🟡',
+                    style: TextStyle(color: Color.fromARGB(255, 226, 50, 50), fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(
+                    text: ' - Expired',
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
                   ),
                 ],
               ),
