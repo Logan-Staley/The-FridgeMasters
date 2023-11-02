@@ -9,6 +9,7 @@ import 'package:fridgemasters/notificationlist.dart';
 import 'package:fridgemasters/foodentry.dart'; // Import the food entry page
 import 'package:fridgemasters/database_service.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
+import 'package:fridgemasters/Services/deleteitem.dart';
 
 
 String convertToDisplayFormat(String date) {
@@ -120,6 +121,7 @@ class _HomePageState extends State<HomePage> {
     if (newFoodItem != null) {
       setState(() {
         widget.fridgeItems.add({
+          'ItemID': newFoodItem.itemId,
           'name': newFoodItem.name,
           'quantity': '${newFoodItem.quantity}',
           'purchaseDate': newFoodItem.dateOfPurchase.toString(),
