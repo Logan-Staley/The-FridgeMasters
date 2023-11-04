@@ -8,10 +8,11 @@ import 'package:fridgemasters/widgets/textonlybutton.dart';
 import 'package:fridgemasters/settings.dart';
 import 'package:fridgemasters/notificationlist.dart';
 import 'package:fridgemasters/foodentry.dart'; // Import the food entry page
-import 'package:fridgemasters/database_service.dart';
+import 'package:fridgemasters/Services/database_service.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
 import 'package:fridgemasters/Services/deleteitem.dart';
 import 'package:path_drawing/path_drawing.dart';
+import 'package:uuid/uuid.dart';
 
 String convertToDisplayFormat(String date) {
   var parts = date.split('-');
@@ -182,6 +183,7 @@ class _HomePageState extends State<HomePage> {
 // Map the loadedItems to the expected format
         List<Map<String, dynamic>> formattedItems = loadedItems.map((item) {
           return {
+            'itemId': item['itemId'], // Include the itemId
             'name': item['productName'],
             'quantity': '${item['quantity']}',
             'purchaseDate': item['dateOfPurchase']
@@ -193,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                 'images/default_image.png', // Keep as default or adjust as necessary
           };
         }).toList();
-
+print('Formatted Items: $formattedItems'); // Print the formattedItems list
         setState(() {
           widget.fridgeItems.addAll(formattedItems);
         });
@@ -331,7 +333,9 @@ Widget _nonExpiringBorder(Widget child) {
                     )
                   : ListView.builder(
                       itemCount: widget.fridgeItems.length + 1, // +1 for the header (date and legend)
+                      
   itemBuilder: (context, index) {
+    
     // This is for the header, which contains the date and legend
     if (index == 0) {
       return Column(
@@ -368,7 +372,10 @@ Widget _nonExpiringBorder(Widget child) {
               textAlign: TextAlign.center,
               text: TextSpan(
                 children: [
-                  
+                  TextSpan(
+                    text: 'Expiry Legend: ',
+                    style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold), 
+                  ),
                   TextSpan(
                     text: '🟡',
                     style: TextStyle(color: Color.fromARGB(255, 4, 114, 8), fontSize: 17, fontWeight: FontWeight.bold), 
@@ -400,9 +407,11 @@ Widget _nonExpiringBorder(Widget child) {
           SizedBox(height: 10),
         ],
       );
-    } 
+    } else {
+      // Index is greater than 0, so it's an item
                         final item = widget.fridgeItems[index-1];
-
+                        final itemId = item['itemId'];
+                        print('Item ID at index $index: $itemId');
                         Color _getPastelColor(int index) {
                           final r = (70 + (index * 50) % 135).toDouble();
                           final g = (90 + (index * 80) % 85).toDouble();
@@ -624,7 +633,7 @@ Widget _nonExpiringBorder(Widget child) {
                                       ),
                                     ),
                                   ),
-                                  Positioned(
+                                   Positioned(
                                     top: 0,
                                     right: 0,
                                     child: IconButton(
@@ -666,14 +675,31 @@ Widget _nonExpiringBorder(Widget child) {
                                                   child: Text('Cancel'),
                                                 ),
                                                 TextButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      widget.fridgeItems
-                                                          .removeAt(index);
-                                                    });
-                                                    Navigator.of(context)
-                                                        .pop(); // Close the dialog
-                                                    // Add logic to handle database update here
+                                                  onPressed: () async {
+                                                    final currentItem = widget
+                                                        .fridgeItems[index-1];
+                                                   try {
+  final StorageService storageService = StorageService();
+  String? userID = await storageService.getStoredUserId();
+  
+  if (userID != null) {
+    String itemIdString = itemId.toString();
+    await deleteItem(userID, itemIdString);
+    
+    // If the deletion was successful in the backend, remove from the local list
+    setState(() {
+      widget.fridgeItems.removeAt(index-1);
+    });
+  } else {
+    // Handle the case where userID is null, e.g., show an error message
+    print("User ID is null");
+  }
+}  catch (e) {
+                                                      print(
+                                                          "Error deleting item: $e");
+                                                      // Here you can show some error message or handle it as per your needs
+                                                    }
+                                                    Navigator.of(context).pop();
                                                   },
                                                   child: Text('Delete'),
                                                 ),
@@ -690,6 +716,7 @@ Widget _nonExpiringBorder(Widget child) {
                           )
                            )
                          );
+    }
                       },
                     )),
         ],

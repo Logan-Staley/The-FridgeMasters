@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
 import 'inventory.dart';
@@ -14,6 +16,17 @@ class FoodEntry extends StatefulWidget {
 
   @override
   _FoodEntryState createState() => _FoodEntryState();
+}
+Future<List<String>> fetchAutocompleteSuggestions(String query) async {
+  final response = await http.get(
+    Uri.parse('https://api.edamam.com/auto-complete=${query}&app_id=68dddfcc&app_key=3da64a21932f13c170c859806396e97e'),
+  );
+
+  if (response.statusCode == 200) {
+    return List<String>.from(json.decode(response.body));
+  } else {
+    throw Exception('Failed to fetch autocomplete suggestions.');
+  }
 }
 
 class _FoodEntryState extends State<FoodEntry> {
@@ -48,50 +61,54 @@ class _FoodEntryState extends State<FoodEntry> {
     }
   }
 
-  void saveToInventory() async {
-    final formattedDateOfPurchase =
-        formatDateString(dateOfPurchaseController.text);
-    final formattedExpirationDate =
-        formatDateString(expirationDateController.text);
+void saveToInventory() async {
+  final formattedDateOfPurchase = formatDateString(dateOfPurchaseController.text);
+  final formattedExpirationDate = formatDateString(expirationDateController.text);
 
-  final foodItem = FoodItem(
-    itemId: ItemID.text,
-    name: foodItemNameController.text,
-    quantity: int.tryParse(quantityController.text) ?? 0,
-    dateOfPurchase: formattedDateOfPurchase,
-    expirationDate: formattedExpirationDate,
+  // Retrieve the userID from storage
+  final storageService = StorageService();
+  final userId = await storageService.getStoredUserId();
+
+  // Make sure you have a valid userID before sending the data
+  if (userId == null || userId.isEmpty) {
+    print("UserID is missing or empty.");
+    return;
+  }
+ // Get the itemId from the ItemID controller
+  final itemId = ItemID.text;
+  // HTTP request
+  final response = await http.post(
+    Uri.parse('http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/insert_inventory.php'),
+    body: {
+      'itemID': itemId,
+      'productName': foodItemNameController.text,
+      'quantity': quantityController.text,
+      'dateOfPurchase': formattedDateOfPurchase,
+      'expirationDate': formattedExpirationDate,
+      'userId': userId, // Include the userID in the request
+    },
   );
 
-    // Retrieve the userID from storage
-    final storageService = StorageService();
-    final userId = await storageService.getStoredUserId();
-
-    // Make sure you have a valid userID before sending the data
-    if (userId == null || userId.isEmpty) {
-      print("UserID is missing or empty.");
-      return;
-    }
-
-    // HTTP request
-    final response = await http.post(
-      Uri.parse(
-          'http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/insert_inventory.php'),
-      body: {
-        'productName': foodItem.name,
-        'quantity': foodItem.quantity.toString(),
-        'dateOfPurchase': foodItem.dateOfPurchase,
-        'expirationDate': foodItem.expirationDate,
-        'userId': userId, // Include the userID in the request
-      },
+  if (response.statusCode == 200) {
+    final responseData = json.decode(response.body);
+    final itemId = responseData['itemId']; // Get the itemId from the response
+    print('Item ID: $itemId');
+    // Create a FoodItem with the retrieved itemId
+    final foodItem = FoodItem(
+      itemId: itemId.toString(), // Convert to string if necessary
+      name: foodItemNameController.text,
+      quantity: int.tryParse(quantityController.text) ?? 0,
+      dateOfPurchase: formattedDateOfPurchase,
+      expirationDate: formattedExpirationDate,
     );
 
-    if (response.statusCode == 200) {
-      print("Data sent successfully!");
-      widget.onFoodItemAdded(foodItem);
-    } else {
-      print("Error sending data: ${response.body}");
-    }
+    print("Data sent successfully!");
+    print(itemId);
+    widget.onFoodItemAdded(foodItem);
+  } else {
+    print("Error sending data: ${response.body}");
   }
+}
 
   void clearFields() {
     showDialog(
@@ -133,7 +150,7 @@ class _FoodEntryState extends State<FoodEntry> {
         currentIndex: 1, // Assuming this is the second tab
         backgroundColor: Color.fromARGB(255, 233, 232, 232),
         onTabChanged: (index) {
-          // Handle tab change if necessary
+          currentIndex: 0;// Handle tab change if necessary
         },
         // If you don't need food item addition functionality in this page, you can remove this callback or make it optional in the Taskbar widget
         onFoodItemAdded: (foodItem) {
@@ -148,11 +165,51 @@ class _FoodEntryState extends State<FoodEntry> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Food Item'),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: Strawberries, Milk, Cheese',
-                  controller: foodItemNameController,
-                ),
+                Autocomplete<String>(
+  optionsBuilder: (TextEditingValue textEditingValue) {
+    if (textEditingValue.text == '') {
+      return const [];
+    }
+    // The function to fetch autocomplete suggestions should be synchronous.
+    // So, consider changing the function or using a FutureBuilder or some other method.
+    return fetchAutocompleteSuggestions(textEditingValue.text);
+  },
+  onSelected: (String selection) {
+    foodItemNameController.text = selection;
+  },
+  optionsViewBuilder: (BuildContext context, AutocompleteOnSelected<String> onSelected, Iterable<String> options) {
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Material(
+        elevation: 4.0,
+        child: ListView.builder(
+          itemCount: options.length,
+          itemBuilder: (BuildContext context, int index) {
+            final String option = options.elementAt(index);
+            return GestureDetector(
+              onTap: () {
+                onSelected(option);
+              },
+              child: ListTile(
+                title: Text(option),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  },
+  fieldViewBuilder: (BuildContext context, TextEditingController _textEditingController, FocusNode _focusNode, VoidCallback onFieldSubmitted) {
+    return TextField(
+      controller: foodItemNameController,
+      focusNode: _focusNode,
+      decoration: InputDecoration(
+        hintText: 'Ex: Strawberries, Milk, Cheese',
+      ),
+    );
+  },
+),
+
                 const SizedBox(height: 20),
                 const Text('Quantity'),
                 InputTextBox(
