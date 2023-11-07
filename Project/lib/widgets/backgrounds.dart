@@ -51,8 +51,7 @@ class Background2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Your code for Background2
-    // ...
+    // Background2 with no transparency
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -60,14 +59,7 @@ class Background2 extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-        child: Container(
-          color: Colors.black.withOpacity(0.3),
-        ),
-      ),
     );
-    // Replace with your implementation
   }
 }
 

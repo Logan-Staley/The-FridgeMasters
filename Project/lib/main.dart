@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       child: Consumer2<ThemeNotifier, UserProvider>(
         builder: (context, themeNotifier, userProvider, child) {
           return MaterialApp(
-            title: 'My App',
+            title: 'FridgeMasters App',
             theme: themeNotifier.themeData,
             initialRoute: '/',
             routes: {
