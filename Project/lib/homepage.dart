@@ -260,6 +260,7 @@ Widget _nonExpiringBorder(Widget child) {
   return Container(
     decoration: BoxDecoration(
       border: Border.all(color: Color.fromARGB(255, 20, 220, 27), width: 2.0),
+      borderRadius: BorderRadius.circular(30),
     ),
     child: child,
   );
@@ -373,7 +374,7 @@ Widget _nonExpiringBorder(Widget child) {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Expiry Legend: ',
+                    text: 'Expiry Color Legend: ',
                     style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold), 
                   ),
                   TextSpan(
@@ -528,7 +529,7 @@ Widget _nonExpiringBorder(Widget child) {
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
-                                                                        17,
+                                                                        16,
                                                                     color: Color
                                                                         .fromARGB(
                                                                             255,
@@ -568,7 +569,7 @@ Widget _nonExpiringBorder(Widget child) {
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
-                                                                        17.5,
+                                                                        15.5,
                                                                     color: Color
                                                                         .fromARGB(
                                                                             255,
@@ -622,22 +623,22 @@ Widget _nonExpiringBorder(Widget child) {
                                     ],
                                   ),
                                   Positioned(
-                                    bottom: 5, // adjust as needed
-                                    left: 30, // adjust as needed
+                                    bottom: 1, // adjust as needed
+                                    left: 38, // adjust as needed
                                     child: Text(
-                                      'Click Image for Nutritional Insights!', // replace with dynamic data if needed
+                                      '    Click Image for\nNutritional Insights!', // replace with dynamic data if needed
                                       style: TextStyle(
-                                        fontSize: 12,
+                                        fontSize: 8,
                                         color: Color.fromARGB(255, 255, 255,
                                             255), // or any color you prefer
                                       ),
                                     ),
                                   ),
                                    Positioned(
-                                    top: 0,
-                                    right: 0,
+                                    top: -5,
+                                    right: -5,
                                     child: IconButton(
-                                      icon: Icon(Icons.delete, size: 20),
+                                      icon: Icon(Icons.delete, size: 18),
                                       onPressed: () {
                                         showDialog(
                                           context: context,
@@ -667,41 +668,36 @@ Widget _nonExpiringBorder(Widget child) {
                                                 ],
                                               ),
                                               actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context)
-                                                        .pop(); // Close the dialog
-                                                  },
-                                                  child: Text('Cancel'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () async {
-                                                    final currentItem = widget
-                                                        .fridgeItems[index-1];
-                                                   try {
-  final StorageService storageService = StorageService();
-  String? userID = await storageService.getStoredUserId();
-  
-  if (userID != null) {
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Remove this line
+            },
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              final currentItem = widget.fridgeItems[index-1];
+              try {
+                final StorageService storageService = StorageService();
+                String? userID = await storageService.getStoredUserId();
+                
+                 if (userID != null) {
     String itemIdString = itemId.toString();
     await deleteItem(userID, itemIdString);
-    
-    // If the deletion was successful in the backend, remove from the local list
-    setState(() {
-      widget.fridgeItems.removeAt(index-1);
-    });
-  } else {
-    // Handle the case where userID is null, e.g., show an error message
-    print("User ID is null");
-  }
-}  catch (e) {
-                                                      print(
-                                                          "Error deleting item: $e");
-                                                      // Here you can show some error message or handle it as per your needs
-                                                    }
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text('Delete'),
+                  
+                  // If the deletion was successful in the backend, remove from the local list
+                  setState(() {
+                    widget.fridgeItems.removeAt(index - 1); // Adjust index
+                  });
+                }
+              } catch (e) {
+                // Handle any exceptions that might occur during the deletion
+                print('Error deleting item: $e');
+              }
+              
+              Navigator.of(context).pop(); // Keep this line to close the dialog
+            },
+            child: Text('Delete'),
                                                 ),
                                               ],
                                             );

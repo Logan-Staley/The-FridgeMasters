@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
 import 'inventory.dart';
@@ -9,7 +8,30 @@ import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:fridgemasters/widgets/taskbar.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+class Recipe {
+  final String label;
+  final String image;
+  final String source;
+  final String url;
+
+  Recipe({
+    required this.label,
+    required this.image,
+    required this.source,
+    required this.url,
+  });
+
+  factory Recipe.fromMap(Map<String, dynamic> data) {
+    return Recipe(
+      label: data['label'] ?? '',
+      image: data['image'] ?? '',
+      source: data['source'] ?? '',
+      url: data['url'] ?? '',
+    );
+  }
+}
 class FoodEntry extends StatefulWidget {
   final Function(FoodItem) onFoodItemAdded;
   const FoodEntry({super.key, required this.onFoodItemAdded});
@@ -17,19 +39,73 @@ class FoodEntry extends StatefulWidget {
   @override
   _FoodEntryState createState() => _FoodEntryState();
 }
-Future<List<String>> fetchAutocompleteSuggestions(String query) async {
-  final response = await http.get(
-    Uri.parse('https://api.edamam.com/auto-complete=${query}&app_id=68dddfcc&app_key=3da64a21932f13c170c859806396e97e'),
-  );
-
-  if (response.statusCode == 200) {
-    return List<String>.from(json.decode(response.body));
-  } else {
-    throw Exception('Failed to fetch autocomplete suggestions.');
-  }
-}
 
 class _FoodEntryState extends State<FoodEntry> {
+
+  
+  String _imageUrl = '';
+  Map<String, dynamic> _nutrientsInfo = {};
+  List<Recipe> _recipes = [];
+
+  void processEdamamData(Map<String, dynamic> data) {
+    // Extracting image URL
+    String imageUrl = data['image'] ?? '';
+    
+    // Extracting nutritional information
+    Map<String, dynamic> nutrients = data['nutrients'] ?? {};
+    
+    // Extracting recipes
+    List<dynamic> recipes = data['hits'] ?? [];
+
+    // Update your state with the fetched information
+    setState(() {
+      _imageUrl = imageUrl;
+      _nutrientsInfo = nutrients;
+      _recipes = recipes.map((recipe) => Recipe.fromMap(recipe['recipe'])).toList();
+    });
+  }
+
+
+  Future<void> fetchFromEdamam(String foodName) async {
+  // Access the variables from .env file
+  final String appIdFood = dotenv.env['EDAMAM_APP_FOOD'] ?? "default_id";
+  final String appKeyFood = dotenv.env['EDAMAM_APP_KEY_FOOD'] ?? "default_key";
+  final String appUrlFood = dotenv.env['EDAMAM_APP_URL_FOOD'] ?? "default_url";
+
+  final String edamamUrlFood = "$appUrlFood?ingr=$foodName&app_id=$appIdFood&app_key=$appKeyFood";
+
+  // Use the edamamUrlFood to fetch food data...
+
+  // You can do the same for Nutrition and Recipes
+  final String appIdNutrition = dotenv.env['EDAMAM_APP_NUTRITION'] ?? "default_id";
+  final String appKeyNutrition = dotenv.env['EDAMAM_APP_KEY_NUTRITION'] ?? "default_key";
+  final String appUrlNutrition = dotenv.env['EDAMAM_APP_URL_NUTRITION'] ?? "default_url";
+
+  // ... And similarly for Recipes
+  final String appIdRecipes = dotenv.env['EDAMAM_APP_ID_RECIPIES'] ?? "default_id";
+  final String appKeyRecipes = dotenv.env['EDAMAM_APP_KEY_RECIPIES'] ?? "default_key";
+  final String appUrlRecipes = dotenv.env['EDAMAM_APP_URL_RECIPIES'] ?? "default_url";
+
+  // Make sure to use the correct URL depending on what type of data you're fetching
+  // For example, if you're fetching food information, use edamamUrlFood
+  // If you're fetching nutrition information, use the appropriate URL and keys
+  // And the same goes for recipes
+
+
+  try {
+    final response = await http.get(Uri.parse(edamamUrlFood));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      // Assuming you have a method to process this data
+      processEdamamData(data);
+    } else {
+      print("Failed to load data from Edamam: ${response.body}");
+    }
+  } catch (e) {
+    print("Error fetching data from Edamam: $e");
+  }
+}
   Future<void> _selectDate(
       BuildContext context, TextEditingController controller) async {
     DateTime? pickedDate = await showDatePicker(
@@ -43,6 +119,7 @@ class _FoodEntryState extends State<FoodEntry> {
     controller.text = DateFormat('MM/dd/yyyy').format(pickedDate);
   }
 }
+  TextEditingController upcNumberController = TextEditingController();
   TextEditingController ItemID = TextEditingController();
   TextEditingController foodItemNameController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
@@ -140,122 +217,144 @@ void saveToInventory() async {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add to Inventory'),
-      ),
-      bottomNavigationBar: Taskbar(
-        currentIndex: 1, // Assuming this is the second tab
-        backgroundColor: Color.fromARGB(255, 233, 232, 232),
-        onTabChanged: (index) {
-          currentIndex: 0;// Handle tab change if necessary
-        },
-        // If you don't need food item addition functionality in this page, you can remove this callback or make it optional in the Taskbar widget
-        onFoodItemAdded: (foodItem) {
-          // Handle food item addition if required
-        },
-      ),
-      body: Stack(
-        children: [
-          Background(type: 'Background1'), // for Background1
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Food Item'),
-                Autocomplete<String>(
-  optionsBuilder: (TextEditingValue textEditingValue) {
-    if (textEditingValue.text == '') {
-      return const [];
-    }
-    // The function to fetch autocomplete suggestions should be synchronous.
-    // So, consider changing the function or using a FutureBuilder or some other method.
-    return fetchAutocompleteSuggestions(textEditingValue.text);
-  },
-  onSelected: (String selection) {
-    foodItemNameController.text = selection;
-  },
-  optionsViewBuilder: (BuildContext context, AutocompleteOnSelected<String> onSelected, Iterable<String> options) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Material(
-        elevation: 4.0,
-        child: ListView.builder(
-          itemCount: options.length,
-          itemBuilder: (BuildContext context, int index) {
-            final String option = options.elementAt(index);
-            return GestureDetector(
-              onTap: () {
-                onSelected(option);
-              },
-              child: ListTile(
-                title: Text(option),
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('Add to Inventory'),
+    ),
+    bottomNavigationBar: Taskbar(
+      currentIndex: 1, // Assuming this is the second tab
+      backgroundColor: Color.fromARGB(255, 233, 232, 232),
+      onTabChanged: (index) {
+        currentIndex: 0; // Handle tab change if necessary
+      },
+      // If you don't need food item addition functionality in this page, you can remove this callback or make it optional in the Taskbar widget
+      onFoodItemAdded: (foodItem) {
+        // Handle food item addition if required
+      },
+    ),
+    body: Stack(
+      children: [
+        Background(type: 'Background1'), // for Background1
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Add spacing between buttons row and text
+              SizedBox(height: 20),
+              Column(
+                children: [
+                  Row( // Use Row to place buttons side by side
+                    mainAxisAlignment: MainAxisAlignment.center, // Center-align the buttons horizontally
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          // Handle the "View Inventory Log" button click
+                        },
+                        child: Text(
+                          'View Inventory Log',
+                          style: TextStyle(fontSize: 16), // Increase button text size
+                        ),
+                      ),
+                      SizedBox(width: 20), // Add some spacing between the buttons
+                      ElevatedButton(
+                        onPressed: () {
+                          // Handle the "View Expired Items" button click
+                        },
+                        child: Text(
+                          'View Expired Items',
+                          style: TextStyle(fontSize: 16), // Increase button text size
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20), // Add spacing between buttons row and text
+                ],
               ),
-            );
-          },
-        ),
-      ),
-    );
-  },
-  fieldViewBuilder: (BuildContext context, TextEditingController _textEditingController, FocusNode _focusNode, VoidCallback onFieldSubmitted) {
-    return TextField(
-      controller: foodItemNameController,
-      focusNode: _focusNode,
-      decoration: InputDecoration(
-        hintText: 'Ex: Strawberries, Milk, Cheese',
-      ),
-    );
-  },
-),
-
-                const SizedBox(height: 20),
-                const Text('Quantity'),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: 20',
-                  controller: quantityController,
+              Text(
+                'UPC Number (Optional)', // Label for UPC Number
+                style: TextStyle(
+                  fontWeight: FontWeight.bold, // Make the text bold
                 ),
-                const SizedBox(height: 20),
-                const Text('Date of Purchase'),
-                GestureDetector(
-                  onTap: () => _selectDate(context, dateOfPurchaseController),
-                  child: AbsorbPointer(
-                    child: InputTextBox(
-                      isPassword: false,
-                      hint: 'Ex: 12/21/2023',
-                      controller: dateOfPurchaseController,
-                    ),
+              ),
+              InputTextBox(
+                isPassword: false,
+                hint: 'Ex: 1234567890',
+                controller: upcNumberController,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Name',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              InputTextBox(
+                isPassword: false,
+                hint: 'Ex: Strawberries, Milk, Cheese',
+                controller: foodItemNameController,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Quantity',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              InputTextBox(
+                isPassword: false,
+                hint: 'Ex: 20',
+                controller: quantityController,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Date of Purchase',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              GestureDetector(
+                onTap: () => _selectDate(context, dateOfPurchaseController),
+                child: AbsorbPointer(
+                  child: InputTextBox(
+                    isPassword: false,
+                    hint: 'Ex: 12/21/2023',
+                    controller: dateOfPurchaseController,
                   ),
                 ),
-                const SizedBox(height: 20),
-                const Text('Expiration Date'),
-                GestureDetector(
-                  onTap: () => _selectDate(context, expirationDateController),
-                  child: AbsorbPointer(
-                    child: InputTextBox(
-                      isPassword: false,
-                      hint: 'Ex: 12/21/2023',
-                      controller: expirationDateController,
-                    ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Expiration Date',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              GestureDetector(
+                onTap: () => _selectDate(context, expirationDateController),
+                child: AbsorbPointer(
+                  child: InputTextBox(
+                    isPassword: false,
+                    hint: 'Ex: 12/21/2023',
+                    controller: expirationDateController,
                   ),
                 ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: saveToInventory,
-                  child: const Text('Add to Fridge'),
-                ),
-                const SizedBox(height: 20),
-                TextOnlyButton(
-                  text: 'Cancel',
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: saveToInventory,
+                child: const Text('Add to Fridge'),
+              ),
+              const SizedBox(height: 20),
+              TextOnlyButton(
+                text: 'Cancel',
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
-}
+        ),
+      ],
+    ),
+  );
+}}

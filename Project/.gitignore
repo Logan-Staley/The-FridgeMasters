@@ -65,5 +65,5 @@ Project/.flutter-plugins-dependencies
 
 
 # Custom files to ignore
-.dart_tool/package_config.json
+/.dart_tool/package_config.json
 android/local.properties
