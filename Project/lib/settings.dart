@@ -137,13 +137,18 @@ class _SettingsState extends State<Settings> {
                   onTap: () => _navigateToSetting('About'),
                 ),
             ListTile(
-  title: Text('Theme'),
-      trailing: Switch(
-        value: themeNotifier.isDarkMode,
-        onChanged: (value) {
-          themeNotifier.toggleTheme();
-    },
-  ),
+            title: Text('Theme'),
+            trailing: ElevatedButton(
+              onPressed: () {
+                themeNotifier.toggleTheme();
+              },
+              child: Text(
+                'Toggle Theme',
+              ),
+            ),
+            
+              
+  
 ),
 
                 SizedBox(

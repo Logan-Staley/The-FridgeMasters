@@ -1,29 +1,16 @@
+// theme_notifier.dart
 import 'package:flutter/material.dart';
 
-final ThemeData lightTheme = ThemeData(
-  brightness: Brightness.light,
-  primarySwatch: Colors.blue,
-  // Customize other light theme properties here
-);
-
-final ThemeData darkTheme = ThemeData(
-  brightness: Brightness.dark,
-  primarySwatch: Colors.orange,
-  // Customize other dark theme properties here
-);
-
 class ThemeNotifier with ChangeNotifier {
-  ThemeData _themeData;
-  bool _isDarkMode;
+  ThemeMode _themeMode = ThemeMode.system;
 
-  ThemeNotifier(this._themeData, this._isDarkMode);
-
-  bool get isDarkMode => _isDarkMode;
-  ThemeData get themeData => _themeData;
+  ThemeMode get themeMode => _themeMode;
 
   void toggleTheme() {
-    _isDarkMode = !_isDarkMode;
-    _themeData = _isDarkMode ? darkTheme : lightTheme;
+    _themeMode = _themeMode == ThemeMode.dark
+        ? ThemeMode.light
+        : ThemeMode.dark;
     notifyListeners();
   }
 }
+
