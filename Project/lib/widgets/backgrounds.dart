@@ -49,8 +49,13 @@ class Background1 extends StatelessWidget {
 class Background2 extends StatelessWidget {
   const Background2({Key? key}) : super(key: key);
 
-  @override
+   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
+    // Your code for Background2
+    // ...
+=======
+>>>>>>> bdc0ddf9e6ddd9bec61ad178c0d3a63203f6da7f
     // Background2 with no transparency
     return Container(
       decoration: const BoxDecoration(

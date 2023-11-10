@@ -31,56 +31,127 @@ class Recipes extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'AI Generated recipes based on your fridge food items',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                // White background with black text
+                Container(
+                  color: const Color.fromARGB(255, 117, 116, 116),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Given the items in your fridge, these are some recipe suggestions you can try:',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 100),
+                const SizedBox(height: 30),
 
-                // Recipe Buttons using the Button widget
-                Button(
-                  onPressed: () async {
-                    return true;
-                  },
-                  buttonText: 'First Recipe',
-                  nextPage: const Recipesinstructions(),
+                // First Recipe Button moved up
+                Container(
+                  height: 60,
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const Recipesinstructions(),
+                        ),
+                      );
+                    },
+                    child: const Text('First Recipe'),
+                  ),
+                ),
+                const SizedBox(height: 20), // Added spacing between buttons
+
+                // Second Recipe Button
+                Container(
+                  height: 60,
+                  width: 200,
+                  child: ElevatedButton(
+                    
+                    onPressed: () async {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const Recipesinstructions(),
+                        ),
+                      );
+                    },
+                    child: const Text('Second Recipe'),
+                    
+                  ),
+                  
+                ),
+                const SizedBox(height: 20),
+
+                // Third Recipe Button
+                Container(
+                  height: 60,
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const Recipesinstructions(),
+                        ),
+                      );
+                    },
+                    child: const Text('Third Recipe'),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Fourth Recipe Button
+                Container(
+                  height: 60,
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const Recipesinstructions(),
+                        ),
+                      );
+                    },
+                    child: const Text('Fourth Recipe'),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Fifth Recipe Button
+                Container(
+                  height: 60,
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const Recipesinstructions(),
+                        ),
+                      );
+                    },
+                    child: const Text('Fifth Recipe'),
+                  ),
                 ),
                 const SizedBox(height: 50),
 
-                Button(
-                  onPressed: () async {
-                    return true;
-                  },
-                  buttonText: 'Second Recipe',
-                  nextPage: const Recipesinstructions(),
-                ),
-                const SizedBox(height: 50),
-
-                Button(
-                  onPressed: () async {
-                    return true;
-                  },
-                  buttonText: 'Third Recipe',
-                  nextPage: const Recipesinstructions(),
-                ),
-                const SizedBox(height: 50),
-
-                Button(
-                  onPressed: () async {
-                    return true;
-                  },
-                  buttonText: 'Fourth Recipe',
-                  nextPage: const Recipesinstructions(),
-                ),
-                const SizedBox(height: 50),
-
-                // Back Button
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const Recipesinstructions()));
-                  },
-                  child: const Text('Back'),
+                // Back Button with spacing
+                Container(
+                  
+                  child: ElevatedButton(
+  onPressed: () {
+    // Navigate back to the homepage at index 0
+    Navigator.of(context).pushReplacementNamed('/home');
+  },
+  style: ElevatedButton.styleFrom(
+    primary: const Color.fromARGB(0, 0, 0, 0), // Make the background color transparent
+  ),
+  child: Text(
+    'Back',
+    style: TextStyle(
+      color: Color.fromARGB(255, 255, 255, 255), // Text color
+    ),
+  ),
+),
                 )
               ],
             ),
@@ -92,4 +163,3 @@ class Recipes extends StatelessWidget {
 }
 
 // Example destination page for a recipe details screen
-
