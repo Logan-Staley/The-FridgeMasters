@@ -1,3 +1,4 @@
+//import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/inventory.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
@@ -7,10 +8,11 @@ import 'package:fridgemasters/widgets/textonlybutton.dart';
 import 'package:fridgemasters/settings.dart';
 import 'package:fridgemasters/notificationlist.dart';
 import 'package:fridgemasters/foodentry.dart'; // Import the food entry page
-import 'package:fridgemasters/database_service.dart';
+import 'package:fridgemasters/Services/database_service.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
 import 'package:fridgemasters/Services/deleteitem.dart';
-
+import 'package:path_drawing/path_drawing.dart';
+import 'package:uuid/uuid.dart';
 
 String convertToDisplayFormat(String date) {
   var parts = date.split('-');
@@ -20,6 +22,105 @@ String convertToDisplayFormat(String date) {
   return date; // Return the original string if the format isn't as expected
 }
 
+
+class ExpiringItemTile extends StatefulWidget {
+  final String expirationDate;
+  final String purchaseDate;
+  final Widget child;
+
+  ExpiringItemTile({
+    required this.expirationDate,
+    required this.purchaseDate,
+    required this.child,
+  });
+
+  @override
+  _ExpiringItemTileState createState() => _ExpiringItemTileState();
+}
+
+class _ExpiringItemTileState extends State<ExpiringItemTile> with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    )..repeat(reverse: false);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  Widget _nonExpiringBorder(Widget child) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Color.fromARGB(255, 20, 220, 27), width: 2.0),
+      ),
+      child: child,
+    );
+  }
+
+  Widget _closeToExpiringBorder(Widget child) {
+  return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, _) {
+        final color = ColorTween(
+          begin: Colors.yellow,
+          end: Color.fromARGB(255, 103, 98, 30),
+        ).lerp(_animationController.value);
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: color!, width: 2.0),
+          ),
+          child: child,
+        );
+      },
+    );
+  }
+ Widget _expiredBorder(Widget child) {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, _) {
+        final color = ColorTween(
+          begin: Color.fromARGB(255, 177, 21, 21),
+          end: Color.fromARGB(255, 103, 98, 30),
+        ).lerp(_animationController.value);
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: color!, width: 2.0),
+          ),
+          child: child,
+        );
+      },
+    );
+  }
+
+  Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget child) {
+    final expiryDate = DateTime.parse(expirationDate);
+    final currentDate = DateTime.now();
+    final currentDateAtMidnight = DateTime(currentDate.year, currentDate.month, currentDate.day);
+    final purchaseDateParsed = DateTime.parse(purchaseDate);
+    final daysLeft = expiryDate.difference(currentDateAtMidnight).inDays;
+
+    if (expiryDate.isBefore(currentDateAtMidnight) || expiryDate.isBefore(purchaseDateParsed)) {
+      return _expiredBorder(child);
+    } else if (daysLeft <= 7) {
+      return _closeToExpiringBorder(child);
+    } else {
+      return _nonExpiringBorder(child);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _getExpirationBorder(widget.expirationDate, widget.purchaseDate, widget.child);
+  }
+}
 
 class YourWidget extends StatelessWidget {
   @override
@@ -62,7 +163,6 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
   final DatabaseService dbService = DatabaseService();
 
-
   @override
   void initState() {
     super.initState();
@@ -82,7 +182,9 @@ class _HomePageState extends State<HomePage> {
 
 // Map the loadedItems to the expected format
         List<Map<String, dynamic>> formattedItems = loadedItems.map((item) {
+          String imageUrl = item['imageUrl'] ?? 'images/default_image.png'; // Use the image URL from the database if available
           return {
+            'itemId': item['itemId'], // Include the itemId
             'name': item['productName'],
             'quantity': '${item['quantity']}',
             'purchaseDate': item['dateOfPurchase']
@@ -91,10 +193,10 @@ class _HomePageState extends State<HomePage> {
                 .split(" ")[0], // Only take the date part, exclude the time
 
             'imageUrl':
-                'images/default_image.png', // Keep as default or adjust as necessary
+                item['imageUrl'], // Keep as default or adjust as necessary
           };
         }).toList();
-
+print('Formatted Items: $formattedItems'); // Print the formattedItems list
         setState(() {
           widget.fridgeItems.addAll(formattedItems);
         });
@@ -127,7 +229,7 @@ class _HomePageState extends State<HomePage> {
           'purchaseDate': newFoodItem.dateOfPurchase.toString(),
           'expirationDate': newFoodItem.expirationDate.toString(),
           'imageUrl':
-              'images/default_image.png',
+              ['imageUrl'],
         });
       });
     }
@@ -136,31 +238,35 @@ class _HomePageState extends State<HomePage> {
  Color _getExpirationColor(String expirationDate, String purchaseDate) {
   final expiryDate = DateTime.parse(expirationDate);
   final currentDate = DateTime.now();
+  final currentDateAtMidnight = DateTime(currentDate.year, currentDate.month, currentDate.day);
   final purchaseDateParsed = DateTime.parse(purchaseDate);
-  final daysLeft = expiryDate.difference(currentDate).inDays;
+  final daysLeft = expiryDate.difference(currentDateAtMidnight).inDays;
 
   // Condition 1: If the expiration date is before the current date.
-  if (expiryDate.isBefore(currentDate)) {
+  if (expiryDate.isBefore(currentDateAtMidnight)) {
     return Color.fromARGB(255, 177, 21, 21);
-  }
+  } 
   // Condition 2: If the expiration date is before the purchase date.
   else if (expiryDate.isBefore(purchaseDateParsed)) {
     return Color.fromARGB(255, 177, 21, 21);
   }
-  else if (daysLeft < 7) {
+  else if (daysLeft <= 7) {
     return Colors.yellow;
   } else {
     return Color.fromARGB(255, 20, 220, 27);
   }
 }
+
 Widget _nonExpiringBorder(Widget child) {
   return Container(
     decoration: BoxDecoration(
       border: Border.all(color: Color.fromARGB(255, 20, 220, 27), width: 2.0),
+      borderRadius: BorderRadius.circular(30),
     ),
     child: child,
   );
 }
+
 Widget _closeToExpiringBorder(Widget child) {
   return TweenAnimationBuilder(
     tween: ColorTween(begin: Colors.yellow[700], end: Colors.yellow[300]),
@@ -234,12 +340,12 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
   } else {
     return _nonExpiringBorder(child);
   }
-}
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(140.0), // here you can set the desired height
         child: AppBar(
@@ -263,6 +369,12 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
           ),
         ),
        shape: RoundedRectangleBorder(
+
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(220, 48, 141, 160),
+        elevation: 0, // Removes the default shadow
+        shape: RoundedRectangleBorder(
+
           side: BorderSide(
             color: const Color.fromARGB(253,253,253,253),
              width: 2), // Blue border
@@ -371,8 +483,14 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                       ],
                     )
                   : ListView.builder(
+
                        itemCount: widget.fridgeItems.length + 1, // +1 for the header (date and legend)
+
+                      itemCount: widget.fridgeItems.length + 1, // +1 for the header (date and legend)
+                      
+
   itemBuilder: (context, index) {
+    
     // This is for the header, which contains the date and legend
     if (index == 0) {
       return Column(
@@ -387,6 +505,7 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 15,
+                fontWeight: FontWeight.bold
               ),
             ),
             TextSpan(
@@ -402,6 +521,7 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
         ),
       ),
     ),
+
    
    // SizedBox(height: 5),
           //Center(
@@ -438,11 +558,53 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
         //    ),
               
         //  ),
+
+    SizedBox(height: 5),
+          Center(
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Expiry Color Legend: ',
+                    style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold), 
+                  ),
+                  TextSpan(
+                    text: '🟡',
+                    style: TextStyle(color: Color.fromARGB(255, 4, 114, 8), fontSize: 17, fontWeight: FontWeight.bold), 
+                  ),
+                  TextSpan(
+                    text: ' - Safe to Eat (>1wk) | ',
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
+                  ),
+                  TextSpan(
+                    text: '🟡',
+                    style: TextStyle(color: Color.fromARGB(255, 250, 228, 28), fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(
+                    text: ' - Nearing Expiry (≤1wk) | ',
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
+                  ),
+                  TextSpan(
+                    text: '🟡',
+                    style: TextStyle(color: Color.fromARGB(255, 226, 50, 50), fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(
+                    text: ' - Expired',
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
+                  ),
+                ],
+              ),
+            ),
+          ),
+
           SizedBox(height: 10),
         ],
       );
-    } 
+    } else {
+      // Index is greater than 0, so it's an item
                         final item = widget.fridgeItems[index-1];
+
 
                         //Color _getPastelColor(int index) {
 
@@ -497,6 +659,37 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                             child: _getExpirationBorder(
   item['expirationDate'], 
   item['purchaseDate'],Container(
+
+                        final itemId = item['itemId'];
+                        //print('Item ID at index $index: $itemId');
+                        Color _getPastelColor(int index) {
+                          final r = (70 + (index * 50) % 135).toDouble();
+                          final g = (90 + (index * 80) % 85).toDouble();
+                          final b = (120 + (index * 30) % 55).toDouble();
+                          return Color.fromRGBO(
+                              r.toInt(), g.toInt(), b.toInt(), 0.9);
+                        }
+
+                     ImageProvider getImageProvider(String? imageUrl) {
+  // Check if imageUrl is a network URL
+  if (imageUrl != null && Uri.tryParse(imageUrl)?.hasAbsolutePath == true) {
+    // If it's a valid URL, return a NetworkImage
+    return NetworkImage(imageUrl);
+  } else {
+    // If it's not a valid URL (or is null), return a AssetImage
+    return AssetImage('images/default_image.png');
+  }
+}  
+                           return Padding(
+  padding: const EdgeInsets.all(8.0),
+  child: Card(
+    color: _getPastelColor(index),
+    elevation: 4.0, // Added shadow
+    child:  ExpiringItemTile(
+      expirationDate: item['expirationDate'],
+      purchaseDate: item['purchaseDate'],
+      child: Container(
+
                               height: 137,
                               child: Stack(
                                 children: [
@@ -505,6 +698,7 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                         CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
+
                                         flex: 3,
                                         child: Padding(
                                           padding: const EdgeInsets.all(
@@ -526,6 +720,38 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                           ),
                                         ),
                                       ),
+
+  flex: 3,
+  child: Padding(
+    padding: const EdgeInsets.all(16.0), // Image padding
+    child: Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.brown, width: 3),
+      ),
+      width: 100,
+      height: 100,
+      child: Image.network(
+        item['imageUrl'].toString() ?? '',
+        fit: BoxFit.cover,
+        errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+          // In case of an error (like a 404), use the default image
+          return Image.asset('images/default_image.png', fit: BoxFit.cover);
+        },
+        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Center(
+            child: CircularProgressIndicator(
+              value: loadingProgress.expectedTotalBytes != null
+                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                  : null,
+            ),
+          );
+        },
+      ),
+    ),
+  ),
+),
+
                                       Expanded(
                                         flex: 7,
                                         child: Column(
@@ -593,10 +819,15 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
+
                                                                         17,
                                                               color: Colors.black,
 
                                                                    /* color: Color
+
+                                                                        16,
+                                                                    color: Color
+
                                                                         .fromARGB(
                                                                             255,
                                                                             255,
@@ -636,9 +867,14 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
+
                                                                         17.5,
                                                                         color: Colors.black,
                                                                    /* color: Color
+
+                                                                        15.5,
+                                                                    color: Color
+
                                                                         .fromARGB(
                                                                             255,
                                                                             255,
@@ -690,23 +926,35 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                       ),
                                     ],
                                   ),
+
                                  /* Positioned(
                                     bottom: 5, // adjust as needed
                                     left: 30, // adjust as needed
+
+                                  Positioned(
+                                    bottom: 1, // adjust as needed
+                                    left: 38, // adjust as needed
+
                                     child: Text(
-                                      'Click Image for Nutritional Insights!', // replace with dynamic data if needed
+                                      '    Click Image for\nNutritional Insights!', // replace with dynamic data if needed
                                       style: TextStyle(
-                                        fontSize: 12,
+                                        fontSize: 8,
                                         color: Color.fromARGB(255, 255, 255,
                                             255), // or any color you prefer
                                       ),
                                     ),
+
                                   ),*/
                                   Positioned(
                                     top: 0,
                                     right: 0,
+                                ),
+                                   Positioned(
+                                    top: -5,
+                                    right: -5,
+
                                     child: IconButton(
-                                      icon: Icon(Icons.delete, size: 20),
+                                      icon: Icon(Icons.delete, size: 18),
                                       onPressed: () {
                                         showDialog(
                                           context: context,
@@ -736,24 +984,36 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                                 ],
                                               ),
                                               actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context)
-                                                        .pop(); // Close the dialog
-                                                  },
-                                                  child: Text('Cancel'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      widget.fridgeItems
-                                                          .removeAt(index);
-                                                    });
-                                                    Navigator.of(context)
-                                                        .pop(); // Close the dialog
-                                                    // Add logic to handle database update here
-                                                  },
-                                                  child: Text('Delete'),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Remove this line
+            },
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              final currentItem = widget.fridgeItems[index-1];
+              try {
+                final StorageService storageService = StorageService();
+                String? userID = await storageService.getStoredUserId();
+                
+                 if (userID != null) {
+    String itemIdString = itemId.toString();
+    await deleteItem(userID, itemIdString);
+                  
+                  // If the deletion was successful in the backend, remove from the local list
+                  setState(() {
+                    widget.fridgeItems.removeAt(index - 1); // Adjust index
+                  });
+                }
+              } catch (e) {
+                // Handle any exceptions that might occur during the deletion
+                print('Error deleting item: $e');
+              }
+              
+              Navigator.of(context).pop(); // Keep this line to close the dialog
+            },
+            child: Text('Delete'),
                                                 ),
                                               ],
                                             );
@@ -766,8 +1026,14 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                               ),
                             ),
                           )
+
                           ),
                         ));
+
+                           )
+                         );
+    }
+
                       },
           )),
           
@@ -795,3 +1061,5 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
      
   }
 }
+
+
