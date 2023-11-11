@@ -179,14 +179,45 @@ Widget _closeToExpiringBorder(Widget child) {
     },
   );
 }
+/*Widget _expiredBorder(Widget child) {
+  return Container(
+    decoration: BoxDecoration(
+      border: Border(
+        top: BorderSide(color: Color.fromARGB(255, 168, 169, 173), width: 0.8), // Top border
+        bottom: BorderSide(color: Color.fromARGB(255, 168, 169, 173), width: 0.8), // Bottom border
+        left: BorderSide(color: Color.fromARGB(255, 168, 169, 173), width: 0.8), // Left side border
+        right: BorderSide(color: Color.fromARGB(255, 168, 169, 173), width: 0.8), // Right side border
+      ),
+    ),
+    child: child,
+  );
+}*/
+/*Widget _expiredBorder(Widget child) {
+  return Container(
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: Color.fromARGB(255, 168, 169, 173),
+        width: 0.8,
+      ),
+      borderRadius: BorderRadius.circular(70), // Add rounded corners
+    ),
+    child: child,
+  );
+}*/
+
 Widget _expiredBorder(Widget child) {
   return Container(
     decoration: BoxDecoration(
-      border: Border.all(color: Color.fromARGB(255, 177, 21, 21), width: 2.0),
+      border: Border.all(
+        color: Color.fromARGB(255, 168, 169, 173),
+        width: 0.8,
+      ),
+      borderRadius: BorderRadius.circular(70), // Rounded corners
     ),
     child: child,
   );
 }
+
 Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget child) {
   final expiryDate = DateTime.parse(expirationDate);
   final currentDate = DateTime.now();
@@ -209,16 +240,47 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(180, 160, 48, 48),
-        elevation: 0, // Removes the default shadow
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-              color: const Color.fromARGB(255, 215, 215, 215),
-              width: 2), // Blue border
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(140.0), // here you can set the desired height
+        child: AppBar(
+          backgroundColor: Colors.transparent, // Make the AppBar background transparent
+          elevation: 0, // Removes the default shadow
+         flexibleSpace: Padding( // Apply padding to the flexibleSpace
+          padding: const EdgeInsets.symmetric(horizontal: 21.0), // Set horizontal padding
+          child: ClipRRect(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)), // Rounded corners at the bottom
+            child: Container(
+              margin: const EdgeInsets.only(top: 45.0), // Top margin to push AppBar down
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 168, 169, 173), // Your AppBar color
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                border: Border.all(
+                  color: const Color.fromARGB(255, 215, 215, 215),
+                  width: 2,
+                ),
+                ),
+            ),
+          ),
         ),
-        
-        leading: IconButton(
+       shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: const Color.fromARGB(253,253,253,253),
+             width: 2), // Blue border
+        ),
+         title: Column(
+        mainAxisSize: MainAxisSize.min, // Use min size for the column
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 35.0), // Adjust the padding to move the title down
+            child: Center( child: Text('The Fridge Masters'),
+          ),
+            
+          ),
+        ],
+         ),
+         leading: Transform.translate(
+        offset: Offset(11, 19), // Add padding to push the icon to the right
+        child: IconButton(
           icon: Icon(Icons.notifications),
           onPressed: () {
             Navigator.push(
@@ -229,8 +291,11 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
             );
           },
         ),
+         ),
         actions: [
-          IconButton(
+          Transform.translate(
+          offset: Offset(-11, 19),
+          child:IconButton(
             icon: Icon(Icons.settings),
             onPressed: () {
               Navigator.push(
@@ -241,39 +306,72 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
               );
             },
           ),
+          ),
         ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(60),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Filter based on food items',
-                border: OutlineInputBorder(
-                  //backgroundColor: color.Yellow,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                prefixIcon: Icon(Icons.search),
-              ),
-            ),
+    
+      
+    bottom: PreferredSize(
+  preferredSize: Size.fromHeight(20),
+  child: Padding(
+    padding: const EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 10.0), // Reduces bottom padding to 10.0
+    child: Theme(
+      data: Theme.of(context).copyWith(
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+          primary: Colors.white, // Changes the cursor and selection handle color
+        ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.white, // Changes the cursor color
+          selectionColor: Colors.white.withOpacity(0.5), // Changes the selection color
+          selectionHandleColor: Colors.white, // Changes the selection handle color
+        ),
+      ),
+      child: TextField(
+        controller: _searchController,
+        decoration: InputDecoration(
+          hintText: 'Filter based on food items',
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white), // Changes the border color when the TextField is focused
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
       ),
+    ),
+  ),
+    ),
+        ),
+      ),
+        //prefixIcon: Icon(Icons.search),
+      
+    
+  
+
+
+        
+      
+
+       
       body: Stack(
         children: [
-          const Background(type: 'Background1'),
+          //const Background(type: 'Background2'),
           Center(
-              child: widget.fridgeItems.isEmpty
+             child: widget.fridgeItems.isEmpty
                   ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                     mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Add Items to your fridge!'),
                         Icon(Icons.arrow_downward, color: Colors.red),
                       ],
                     )
                   : ListView.builder(
-                      itemCount: widget.fridgeItems.length + 1, // +1 for the header (date and legend)
+                       itemCount: widget.fridgeItems.length + 1, // +1 for the header (date and legend)
   itemBuilder: (context, index) {
     // This is for the header, which contains the date and legend
     if (index == 0) {
@@ -295,7 +393,7 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
               text:
                   '${DateTime.now().month}/${DateTime.now().day}/${DateTime.now().year}',
               style: TextStyle(
-                color: Colors.white,
+                color: Color.fromARGB(255, 12, 12, 12),
                 fontSize: 17,
                 fontWeight: FontWeight.bold,
               ),
@@ -304,59 +402,98 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
         ),
       ),
     ),
-    SizedBox(height: 5),
-          Center(
-            child: RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Expiry Legend: ',
-                    style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  TextSpan(
-                    text: '🟢Green - Safe to Eat (>1wk) ',
-                    style: TextStyle(color: Color.fromARGB(255, 4, 114, 8), fontSize: 16, fontWeight: FontWeight.bold), 
-                  ),
-                  TextSpan(
-                    text: '| ',
-                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
-                  ),
-                  TextSpan(
-                    text: '🟡 Yellow - Nearing Expiry (≤1wk) ',
-                    style: TextStyle(color: Color.fromARGB(255, 250, 228, 28), fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  TextSpan(
-                    text: '| ',
-                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
-                  ),
-                  TextSpan(
-                    text: '🔴 Red - Expired',
-                    style: TextStyle(color: Color.fromARGB(255, 226, 50, 50), fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-          ),
+   
+   // SizedBox(height: 5),
+          //Center(
+            //child: RichText(
+              //textAlign: TextAlign.center,
+              //text: TextSpan(
+               // children: [
+                //  TextSpan(
+                  //  text: 'Expiry Legend: ',
+                  //  style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+                //  ),
+                 // TextSpan(
+                  //  text: '🟢Green - Safe to Eat (>1wk) ',
+                  //  style: TextStyle(color: Color.fromARGB(255, 4, 114, 8), fontSize: 16, fontWeight: FontWeight.bold), 
+                  //),
+                 // TextSpan(
+                   // text: '| ',
+                   // style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
+               //   ),
+                 // TextSpan(
+                 //   text: '🟡 Yellow - Nearing Expiry (≤1wk) ',
+                //    style: TextStyle(color: Color.fromARGB(255, 65, 105, 225), fontSize: 16, fontWeight: FontWeight.bold),
+                 // ),
+               //   TextSpan(
+                //    text: '| ',
+                //    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
+                //  ),
+               //   TextSpan(
+                //    text: '🔴 Red - Expired',
+                 //   style: TextStyle(color: Color.fromARGB(255, 226, 50, 50), fontSize: 16, fontWeight: FontWeight.bold),
+                //  ),
+              //  ],
+         //     ),
+        //    ),
+              
+        //  ),
           SizedBox(height: 10),
         ],
       );
     } 
                         final item = widget.fridgeItems[index-1];
 
-                        Color _getPastelColor(int index) {
-                          final r = (70 + (index * 50) % 135).toDouble();
-                          final g = (90 + (index * 80) % 85).toDouble();
-                          final b = (120 + (index * 30) % 55).toDouble();
-                          return Color.fromRGBO(
-                              r.toInt(), g.toInt(), b.toInt(), 0.9);
-                        }
+                        //Color _getPastelColor(int index) {
+
+                         Color _getLightGrayColor() {
+  // Light gray color #F0F0F0
+  return Color.fromRGBO(240, 240, 240, 1); // Opacity is set to 1 for a solid color
+}
+
+
+
+
+
+                         //// final r = (70 + (index * 50) % 135).toDouble();
+                          //final g = (90 + (index * 80) % 85).toDouble();
+                        ///  final b = (120 + (index * 30) % 55).toDouble();
+                          //return Color.fromRGBO(
+                             // r.toInt(), g.toInt(), b.toInt(), 0.9);
+                        //}
 
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                            color: _getPastelColor(index),
-                            elevation: 4.0, // Added shadow
+  child: Card(
+    //color: _getPastelColor(index),
+    color: _getLightGrayColor(),
+    elevation: 4.0,
+   shape: RoundedRectangleBorder(
+  side: BorderSide(
+    color: Color.fromARGB(255, 168, 169, 173), // Same color
+    width: 0.8, // Same width
+  ),
+  borderRadius: BorderRadius.circular(70), // Same rounded corners as in _expiredBorder
+),
+
+   /*shape: RoundedRectangleBorder(
+      
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(900.0),
+        topRight: Radius.circular(900.0),
+        bottomLeft: Radius.circular(900.0),
+        bottomRight: Radius.circular(900.0),
+      ),
+    ),*/
+                            
+   child: SizedBox(
+    height: 200, // Add your desired height here
+    // Your card content goes here 
+  
+        
+  
+                        
+                                      
                             child: _getExpirationBorder(
   item['expirationDate'], 
   item['purchaseDate'],Container(
@@ -375,7 +512,7 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                           child: Container(
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Colors.brown,
+                                                  color: const Color.fromARGB(255, 221, 145, 117),
                                                   width: 3),
                                               image: DecorationImage(
                                                 image: NetworkImage(item[
@@ -423,12 +560,10 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                                                             .bold,
                                                                     fontSize:
                                                                         18,
-                                                                    color: Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                            255),decoration: TextDecoration.underline)), // User-entered text size
+                                                                       color: Colors.black,
+                                                                ),
+                                                            ),
+                                                                   // color: Color.fromARGB(0, 0, 0, 0),decoration: TextDecoration.underline)), // User-entered text size
                                                           ],
                                                         ),
                                                       ),
@@ -459,12 +594,14 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                                                             .bold,
                                                                     fontSize:
                                                                         17,
-                                                                    color: Color
+                                                              color: Colors.black,
+
+                                                                   /* color: Color
                                                                         .fromARGB(
                                                                             255,
                                                                             255,
                                                                             255,
-                                                                            255))),
+                                                                            255)*/)),
                                                           ],
                                                         ),
                                                       ),
@@ -473,6 +610,7 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                                 ],
                                               ),
                                             ),
+                                            
                                             Expanded(
                                               child: Row(
                                                 children: [
@@ -499,12 +637,13 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                                                             .bold,
                                                                     fontSize:
                                                                         17.5,
-                                                                    color: Color
+                                                                        color: Colors.black,
+                                                                   /* color: Color
                                                                         .fromARGB(
                                                                             255,
                                                                             255,
                                                                             255,
-                                                                            255))),
+                                                                            255)*/)),
                                                           ],
                                                         ),
                                                       ),
@@ -551,7 +690,7 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                       ),
                                     ],
                                   ),
-                                  Positioned(
+                                 /* Positioned(
                                     bottom: 5, // adjust as needed
                                     left: 30, // adjust as needed
                                     child: Text(
@@ -562,7 +701,7 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                                             255), // or any color you prefer
                                       ),
                                     ),
-                                  ),
+                                  ),*/
                                   Positioned(
                                     top: 0,
                                     right: 0,
@@ -628,9 +767,11 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
                             ),
                           )
                           ),
-                        );
+                        ));
                       },
-                    )),
+          )),
+          
+      
         ],
       ),
       bottomNavigationBar: Taskbar(
@@ -644,9 +785,13 @@ Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget c
       floatingActionButton: FloatingActionButton(
         onPressed: _navigateToAddItem,
         child: Icon(Icons.add),
-        backgroundColor: const Color.fromARGB(210, 33, 149, 243),
+        backgroundColor: Color.fromARGB(168, 169, 173, 226),
       ),
+     
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+
+       
     );
+     
   }
 }
