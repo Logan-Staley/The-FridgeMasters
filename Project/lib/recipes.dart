@@ -26,7 +26,7 @@ class Recipes extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Background(type: 'Background1'), // for Background1
+          Background(type: 'Background4'), // for Background1
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

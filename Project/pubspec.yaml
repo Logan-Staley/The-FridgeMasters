@@ -44,6 +44,7 @@ dependencies:
   intl: ^0.18.0
   provider: ^6.0.5
   path_drawing: ^1.0.1
+  flutter_svg: ^2.0.9
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -72,6 +73,14 @@ flutter:
      - images/test-food-image.jpg
      - images/bell-notifications.jpg
      - images/fridgemasters-logo.png
+     - images/LOGIN_Image.jpg
+     - images/FinalLOGO.jpeg
+     - images/Notifications_Image.jpg
+     - images/Recipes_Image.jpg
+     - images/Homepage_Image.jpg
+     - images/LogoFM.svg
+
+
 #    - sounds/app_launch.mp3
      - sounds/click_sound.mp3
      - sounds/login_sound.mp3

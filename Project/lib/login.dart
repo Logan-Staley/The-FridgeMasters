@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Services/fetchinventoryItems.dart';
 import 'package:fridgemasters/homepage.dart';
+import 'package:fridgemasters/logo_widget.dart';
 import 'package:fridgemasters/widgets/button.dart';
 import 'package:fridgemasters/resetpassword.dart';
 import 'widgets/inputtextbox.dart';
@@ -99,11 +100,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildLoginContent() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset('images/fridgemasters-logo.png'),
-        const SizedBox(height: 20),
+    return SingleChildScrollView(
+      child: Column( mainAxisAlignment: MainAxisAlignment.center, 
+      children: [ LogoWidget(width: MediaQuery.of(context).size.width * 0.3),
+      SizedBox(height: 20),
+      //mainAxisAlignment: MainAxisAlignment.center,
+      //children: [
+        //Image.asset('images/FinalLOGO.jpeg'),
+        //const SizedBox(height: 20),
         InputTextBox(
           controller: usernameController,
           isPassword: false,
@@ -142,6 +146,17 @@ class _LoginPageState extends State<LoginPage> {
           },
         ),
       ],
+    ),
     );
+  }
+
+  
+  
+  @override
+  void dispose() {
+    // Dispose of your controllers when the widget is no longer used
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }
