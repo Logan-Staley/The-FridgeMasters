@@ -8,6 +8,7 @@ class FoodItem {
   final int quantity;
   final String dateOfPurchase;
   final String expirationDate;
+  final String imageUrl; // Add this line
 
   FoodItem({
     required this.itemId,
@@ -15,6 +16,7 @@ class FoodItem {
     required this.quantity,
     required this.dateOfPurchase,
     required this.expirationDate,
+    required this.imageUrl, // Add this line
   });
 }
 
@@ -48,6 +50,7 @@ class _InventoryState extends State<Inventory> {
         quantity: int.parse(item['quantity']),
         dateOfPurchase: item['dateOfPurchase'],
         expirationDate: item['expirationDate'],
+        imageUrl: item['imageUrl'] ?? 'default_image.png', // Add this line
       )).toList();
     } else {
       // Handle error accordingly

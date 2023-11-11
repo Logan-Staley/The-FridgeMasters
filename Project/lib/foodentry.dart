@@ -42,40 +42,75 @@ class FoodEntry extends StatefulWidget {
 
 class _FoodEntryState extends State<FoodEntry> {
 
-  
+   String _productName = '';
   String _imageUrl = '';
+
   Map<String, dynamic> _nutrientsInfo = {};
   List<Recipe> _recipes = [];
 
-  void processEdamamData(Map<String, dynamic> data) {
-    // Extracting image URL
-    String imageUrl = data['image'] ?? '';
+  // Make processEdamamData asynchronous and return a Future
+Future<void> processEdamamData(Map<String, dynamic> data, {bool isUpc = false}) async {
+  String imageUrl = '';
+  if (data.containsKey('hints') && data['hints'] is List && data['hints'].isNotEmpty) {
+    Map<String, dynamic> firstHint = data['hints'][0];
+    if (firstHint.containsKey('food') && firstHint['food'] is Map) {
+      Map<String, dynamic> foodData = firstHint['food'];
+      // Check for the existence of 'image' key and set imageUrl accordingly
+      imageUrl = foodData.containsKey('image') ? foodData['image'] : '';
+    }
+  }
+  String productName = '';
+if (isUpc) {
+  // Check if the hints array is not empty and then access the label
+  if (data.containsKey('hints') && data['hints'] is List && data['hints'].isNotEmpty && data['hints'][0] is Map && data['hints'][0].containsKey('food') && data['hints'][0]['food'] is Map && data['hints'][0]['food'].containsKey('label')) {
+    productName = data['hints'][0]['food']['label'];
     
+  }
+} else {
+  // If the call was not made with a UPC code, use the user input
+  productName = foodItemNameController.text;
+}
+  
+  // Call saveToInventory with the extracted data
+  saveToInventory(productName: productName, imageUrl: imageUrl);
     // Extracting nutritional information
     Map<String, dynamic> nutrients = data['nutrients'] ?? {};
     
     // Extracting recipes
     List<dynamic> recipes = data['hits'] ?? [];
-
+    
     // Update your state with the fetched information
     setState(() {
-      _imageUrl = imageUrl;
-      _nutrientsInfo = nutrients;
-      _recipes = recipes.map((recipe) => Recipe.fromMap(recipe['recipe'])).toList();
+      if (foodItemNameController.text.isEmpty) {
+        _productName = productName;
+        print (productName);
+      }
+      else 
+      _productName = foodItemNameController.text;
+      print (productName);
+      _imageUrl = imageUrl;// Set the product name in the state
+      //_nutrientsInfo = nutrients;
+      //_recipes = recipes.map((recipe) => Recipe.fromMap(recipe['recipe'])).toList();
     });
   }
 
 
-  Future<void> fetchFromEdamam(String foodName) async {
+  Future<void> fetchFromEdamam(String foodName, {bool isUpc = false}) async {
   // Access the variables from .env file
   final String appIdFood = dotenv.env['EDAMAM_APP_FOOD'] ?? "default_id";
   final String appKeyFood = dotenv.env['EDAMAM_APP_KEY_FOOD'] ?? "default_key";
   final String appUrlFood = dotenv.env['EDAMAM_APP_URL_FOOD'] ?? "default_url";
 
-  final String edamamUrlFood = "$appUrlFood?ingr=$foodName&app_id=$appIdFood&app_key=$appKeyFood";
+  final String upcCode = upcNumberController.text;
+  final String edamamUrlFood;
 
+if (upcCode.isNotEmpty) {
+  edamamUrlFood = "$appUrlFood?upc=$upcCode&app_id=$appIdFood&app_key=$appKeyFood";
+} else {
+  edamamUrlFood = "$appUrlFood?ingr=$foodName&app_id=$appIdFood&app_key=$appKeyFood";
+}
   // Use the edamamUrlFood to fetch food data...
-
+ print("Edamam URL: $edamamUrlFood");
   // You can do the same for Nutrition and Recipes
   final String appIdNutrition = dotenv.env['EDAMAM_APP_NUTRITION'] ?? "default_id";
   final String appKeyNutrition = dotenv.env['EDAMAM_APP_KEY_NUTRITION'] ?? "default_key";
@@ -97,8 +132,8 @@ class _FoodEntryState extends State<FoodEntry> {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      // Assuming you have a method to process this data
-      processEdamamData(data);
+      // Wait for processEdamamData to finish
+    await processEdamamData(data, isUpc: isUpc);
     } else {
       print("Failed to load data from Edamam: ${response.body}");
     }
@@ -138,7 +173,7 @@ class _FoodEntryState extends State<FoodEntry> {
     }
   }
 
-void saveToInventory() async {
+void saveToInventory({required String productName, required String imageUrl}) async {
   final formattedDateOfPurchase = formatDateString(dateOfPurchaseController.text);
   final formattedExpirationDate = formatDateString(expirationDateController.text);
 
@@ -151,6 +186,12 @@ void saveToInventory() async {
     print("UserID is missing or empty.");
     return;
   }
+  if (foodItemNameController.text.isEmpty) {
+        productName = productName;
+        print (productName);
+      }
+      else 
+      productName = foodItemNameController.text;
  // Get the itemId from the ItemID controller
   final itemId = ItemID.text;
   // HTTP request
@@ -158,18 +199,21 @@ void saveToInventory() async {
     Uri.parse('http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/insert_inventory.php'),
     body: {
       'itemID': itemId,
-      'productName': foodItemNameController.text,
+      'productName': productName,
       'quantity': quantityController.text,
       'dateOfPurchase': formattedDateOfPurchase,
       'expirationDate': formattedExpirationDate,
       'userId': userId, // Include the userID in the request
+      'imageUrl': _imageUrl, // Include the image URL in the request
+      'upcCode' : upcNumberController.text,
     },
   );
 
   if (response.statusCode == 200) {
     final responseData = json.decode(response.body);
     final itemId = responseData['itemId']; // Get the itemId from the response
-    print('Item ID: $itemId');
+    final imageUrl = responseData['imageUrl']; // Get the imageUrl from the response
+
     // Create a FoodItem with the retrieved itemId
     final foodItem = FoodItem(
       itemId: itemId.toString(), // Convert to string if necessary
@@ -177,6 +221,7 @@ void saveToInventory() async {
       quantity: int.tryParse(quantityController.text) ?? 0,
       dateOfPurchase: formattedDateOfPurchase,
       expirationDate: formattedExpirationDate,
+      imageUrl: imageUrl,
     );
 
     print("Data sent successfully!");
@@ -343,9 +388,21 @@ Widget build(BuildContext context) {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: saveToInventory,
-                child: const Text('Add to Fridge'),
-              ),
+  onPressed: () async {
+    if (upcNumberController.text.isNotEmpty) {
+      // Fetch data using the UPC code
+      await fetchFromEdamam(upcNumberController.text, isUpc: true);
+    } else if (foodItemNameController.text.isNotEmpty) {
+      // Fetch data using the food name
+      await fetchFromEdamam(foodItemNameController.text);
+    } else {
+      print("Please enter a UPC code or a food name.");
+      return;
+    }
+  },
+  child: const Text('Add to Fridge'),
+),
+
               const SizedBox(height: 20),
               TextOnlyButton(
                 text: 'Cancel',

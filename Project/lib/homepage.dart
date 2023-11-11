@@ -1,4 +1,4 @@
-import 'dart:math';
+//import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/inventory.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
@@ -182,6 +182,7 @@ class _HomePageState extends State<HomePage> {
 
 // Map the loadedItems to the expected format
         List<Map<String, dynamic>> formattedItems = loadedItems.map((item) {
+          String imageUrl = item['imageUrl'] ?? 'images/default_image.png'; // Use the image URL from the database if available
           return {
             'itemId': item['itemId'], // Include the itemId
             'name': item['productName'],
@@ -192,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                 .split(" ")[0], // Only take the date part, exclude the time
 
             'imageUrl':
-                'images/default_image.png', // Keep as default or adjust as necessary
+                item['imageUrl'], // Keep as default or adjust as necessary
           };
         }).toList();
 print('Formatted Items: $formattedItems'); // Print the formattedItems list
@@ -228,7 +229,7 @@ print('Formatted Items: $formattedItems'); // Print the formattedItems list
           'purchaseDate': newFoodItem.dateOfPurchase.toString(),
           'expirationDate': newFoodItem.expirationDate.toString(),
           'imageUrl':
-              'images/default_image.png',
+              ['imageUrl'],
         });
       });
     }
@@ -412,7 +413,7 @@ Widget _nonExpiringBorder(Widget child) {
       // Index is greater than 0, so it's an item
                         final item = widget.fridgeItems[index-1];
                         final itemId = item['itemId'];
-                        print('Item ID at index $index: $itemId');
+                        //print('Item ID at index $index: $itemId');
                         Color _getPastelColor(int index) {
                           final r = (70 + (index * 50) % 135).toDouble();
                           final g = (90 + (index * 80) % 85).toDouble();
@@ -421,7 +422,16 @@ Widget _nonExpiringBorder(Widget child) {
                               r.toInt(), g.toInt(), b.toInt(), 0.9);
                         }
 
-                       
+                     ImageProvider getImageProvider(String? imageUrl) {
+  // Check if imageUrl is a network URL
+  if (imageUrl != null && Uri.tryParse(imageUrl)?.hasAbsolutePath == true) {
+    // If it's a valid URL, return a NetworkImage
+    return NetworkImage(imageUrl);
+  } else {
+    // If it's not a valid URL (or is null), return a AssetImage
+    return AssetImage('images/default_image.png');
+  }
+}  
                            return Padding(
   padding: const EdgeInsets.all(8.0),
   child: Card(
@@ -439,27 +449,36 @@ Widget _nonExpiringBorder(Widget child) {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
-                                        flex: 3,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(
-                                              16.0), // Image padding
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.brown,
-                                                  width: 3),
-                                              image: DecorationImage(
-                                                image: NetworkImage(item[
-                                                        'imageUrl'] ??
-                                                    'images/default_image.png'), // Explicit Null Check for imageUrl
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            width: 100,
-                                            height: 100,
-                                          ),
-                                        ),
-                                      ),
+  flex: 3,
+  child: Padding(
+    padding: const EdgeInsets.all(16.0), // Image padding
+    child: Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.brown, width: 3),
+      ),
+      width: 100,
+      height: 100,
+      child: Image.network(
+        item['imageUrl'].toString() ?? '',
+        fit: BoxFit.cover,
+        errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+          // In case of an error (like a 404), use the default image
+          return Image.asset('images/default_image.png', fit: BoxFit.cover);
+        },
+        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Center(
+            child: CircularProgressIndicator(
+              value: loadingProgress.expectedTotalBytes != null
+                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                  : null,
+            ),
+          );
+        },
+      ),
+    ),
+  ),
+),
                                       Expanded(
                                         flex: 7,
                                         child: Column(
