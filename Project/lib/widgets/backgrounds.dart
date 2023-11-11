@@ -55,7 +55,7 @@ class Background2 extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('images/bell-notifications.jpg'),
+          image: AssetImage('images/Homepage_Image.jpg'),
           fit: BoxFit.cover,
         ),
       ),
