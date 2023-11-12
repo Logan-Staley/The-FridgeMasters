@@ -14,7 +14,8 @@ Future<List<FoodItem>> fetchInventoryItems() async {
       quantity: item['quantity'],
       dateOfPurchase: item['dateOfPurchase'],
       expirationDate: item['expirationDate'],
-      imageUrl: item['imageUrl'] ?? 'default_image.png', // Add this line
+      imageUrl: item['imageUrl'] ?? 'default_image.png',
+      nutrients: item['nutrients'], // Add this line
     )).toList();
     
   } else {
