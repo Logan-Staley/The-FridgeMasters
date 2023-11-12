@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/homepage.dart';
 import 'package:fridgemasters/login.dart';
-import 'package:provider/provider.dart';
-import 'theme.dart'; // Import theme.dart where you have lightTheme and darkTheme definitions
+import 'package:fridgemasters/theme.dart';
+import 'package:provider/provider.dart'; // Import theme.dart where you have lightTheme and darkTheme definitions
 import 'theme_notifier.dart'; // Import your ThemeNotifier
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'language_change_notifier.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required if you're using async code before runApp
@@ -16,10 +17,14 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ThemeNotifier(),
-      child: Consumer<ThemeNotifier>(
-        builder: (context, themeNotifier, child) {
+    return MultiProvider( providers: [
+ChangeNotifierProvider(create: (context) => ThemeNotifier()),
+        ChangeNotifierProvider(create: (context) => LanguageChangeNotifier()),
+
+    ],
+      //create: (context) => ThemeNotifier(),
+      child: Consumer2<ThemeNotifier, LanguageChangeNotifier>(
+        builder: (context, themeNotifier, languageNotifier, child) {
           return MaterialApp(
             title: 'FridgeMasters App',
             theme: lightTheme,

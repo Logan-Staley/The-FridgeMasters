@@ -6,7 +6,8 @@ class AccountSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Account Settings')),
+      appBar: AppBar(title: Text('Account Settings'),
+      backgroundColor: Theme.of(context).primaryColor,),
       body: ListView(
         children: [
           ListTile(

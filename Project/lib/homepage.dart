@@ -267,9 +267,11 @@ Widget _nonExpiringBorder(Widget child) {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(220, 48, 141, 160),
+        backgroundColor: theme.primaryColor,
+        //backgroundColor: Color.fromARGB(220, 48, 141, 160),
         elevation: 0, // Removes the default shadow
         shape: RoundedRectangleBorder(
           side: BorderSide(
@@ -321,7 +323,8 @@ Widget _nonExpiringBorder(Widget child) {
       ),
       body: Stack(
         children: [
-          const Background(type: 'Background1'),
+          //const Background(type: 'Background1'),
+          Background(type: 'Background1'),
           Center(
               child: widget.fridgeItems.isEmpty
                   ? Column(
@@ -723,7 +726,8 @@ Widget _nonExpiringBorder(Widget child) {
       ),
       bottomNavigationBar: Taskbar(
         currentIndex: 0,
-        backgroundColor: Color.fromARGB(255, 233, 232, 232),
+        backgroundColor: theme.bottomAppBarColor,
+        //backgroundColor: Color.fromARGB(255, 233, 232, 232),
         onTabChanged: (index) {},
         onFoodItemAdded: (foodItem) {
           // You need to provide this callback
@@ -732,7 +736,8 @@ Widget _nonExpiringBorder(Widget child) {
       floatingActionButton: FloatingActionButton(
         onPressed: _navigateToAddItem,
         child: Icon(Icons.add),
-        backgroundColor: const Color.fromARGB(210, 33, 149, 243),
+        //backgroundColor: const Color.fromARGB(210, 33, 149, 243),
+        backgroundColor: theme.colorScheme.secondary,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

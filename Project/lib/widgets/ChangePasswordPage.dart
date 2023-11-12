@@ -1,4 +1,4 @@
-// TODO Implement this library.
+
 import 'package:flutter/material.dart';
 
 class ChangePasswordPage extends StatefulWidget {
@@ -10,9 +10,20 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final _formKey = GlobalKey<FormState>();
   String _currentPassword = '';
   String _newPassword = '';
+  String _retypePassword = '';
 
   void _changePassword() {
     // Implement your change password logic here
+  }
+
+  bool _isPasswordCompliant(String password, [int minLength = 5]) {
+    if (password.isEmpty) {
+      return false;
+    }
+    bool hasMinLength = password.length >= minLength;
+    bool hasSpecialCharacter = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+
+    return hasMinLength && hasSpecialCharacter;
   }
 
   @override
@@ -35,7 +46,33 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               decoration: InputDecoration(labelText: 'New Password'),
               obscureText: true,
               onChanged: (value) => _newPassword = value,
-              // Add validators as necessary
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a new password';
+                }
+                if (!_isPasswordCompliant(value)) {
+                  return 'Password must be at least 5 characters long and include special characters';
+                }
+                if (value != _retypePassword) {
+                  return 'Passwords do not match';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Retype New Password'),
+              obscureText: true,
+              onChanged: (value) => _retypePassword = value,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please retype the new password';
+                }
+                if (_newPassword != value) {
+                  return 'Passwords do not match';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 24.0),
             ElevatedButton(
@@ -52,4 +89,3 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     );
   }
 }
-//ODO Implement this library.

@@ -9,6 +9,7 @@ class NutritionPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Nutrition Page'),
+         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),

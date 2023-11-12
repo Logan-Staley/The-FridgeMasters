@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fridgemasters/logo_widget.dart';
 
 class AnimatedLogo extends StatefulWidget {
   final VoidCallback? onAnimationCompleted;
@@ -12,9 +11,8 @@ class AnimatedLogo extends StatefulWidget {
 
 class _AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  //late Animation<double> _animation;
-  //bool _isDisposed = false;
-  late Animation<double> _opacity;
+  late Animation<double> _animation;
+  bool _isDisposed = false;
 
   @override
   void initState() {
@@ -25,34 +23,112 @@ class _AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderSt
       vsync: this,
     );
 
-   
-_opacity = Tween<double>(begin: 0.0, end: 1.0).animate(_controller)
-..addStatusListener((status) {if(status == AnimationStatus.completed)
-{widget.onAnimationCompleted?.call();
-}
+    _animation = Tween<double>(begin: -0.52, end: 0.8).animate(_controller)
+      ..addStatusListener((status) {
+        if (!_isDisposed && status == AnimationStatus.completed) {
+          if (widget.onAnimationCompleted != null) {
+            widget.onAnimationCompleted!();
+          }
+        }
+      });
 
-});
- 
-    _controller.forward();
+    _startMeteorAnimation();
+  }
+
+  void _startMeteorAnimation() {
+    if (!_isDisposed) {
+      _controller.reset();
+      _controller.forward().whenComplete(() {
+        // Trigger the onAnimationCompleted callback if provided
+        if (widget.onAnimationCompleted != null) {
+          widget.onAnimationCompleted!();
+        }
+      });
     }
-  
+  }
 
-  //@override
-  
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _opacity,
-      child: Center(
-        child: LogoWidget(),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            final meteorPosition = _animation.value;
+            final meteorScale = (_animation.value + 1).clamp(0.0, 1.0);
+
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                Positioned(
+                  left: constraints.maxWidth * meteorPosition,
+                  child: Transform.scale(
+                    scale: meteorScale,
+                    child: Image.asset(
+                      'images/FinalLOGO.png',
+                      width: 250,
+                    ),
+                  ),
+                ),
+                ShimmeringCircle(
+                  animation: _controller,
+                  constraints: constraints,
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 
   @override
   void dispose() {
-    //_isDisposed = true;
+    _isDisposed = true;
     _controller.dispose();
     super.dispose();
+  }
+}
+
+class ShimmeringCircle extends StatelessWidget {
+  final Animation<double> animation;
+  final BoxConstraints constraints;
+
+  ShimmeringCircle({required this.animation, required this.constraints});
+
+  @override
+  Widget build(BuildContext context) {
+    final shimmerPosition = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 0, end: 1),
+        weight: 0.4,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 1, end: 0),
+        weight: 0.1,
+      ),
+    ]).animate(CurvedAnimation(
+      parent: animation,
+      curve: Curves.easeInOutQuart,
+    ));
+
+    return AnimatedBuilder(
+      animation: shimmerPosition,
+      builder: (context, child) {
+        final position = shimmerPosition.value;
+
+        return Opacity(
+          opacity: position,
+          child: Container(
+            width: constraints.maxWidth * position * 2.0,
+            height: constraints.maxHeight * position * 2.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color.fromARGB(231, 158, 158, 158),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

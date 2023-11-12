@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 import  'audio_manager.dart';
 import 'animated_logo.dart';
-import 'package:fridgemasters/logo_widget.dart';
+
 
 
 class SplashScreen extends StatefulWidget {

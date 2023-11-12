@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Services/fetchinventoryItems.dart';
 import 'package:fridgemasters/homepage.dart';
-import 'package:fridgemasters/logo_widget.dart';
+import 'package:fridgemasters/language_change_notifier.dart';
 import 'package:fridgemasters/widgets/button.dart';
 import 'package:fridgemasters/resetpassword.dart';
 import 'widgets/inputtextbox.dart';
@@ -14,6 +14,7 @@ import 'package:fridgemasters/widgets/animated_logo.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "Services/storage_service.dart";
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
@@ -79,7 +80,13 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final languageNotifier = Provider.of<LanguageChangeNotifier>(context);
+    //Color backgroundColor = theme.brightness == Brightness.dark ? Colors.black : Colors.white;
     return Scaffold(
+      //backgroundColor: theme.backgroundColor,
+     // backgroundColor: Colors.white,
+     backgroundColor: Colors.white,
       body: Stack(
         children: [
           const Background(type: 'Background1'), // for Background1
@@ -92,32 +99,49 @@ class _LoginPageState extends State<LoginPage> {
                       });
                     },
                   )
-                : _buildLoginContent(),
+                //: _buildLoginContent(),
+                : _buildLoginContent(languageNotifier.currentLanguage, theme),
+
           ),
         ],
       ),
     );
   }
 
-  Widget _buildLoginContent() {
+  Widget _buildLoginContent(String currentLanguage, ThemeData theme) {
+    //Color inputTextColor = theme.brightness == Brightness.dark ? Colors.black87 : theme.textTheme.bodyText1?.color ?? Colors.black87;
+     // Update text based on currentLanguage
+     Color inputTextColor = theme.brightness == Brightness.dark ?  Colors.black87 : theme.textTheme.bodyText1?.color ?? Colors.black87;
+   // Color inputBackgroundColor = theme.brightness == Brightness.dark ? (Colors.grey[850] ?? Colors.black): Colors.grey[200]!;
+
+    String loginButtonText = getLocalizedString(currentLanguage, 'login');
+    String createAccountText = getLocalizedString(currentLanguage, 'createAccount');
+    String forgotPasswordText = getLocalizedString(currentLanguage, 'forgotPassword');
+
     return SingleChildScrollView(
       child: Column( mainAxisAlignment: MainAxisAlignment.center, 
-      children: [ LogoWidget(width: MediaQuery.of(context).size.width * 0.3),
-      SizedBox(height: 20),
+      //children: [ LogoWidget(width: MediaQuery.of(context).size.width * 0.3),
+      children: [ SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+      Image.asset('images/FinalLOGO.png', width: MediaQuery.of(context).size.width * 0.3),
+      //SizedBox(height: 20),
       //mainAxisAlignment: MainAxisAlignment.center,
       //children: [
-        //Image.asset('images/FinalLOGO.jpeg'),
-        //const SizedBox(height: 20),
+        //mage.asset('images/FinalLOGO.png'),
+        const SizedBox(height: 20),
         InputTextBox(
           controller: usernameController,
           isPassword: false,
           hint: 'Username or Email',
+          textColor: inputTextColor,
+          backgroundColor: Colors.grey[200]!,
         ),
         const SizedBox(height: 20),
         InputTextBox(
           controller: passwordController,
           isPassword: true,
           hint: 'Enter your password',
+          textColor: Colors.black87,
+          backgroundColor: Colors.grey[200]!,
         ),
         const SizedBox(height: 20),
         Button(
@@ -150,13 +174,34 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  
-  
+    String getLocalizedString(String currentLanguage, String key) {
+    Map<String, Map<String, String>> localizedStrings = {
+      'en': {
+        'login': 'Login',
+        'createAccount': 'Create Account',
+        'forgotPassword': 'Forgot Password?',
+      },
+      'es': {
+        'login': 'Iniciar sesión',
+        'createAccount': 'Crear Cuenta',
+        'forgotPassword': '¿Olvidaste tu contraseña?',
+      },
+      'fr': {
+        'login': 'Connexion',
+        'createAccount': 'Créer un compte',
+        'forgotPassword': 'Mot de passe oublié?',
+      },
+    };
+
+    return localizedStrings[currentLanguage]?[key] ?? 'Key not found';
+  }
+
   @override
   void dispose() {
     // Dispose of your controllers when the widget is no longer used
     usernameController.dispose();
     passwordController.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 }

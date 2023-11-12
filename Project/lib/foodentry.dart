@@ -142,13 +142,20 @@ void saveToInventory() async {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add to Inventory'),
+        backgroundColor: theme.primaryColor,
       ),
       bottomNavigationBar: Taskbar(
         currentIndex: 1, // Assuming this is the second tab
-        backgroundColor: Color.fromARGB(255, 233, 232, 232),
+        //backgroundColor: Color.fromARGB(255, 233, 232, 232),
+        backgroundColor: theme.bottomAppBarColor,
+
+      
+          // Handle navigation logic here
+        
         onTabChanged: (index) {
           currentIndex: 0;// Handle tab change if necessary
         },
@@ -161,7 +168,8 @@ void saveToInventory() async {
         children: [
           Background(type: 'Background1'), // for Background1
           Center(
-            child: Column(
+            //child: Column(
+              child: SingleChildScrollView( child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Food Item'),
@@ -247,12 +255,15 @@ void saveToInventory() async {
                   child: const Text('Add to Fridge'),
                 ),
                 const SizedBox(height: 20),
-                TextOnlyButton(
-                  text: 'Cancel',
+                ElevatedButton(
+                  //text: 'Cancel',
                   onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancel'),
+                  style: ElevatedButton.styleFrom() ,
                 ),
               ],
             ),
+          ),
           ),
         ],
       ),

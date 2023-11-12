@@ -23,11 +23,12 @@ class _NotificationListState extends State<NotificationList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notifications'),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Stack(
         children: [
           // Here you can call Background2 by using Background(type: 'Background2')
-          Background(type: 'Background2'),
+          Background(type: 'Background1'),
           ListView.builder(
             itemCount: foodItems.length,
             itemBuilder: (context, index) {

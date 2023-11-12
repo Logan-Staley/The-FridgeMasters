@@ -90,6 +90,7 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
+        backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -139,11 +140,12 @@ class _SettingsState extends State<Settings> {
             ListTile(
             title: Text('Theme'),
             trailing: ElevatedButton(
-              onPressed: () {
-                themeNotifier.toggleTheme();
-              },
-              child: Text(
-                'Toggle Theme',
+              onPressed: () => Provider.of<ThemeNotifier>(context, listen: false).toggleTheme(),
+                //themeNotifier.toggleTheme();
+              
+              child: Text('Toggle Theme'
+                
+                //themeNotifier.themeMode == ThemeMode.dark ? 'Switch to Light Mode' : 'Switch to Dark Mode',
               ),
             ),
             

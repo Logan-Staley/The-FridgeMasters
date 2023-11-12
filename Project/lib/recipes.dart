@@ -9,13 +9,16 @@ class Recipes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recipes Page'),
+        backgroundColor: theme.primaryColor,
       ),
       bottomNavigationBar: Taskbar(
         currentIndex: 2, // Assuming this is the second tab
-        backgroundColor: Color.fromARGB(255, 233, 232, 232),
+        backgroundColor: theme.bottomAppBarColor,
+        //Color.fromARGB(255, 233, 232, 232),
         onTabChanged: (index) {
           // Handle tab change if necessary
         },
@@ -26,14 +29,14 @@ class Recipes extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Background(type: 'Background4'), // for Background1
+          Background(type: 'Background1'), // for Background1
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                 Text(
                   'AI Generated recipes based on your fridge food items',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: theme.textTheme.bodyText1?.color,),
                 ),
                 const SizedBox(height: 100),
 
@@ -81,6 +84,9 @@ class Recipes extends StatelessWidget {
                         builder: (context) => const Recipesinstructions()));
                   },
                   child: const Text('Back'),
+                  style: ElevatedButton.styleFrom(
+                    primary: theme.colorScheme.secondary,
+                )
                 )
               ],
             ),
