@@ -194,8 +194,15 @@ class _HomePageState extends State<HomePage> {
 
             'imageUrl':
                 item['imageUrl'], // Keep as default or adjust as necessary
-          };
-        }).toList();
+            'nutrients': {
+      'ENERC_KCAL': item['ENERC_KCAL'],
+      'PROCNT': item['PROCNT'],
+      'FAT': item['FAT'],
+      'CHOCDF': item['CHOCDF'],
+      'FIBTG': item['FIBTG'],
+    },
+  };
+}).toList();
 print('Formatted Items: $formattedItems'); // Print the formattedItems list
         setState(() {
           widget.fridgeItems.addAll(formattedItems);
@@ -379,7 +386,7 @@ Widget _nonExpiringBorder(Widget child) {
                     style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold), 
                   ),
                   TextSpan(
-                    text: '🟡',
+                    text: '🟢',
                     style: TextStyle(color: Color.fromARGB(255, 4, 114, 8), fontSize: 17, fontWeight: FontWeight.bold), 
                   ),
                   TextSpan(
@@ -395,7 +402,7 @@ Widget _nonExpiringBorder(Widget child) {
                     style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
                   ),
                   TextSpan(
-                    text: '🟡',
+                    text: '🔴',
                     style: TextStyle(color: Color.fromARGB(255, 226, 50, 50), fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
@@ -452,29 +459,41 @@ Widget _nonExpiringBorder(Widget child) {
   flex: 3,
   child: Padding(
     padding: const EdgeInsets.all(16.0), // Image padding
-    child: Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.brown, width: 3),
-      ),
-      width: 100,
-      height: 100,
-      child: Image.network(
-        item['imageUrl'].toString() ?? '',
-        fit: BoxFit.cover,
-        errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-          // In case of an error (like a 404), use the default image
-          return Image.asset('images/default_image.png', fit: BoxFit.cover);
-        },
-        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) return child;
-          return Center(
-            child: CircularProgressIndicator(
-              value: loadingProgress.expectedTotalBytes != null
-                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                  : null,
-            ),
-          );
-        },
+    child: GestureDetector(
+      onTap: () {
+        // Action to perform on tap goes here.
+        // For instance, navigate to a new screen with the nutritional facts.
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NutritionPage(item: item), // itemData should include 'name' and 'nutrients'
+          ),
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.brown, width: 3),
+        ),
+        width: 100,
+        height: 100,
+        child: Image.network(
+          item['imageUrl'].toString() ?? '',
+          fit: BoxFit.cover,
+          errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+            // In case of an error (like a 404), use the default image
+            return Image.asset('images/default_image.png', fit: BoxFit.cover);
+          },
+          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                    : null,
+              ),
+            );
+          },
+        ),
       ),
     ),
   ),
