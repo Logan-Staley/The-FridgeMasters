@@ -1,0 +1,7 @@
+source /Path/To/SCRIPT
+
+
+Source C:/xampp/mysql/scripts/Scriptname.sql
+
+
+Run the Script 2 Times.
