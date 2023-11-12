@@ -13,15 +13,15 @@ class _LanguageState extends State<Language> {
   Map<String, Map<String, String>> localizedValues = {
     'en': {
       'title': 'Language',
-      'content': 'Your content here',
+      'content': 'Select your preferred language',
     },
     'es': {
       'title': 'Idioma',
-      'content': 'Tu contenido aquí',
+      'content': 'Selecciona tu idioma preferido',
     },
     'fr': {
       'title': 'Langue',
-      'content': 'Votre contenu ici',
+      'content': 'Sélectionnez votre langue préférée',
     },
   };
 
@@ -45,58 +45,56 @@ class _LanguageState extends State<Language> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    Color appBarColor = theme.primaryColor;
+    final Color activeColor = Colors.blue;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizedValues[currentLanguage]!['title']!),
-        backgroundColor: Theme.of(context).primaryColor,
+        title: Text(
+          localizedValues[currentLanguage]!['title']!,
+          style: theme.appBarTheme.titleTextStyle,
+        ),
+       // backgroundColor: theme.appBarTheme.backgroundColor,
+       backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Stack(
         children: [
-          Positioned.fill(child: Background(type: 'Background1')), // For Background1
-          Center(
+          Background(type: 'Background1'), // Consistent background
+          Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(localizedValues[currentLanguage]!['content']!),
+                Text(
+                  localizedValues[currentLanguage]!['content']!,
+                  style: theme.textTheme.headline6,
+                ),
                 SizedBox(height: 20),
-                RadioListTile<String>(
-                  title: const Text('English'),
-                  value: 'en',
-                  groupValue: currentLanguage,
-                  onChanged: (String? value) {
-                    setState(() {
-                      currentLanguage = value!;
-                    });
-                    _saveLanguage(currentLanguage);
-                  },
-                ),
-                RadioListTile<String>(
-                  title: const Text('Español'),
-                  value: 'es',
-                  groupValue: currentLanguage,
-                  onChanged: (String? value) {
-                    setState(() {
-                      currentLanguage = value!;
-                    });
-                    _saveLanguage(currentLanguage);
-                  },
-                ),
-                RadioListTile<String>(
-                  title: const Text('Français'),
-                  value: 'fr',
-                  groupValue: currentLanguage,
-                  onChanged: (String? value) {
-                    setState(() {
-                      currentLanguage = value!;
-                    });
-                    _saveLanguage(currentLanguage);
-                  },
-                ),
+                _buildLanguageOption('en', 'English', activeColor),
+                _buildLanguageOption('es', 'Español', activeColor),
+                _buildLanguageOption('fr', 'Français', activeColor),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildLanguageOption(String value, String text, Color activeColor) {
+    return RadioListTile<String>(
+      title: Text(text, style: Theme.of(context).textTheme.subtitle1),
+      value: value,
+      groupValue: currentLanguage,
+      onChanged: (String? selectedValue) {
+        setState(() {
+          currentLanguage = selectedValue!;
+        });
+        _saveLanguage(currentLanguage);
+      },
+      activeColor: activeColor,
     );
   }
 }
