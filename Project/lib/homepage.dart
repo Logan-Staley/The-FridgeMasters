@@ -22,7 +22,6 @@ String convertToDisplayFormat(String date) {
   return date; // Return the original string if the format isn't as expected
 }
 
-
 class ExpiringItemTile extends StatefulWidget {
   final String expirationDate;
   final String purchaseDate;
@@ -38,7 +37,8 @@ class ExpiringItemTile extends StatefulWidget {
   _ExpiringItemTileState createState() => _ExpiringItemTileState();
 }
 
-class _ExpiringItemTileState extends State<ExpiringItemTile> with SingleTickerProviderStateMixin {
+class _ExpiringItemTileState extends State<ExpiringItemTile>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
   @override
@@ -59,16 +59,16 @@ class _ExpiringItemTileState extends State<ExpiringItemTile> with SingleTickerPr
   Widget _nonExpiringBorder(Widget child) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Color.fromARGB(255, 168, 169, 173), width: 0.8),
-         borderRadius: BorderRadius.circular(70), 
+        border:
+            Border.all(color: Color.fromARGB(255, 168, 169, 173), width: 0.8),
+        borderRadius: BorderRadius.circular(70),
       ),
-      
       child: child,
     );
   }
 
   Widget _closeToExpiringBorder(Widget child) {
-  return AnimatedBuilder(
+    return AnimatedBuilder(
       animation: _animationController,
       builder: (context, _) {
         final color = ColorTween(
@@ -84,7 +84,8 @@ class _ExpiringItemTileState extends State<ExpiringItemTile> with SingleTickerPr
       },
     );
   }
- Widget _expiredBorder(Widget child) {
+
+  Widget _expiredBorder(Widget child) {
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, _) {
@@ -94,26 +95,29 @@ class _ExpiringItemTileState extends State<ExpiringItemTile> with SingleTickerPr
         ).lerp(_animationController.value);
         return Container(
           decoration: BoxDecoration(
-      border: Border.all(
-        color: Color.fromARGB(255, 168, 169, 173),
-        width: 0.8,
-      ),
-      borderRadius: BorderRadius.circular(70), // Rounded corners
-    ),
-    child: child,
-  );
+            border: Border.all(
+              color: Color.fromARGB(255, 168, 169, 173),
+              width: 0.8,
+            ),
+            borderRadius: BorderRadius.circular(70), // Rounded corners
+          ),
+          child: child,
+        );
       },
     );
   }
 
-  Widget _getExpirationBorder(String expirationDate, String purchaseDate, Widget child) {
+  Widget _getExpirationBorder(
+      String expirationDate, String purchaseDate, Widget child) {
     final expiryDate = DateTime.parse(expirationDate);
     final currentDate = DateTime.now();
-    final currentDateAtMidnight = DateTime(currentDate.year, currentDate.month, currentDate.day);
+    final currentDateAtMidnight =
+        DateTime(currentDate.year, currentDate.month, currentDate.day);
     final purchaseDateParsed = DateTime.parse(purchaseDate);
     final daysLeft = expiryDate.difference(currentDateAtMidnight).inDays;
 
-    if (expiryDate.isBefore(currentDateAtMidnight) || expiryDate.isBefore(purchaseDateParsed)) {
+    if (expiryDate.isBefore(currentDateAtMidnight) ||
+        expiryDate.isBefore(purchaseDateParsed)) {
       return _expiredBorder(child);
     } else if (daysLeft <= 7) {
       return _closeToExpiringBorder(child);
@@ -124,7 +128,8 @@ class _ExpiringItemTileState extends State<ExpiringItemTile> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
-    return _getExpirationBorder(widget.expirationDate, widget.purchaseDate, widget.child);
+    return _getExpirationBorder(
+        widget.expirationDate, widget.purchaseDate, widget.child);
   }
 }
 
@@ -132,7 +137,8 @@ class YourWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Get today's date
-    String currentDate = DateTime.now().toString().split(' ')[0]; // YYYY-MM-DD format
+    String currentDate =
+        DateTime.now().toString().split(' ')[0]; // YYYY-MM-DD format
 
     return Column(
       children: [
@@ -154,8 +160,6 @@ class YourWidget extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-
-  
   final List<Map<String, dynamic>> fridgeItems;
 
   const HomePage({Key? key, required this.fridgeItems}) : super(key: key);
@@ -188,7 +192,8 @@ class _HomePageState extends State<HomePage> {
 
 // Map the loadedItems to the expected format
         List<Map<String, dynamic>> formattedItems = loadedItems.map((item) {
-          String imageUrl = item['imageUrl'] ?? 'images/default_image.png'; // Use the image URL from the database if available
+          String imageUrl = item['imageUrl'] ??
+              'images/default_image.png'; // Use the image URL from the database if available
           return {
             'itemId': item['itemId'], // Include the itemId
             'name': item['productName'],
@@ -198,18 +203,18 @@ class _HomePageState extends State<HomePage> {
             'expirationDate': item['expirationDate']
                 .split(" ")[0], // Only take the date part, exclude the time
 
-            'imageUrl':
-                item['imageUrl'] ,
-                 'nutrients': {
-      'ENERC_KCAL': item['ENERC_KCAL'],
-      'PROCNT': item['PROCNT'],
-      'FAT': item['FAT'],
-      'CHOCDF': item['CHOCDF'],
-      'FIBTG': item['FIBTG'],
-                  }, // Keep as default or adjust as necessary
+            'imageUrl': item['imageUrl'],
+            'nutrients': {
+              'ENERC_KCAL': item['ENERC_KCAL'],
+              'PROCNT': item['PROCNT'],
+              'FAT': item['FAT'],
+              'CHOCDF': item['CHOCDF'],
+              'FIBTG': item['FIBTG'],
+            }, // Keep as default or adjust as necessary
           };
         }).toList();
-print('Formatted Items: $formattedItems'); // Print the formattedItems list
+        print(
+            'Formatted Items: $formattedItems'); // Print the formattedItems list
         setState(() {
           widget.fridgeItems.addAll(formattedItems);
         });
@@ -241,46 +246,45 @@ print('Formatted Items: $formattedItems'); // Print the formattedItems list
           'quantity': '${newFoodItem.quantity}',
           'purchaseDate': newFoodItem.dateOfPurchase.toString(),
           'expirationDate': newFoodItem.expirationDate.toString(),
-          'imageUrl':
-              ['imageUrl'],
+          'imageUrl': ['imageUrl'],
         });
       });
     }
   }
 
- Color _getExpirationColor(String expirationDate, String purchaseDate) {
-  final expiryDate = DateTime.parse(expirationDate);
-  final currentDate = DateTime.now();
-  final currentDateAtMidnight = DateTime(currentDate.year, currentDate.month, currentDate.day);
-  final purchaseDateParsed = DateTime.parse(purchaseDate);
-  final daysLeft = expiryDate.difference(currentDateAtMidnight).inDays;
+  Color _getExpirationColor(String expirationDate, String purchaseDate) {
+    final expiryDate = DateTime.parse(expirationDate);
+    final currentDate = DateTime.now();
+    final currentDateAtMidnight =
+        DateTime(currentDate.year, currentDate.month, currentDate.day);
+    final purchaseDateParsed = DateTime.parse(purchaseDate);
+    final daysLeft = expiryDate.difference(currentDateAtMidnight).inDays;
 
-  // Condition 1: If the expiration date is before the current date.
-  if (expiryDate.isBefore(currentDateAtMidnight)) {
-    return Color.fromARGB(255, 177, 21, 21);
-  } 
-  // Condition 2: If the expiration date is before the purchase date.
-  else if (expiryDate.isBefore(purchaseDateParsed)) {
-    return Color.fromARGB(255, 177, 21, 21);
+    // Condition 1: If the expiration date is before the current date.
+    if (expiryDate.isBefore(currentDateAtMidnight)) {
+      return Color.fromARGB(255, 177, 21, 21);
+    }
+    // Condition 2: If the expiration date is before the purchase date.
+    else if (expiryDate.isBefore(purchaseDateParsed)) {
+      return Color.fromARGB(255, 177, 21, 21);
+    } else if (daysLeft <= 7) {
+      return Colors.yellow;
+    } else {
+      return Color.fromARGB(255, 20, 220, 27);
+    }
   }
-  else if (daysLeft <= 7) {
-    return Colors.yellow;
-  } else {
-    return Color.fromARGB(255, 20, 220, 27);
+
+  Widget _nonExpiringBorder(Widget child) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Color.fromARGB(255, 20, 220, 27), width: 2.0),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: child,
+    );
   }
-}
 
-Widget _nonExpiringBorder(Widget child) {
-  return Container(
-    decoration: BoxDecoration(
-      border: Border.all(color: Color.fromARGB(255, 20, 220, 27), width: 2.0),
-      borderRadius: BorderRadius.circular(30),
-    ),
-    child: child,
-  );
-}
-
- /* @override
+  /* @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -300,126 +304,133 @@ Widget _nonExpiringBorder(Widget child) {
             ),
           ],
         ), */
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: PreferredSize(
-      preferredSize: Size.fromHeight(140.0), // Adjust the height as needed
-      child: AppBar(
-        backgroundColor: Colors.transparent, // Make the AppBar background transparent
-        elevation: 0, // Removes the default shadow
-         shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: Color.fromARGB(253, 253, 253, 253),
-            width: 2,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(140.0), // Adjust the height as needed
+        child: AppBar(
+          backgroundColor:
+              Colors.transparent, // Make the AppBar background transparent
+          elevation: 0, // Removes the default shadow
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: Color.fromARGB(253, 253, 253, 253),
+              width: 2,
+            ),
           ),
-        ),
-       
-        flexibleSpace: Padding( // Apply padding to the flexibleSpace
-          padding: const EdgeInsets.symmetric(horizontal: 21.0), // Set horizontal padding
-          child: ClipRRect(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)), // Rounded corners at the bottom
-            child: Container(
-              margin: const EdgeInsets.only(top: 45.0), // Top margin to push AppBar down
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 168, 169, 173), // Your AppBar color
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                border: Border.all(
-                  color: const Color.fromARGB(255, 215, 215, 215),
-                  width: 2,
-                  
+
+          flexibleSpace: Padding(
+            // Apply padding to the flexibleSpace
+            padding: const EdgeInsets.symmetric(
+                horizontal: 21.0), // Set horizontal padding
+            child: ClipRRect(
+              borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(20)), // Rounded corners at the bottom
+              child: Container(
+                margin: const EdgeInsets.only(
+                    top: 45.0), // Top margin to push AppBar down
+                decoration: BoxDecoration(
+                  color:
+                      Color.fromARGB(255, 168, 169, 173), // Your AppBar color
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 215, 215, 215),
+                    width: 2,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        title: Column(
-          mainAxisSize: MainAxisSize.min, // Use min size for the column
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 35.0), // Adjust the padding to move the title down
-              child: Center(child: Text('The Fridge Masters')),
+          title: Column(
+            mainAxisSize: MainAxisSize.min, // Use min size for the column
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 35.0), // Adjust the padding to move the title down
+                child: Center(child: Text('The Fridge Masters')),
+              ),
+            ],
+          ),
+
+          leading: Transform.translate(
+            offset: Offset(11, 19),
+            child: IconButton(
+              icon: Icon(Icons.notifications),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        NotificationList(fridgeItems: widget.fridgeItems),
+                  ),
+                );
+              },
             ),
+          ),
+          actions: [
+            Transform.translate(
+                offset: Offset(-11, 19),
+                child: IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Settings(),
+                      ),
+                    );
+                  },
+                )),
           ],
-        ),
 
-        leading:  Transform.translate(
-        offset: Offset(11, 19), 
-        
-       child: IconButton(
-          
-          icon: Icon(Icons.notifications),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NotificationList(),
-              ),
-            );
-          },
-        ),
-        ),
-        actions: [
-          Transform.translate(
-          offset: Offset(-11, 19),
-
-          child:IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Settings(),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(60),
+            child: Padding(
+              //padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: const EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 10.0),
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: Theme.of(context).colorScheme.copyWith(
+                        primary: Colors
+                            .white, // Changes the cursor and selection handle color
+                      ),
+                  textSelectionTheme: TextSelectionThemeData(
+                    cursorColor: Colors.white, // Changes the cursor color
+                    selectionColor: Colors.white
+                        .withOpacity(0.5), // Changes the selection color
+                    selectionHandleColor:
+                        Colors.white, // Changes the selection handle color
+                  ),
                 ),
-              );
-            },
-          )),
-        ],
-      
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(60),
-          child: Padding(
-            //padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            padding: const EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 10.0),
-            child: Theme(
-      data: Theme.of(context).copyWith(
-        colorScheme: Theme.of(context).colorScheme.copyWith(
-          primary: Colors.white, // Changes the cursor and selection handle color
-        ),
-        textSelectionTheme: TextSelectionThemeData(
-          cursorColor: Colors.white, // Changes the cursor color
-          selectionColor: Colors.white.withOpacity(0.5), // Changes the selection color
-          selectionHandleColor: Colors.white, // Changes the selection handle color
-        ),
-      ),
-
-
-
-
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-               hintText: 'Filter based on food items',
-          prefixIcon: Icon(Icons.search), // Icon for search
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white), // Choose border color
-            borderRadius: BorderRadius.circular(20), // Choose border radius
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white), // Changes the border color when the TextField is focused
-            borderRadius: BorderRadius.circular(20),
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Filter based on food items',
+                    prefixIcon: Icon(Icons.search), // Icon for search
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.white), // Choose border color
+                      borderRadius:
+                          BorderRadius.circular(20), // Choose border radius
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors
+                              .white), // Changes the border color when the TextField is focused
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
         ),
       ),
-      ),
-      ),
-    ),
       body: Stack(
         children: [
           //const Background(type: 'Background1'),
@@ -433,41 +444,40 @@ Widget build(BuildContext context) {
                       ],
                     )
                   : ListView.builder(
-                      itemCount: widget.fridgeItems.length + 1, // +1 for the header (date and legend)
-                      
-  itemBuilder: (context, index) {
-    
-    // This is for the header, which contains the date and legend
-    if (index == 0) {
-      return Column(
-  children: [
-    SizedBox(height: 10),
-    Center(
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: 'Today\'s Date: ',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 15,
-                fontWeight: FontWeight.bold
-              ),
-            ),
-            TextSpan(
-              text:
-                  '${DateTime.now().month}/${DateTime.now().day}/${DateTime.now().year}',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-   /* SizedBox(height: 5),
+                      itemCount: widget.fridgeItems.length +
+                          1, // +1 for the header (date and legend)
+
+                      itemBuilder: (context, index) {
+                        // This is for the header, which contains the date and legend
+                        if (index == 0) {
+                          return Column(
+                            children: [
+                              SizedBox(height: 10),
+                              Center(
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'Today\'s Date: ',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            '${DateTime.now().month}/${DateTime.now().day}/${DateTime.now().year}',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              /* SizedBox(height: 5),
           Center(
             child: RichText(
               textAlign: TextAlign.center,
@@ -505,21 +515,22 @@ Widget build(BuildContext context) {
               ),
             ),
           ),*/
-          SizedBox(height: 10),
-        ],
-      );
-    } else {
-      // Index is greater than 0, so it's an item
-                        final item = widget.fridgeItems[index-1];
-                        final itemId = item['itemId'];
-                        print('Item ID at index $index: $itemId');
+                              SizedBox(height: 10),
+                            ],
+                          );
+                        } else {
+                          // Index is greater than 0, so it's an item
+                          final item = widget.fridgeItems[index - 1];
+                          final itemId = item['itemId'];
+                          print('Item ID at index $index: $itemId');
 
-                           Color _getLightGrayColor() {
-  // Light gray color #F0F0F0
-                         return Color.fromRGBO(240, 240, 240, 1); // Opacity is set to 1 for a solid color
-}
+                          Color _getLightGrayColor() {
+                            // Light gray color #F0F0F0
+                            return Color.fromRGBO(240, 240, 240,
+                                1); // Opacity is set to 1 for a solid color
+                          }
 
-                        /*Color _getPastelColor(int index) {
+                          /*Color _getPastelColor(int index) {
                           final r = (70 + (index * 50) % 135).toDouble();
                           final g = (90 + (index * 80) % 85).toDouble();
                           final b = (120 + (index * 30) % 55).toDouble();
@@ -527,253 +538,286 @@ Widget build(BuildContext context) {
                               r.toInt(), g.toInt(), b.toInt(), 0.9);
                         }*/
 
-                     ImageProvider getImageProvider(String? imageUrl) {
-  // Check if imageUrl is a network URL
-  if (imageUrl != null && Uri.tryParse(imageUrl)?.hasAbsolutePath == true) {
-    // If it's a valid URL, return a NetworkImage
-    return NetworkImage(imageUrl);
-  } else {
-    // If it's not a valid URL (or is null), return a AssetImage
-    return AssetImage('images/default_image.png');
-  }
-}  
-                           return Padding(
-  padding: const EdgeInsets.all(8.0),
-  child: Card(
-    color: _getLightGrayColor(),
-    
-    //color: _getPastelColor(index),
-    elevation: 4.0,
-   shape: RoundedRectangleBorder(
-  side: BorderSide(
-    color: Color.fromARGB(255, 168, 169, 173), // Same color
-    width: 0.8, // Same width
-  ),
-  borderRadius: BorderRadius.circular(70), // Same rounded corners as in _expiredBorder
-),
+                          ImageProvider getImageProvider(String? imageUrl) {
+                            // Check if imageUrl is a network URL
+                            if (imageUrl != null &&
+                                Uri.tryParse(imageUrl)?.hasAbsolutePath ==
+                                    true) {
+                              // If it's a valid URL, return a NetworkImage
+                              return NetworkImage(imageUrl);
+                            } else {
+                              // If it's not a valid URL (or is null), return a AssetImage
+                              return AssetImage('images/default_image.png');
+                            }
+                          }
 
+                          return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                  color: _getLightGrayColor(),
 
-
-   
-    child:  ExpiringItemTile(
-      expirationDate: item['expirationDate'],
-      purchaseDate: item['purchaseDate'],
-      child: Container(
-                              height: 137,
-                              child: Stack(
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-  flex: 3,
-  child: Padding(
-    padding: const EdgeInsets.all(16.0), // Image padding
-    child: GestureDetector(
-      onTap: () {
-         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => NutritionPage(item: item), // itemData should include 'name' and 'nutrients'
-          ),
-        );
-      },
-
-
-    child: Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromARGB(255, 197, 193, 191), width: 3),
-      ),
-      width: 100,
-      height: 100,
-      child: Image.network(
-        item['imageUrl'].toString() ?? '',
-        fit: BoxFit.cover,
-        errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-          // In case of an error (like a 404), use the default image
-          return Image.asset('images/default_image.png', fit: BoxFit.cover);
-        },
-        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) return child;
-          return Center(
-            child: CircularProgressIndicator(
-              value: loadingProgress.expectedTotalBytes != null
-                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                  : null,
-            ),
-          );
-        },
-      ),
-    ),
-  ),
-),
-                                      ),
-                                      Expanded(
-                                        flex: 7,
-                                        child: Column(
-                                          children: [
-                                            Expanded(
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Center(
-                                                      child: RichText(
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        text: TextSpan(
-                                                          style: DefaultTextStyle
-                                                                  .of(context)
-                                                              .style,
-                                                          children: <TextSpan>[
-                                                            TextSpan(
-                                                                text: 'Name: ',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                    fontSize:
-                                                                        12)), // Descriptor size
-                                                            TextSpan(
-                                                                text:
-                                                                    '${item['name']}',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        18,
-                                                                        color: Colors.black,
-                                                                   /* color: Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                            255),decoration: TextDecoration.underline*/)), // User-entered text size
-                                                          ],
+                                  //color: _getPastelColor(index),
+                                  elevation: 4.0,
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      color: Color.fromARGB(
+                                          255, 168, 169, 173), // Same color
+                                      width: 0.8, // Same width
+                                    ),
+                                    borderRadius: BorderRadius.circular(
+                                        70), // Same rounded corners as in _expiredBorder
+                                  ),
+                                  child: ExpiringItemTile(
+                                    expirationDate: item['expirationDate'],
+                                    purchaseDate: item['purchaseDate'],
+                                    child: Container(
+                                      height: 137,
+                                      child: Stack(
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                flex: 3,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      16.0), // Image padding
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              NutritionPage(
+                                                                  item:
+                                                                      item), // itemData should include 'name' and 'nutrients'
                                                         ),
+                                                      );
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: const Color
+                                                                .fromARGB(255,
+                                                                197, 193, 191),
+                                                            width: 3),
+                                                      ),
+                                                      width: 100,
+                                                      height: 100,
+                                                      child: Image.network(
+                                                        item['imageUrl']
+                                                                .toString() ??
+                                                            '',
+                                                        fit: BoxFit.cover,
+                                                        errorBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                Object
+                                                                    exception,
+                                                                StackTrace?
+                                                                    stackTrace) {
+                                                          // In case of an error (like a 404), use the default image
+                                                          return Image.asset(
+                                                              'images/default_image.png',
+                                                              fit:
+                                                                  BoxFit.cover);
+                                                        },
+                                                        loadingBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                Widget child,
+                                                                ImageChunkEvent?
+                                                                    loadingProgress) {
+                                                          if (loadingProgress ==
+                                                              null)
+                                                            return child;
+                                                          return Center(
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              value: loadingProgress
+                                                                          .expectedTotalBytes !=
+                                                                      null
+                                                                  ? loadingProgress
+                                                                          .cumulativeBytesLoaded /
+                                                                      loadingProgress
+                                                                          .expectedTotalBytes!
+                                                                  : null,
+                                                            ),
+                                                          );
+                                                        },
                                                       ),
                                                     ),
                                                   ),
-                                                  Expanded(
-                                                    child: Center(
-                                                      child: RichText(
-                                                        text: TextSpan(
-                                                          style: DefaultTextStyle
-                                                                  .of(context)
-                                                              .style,
-                                                          children: <TextSpan>[
-                                                            TextSpan(
-                                                                text:
-                                                                    'Purchased: ',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal)),
-                                                            TextSpan(
-                                                                text: convertToDisplayFormat(
-                                                                    item[
-                                                                        'purchaseDate']),
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        16,
-                                                                    /*color: Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                            255)*/)),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                                ),
                                               ),
-                                            ),
-                                            Expanded(
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Center(
-                                                      child: RichText(
-                                                        text: TextSpan(
-                                                          style: DefaultTextStyle
-                                                                  .of(context)
-                                                              .style,
-                                                          children: <TextSpan>[
-                                                            TextSpan(
-                                                                text: 'Qty: ',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal)),
-                                                            TextSpan(
-                                                                text:
-                                                                    '${item['quantity']}',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        15.5,
-                                                                         color: Colors.black,
-                                                                    /*color: Color
+                                              Expanded(
+                                                flex: 7,
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child: Center(
+                                                              child: RichText(
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                text: TextSpan(
+                                                                  style: DefaultTextStyle.of(
+                                                                          context)
+                                                                      .style,
+                                                                  children: <TextSpan>[
+                                                                    TextSpan(
+                                                                        text:
+                                                                            'Name: ',
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                            fontSize: 12)), // Descriptor size
+                                                                    TextSpan(
+                                                                        text:
+                                                                            '${item['name']}',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                          fontSize:
+                                                                              18,
+                                                                          color:
+                                                                              Colors.black,
+                                                                          /* color: Color
                                                                         .fromARGB(
                                                                             255,
                                                                             255,
                                                                             255,
-                                                                            255)*/)),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Center(
-                                                      child: RichText(
-                                                        text: TextSpan(
-                                                          style: DefaultTextStyle
-                                                                  .of(context)
-                                                              .style,
-                                                          children: <TextSpan>[
-                                                            TextSpan(
-                                                                text:
-                                                                    'Expiry: ',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal)),
-                                                            TextSpan(
-                                                              text: convertToDisplayFormat(
-                                                                  item[
-                                                                      'expirationDate']),
-                                                              style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 17,
-                                                                color: _getExpirationColor(item['expirationDate'], item['purchaseDate'])
-
+                                                                            255),decoration: TextDecoration.underline*/
+                                                                        )), // User-entered text size
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ),
-                                                          ],
-                                                        ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Center(
+                                                              child: RichText(
+                                                                text: TextSpan(
+                                                                  style: DefaultTextStyle.of(
+                                                                          context)
+                                                                      .style,
+                                                                  children: <TextSpan>[
+                                                                    TextSpan(
+                                                                        text:
+                                                                            'Purchased: ',
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.normal)),
+                                                                    TextSpan(
+                                                                        text: convertToDisplayFormat(item[
+                                                                            'purchaseDate']),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                          fontSize:
+                                                                              16,
+                                                                          /*color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                            255)*/
+                                                                        )),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
+                                                    Expanded(
+                                                      child: Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child: Center(
+                                                              child: RichText(
+                                                                text: TextSpan(
+                                                                  style: DefaultTextStyle.of(
+                                                                          context)
+                                                                      .style,
+                                                                  children: <TextSpan>[
+                                                                    TextSpan(
+                                                                        text:
+                                                                            'Qty: ',
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.normal)),
+                                                                    TextSpan(
+                                                                        text:
+                                                                            '${item['quantity']}',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                          fontSize:
+                                                                              15.5,
+                                                                          color:
+                                                                              Colors.black,
+                                                                          /*color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                            255)*/
+                                                                        )),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Center(
+                                                              child: RichText(
+                                                                text: TextSpan(
+                                                                  style: DefaultTextStyle.of(
+                                                                          context)
+                                                                      .style,
+                                                                  children: <TextSpan>[
+                                                                    TextSpan(
+                                                                        text:
+                                                                            'Expiry: ',
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.normal)),
+                                                                    TextSpan(
+                                                                      text: convertToDisplayFormat(
+                                                                          item[
+                                                                              'expirationDate']),
+                                                                      style: TextStyle(
+                                                                          fontWeight: FontWeight
+                                                                              .bold,
+                                                                          fontSize:
+                                                                              17,
+                                                                          color: _getExpirationColor(
+                                                                              item['expirationDate'],
+                                                                              item['purchaseDate'])),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  /*Positioned(
+                                            ],
+                                          ),
+                                          /*Positioned(
                                     bottom: 1, // adjust as needed
                                     left: 38, // adjust as needed
                                     child: Text(
@@ -785,85 +829,112 @@ Widget build(BuildContext context) {
                                       ),
                                     ),
                                   ),*/
-                                   Positioned(
-                                    top: 2,
-                                    right: 2,
-                                    child: IconButton(
-                                      icon: Icon(Icons.delete, size: 20),
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            bool isChecked = false;
-                                            return AlertDialog(
-                                              title: Text('Delete Item'),
-                                              content: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text(
-                                                      'Are you sure you want to delete this item?'),
-                                                  Row(
-                                                    children: [
-                                                      Checkbox(
-                                                        value: isChecked,
-                                                        onChanged:
-                                                            (bool? value) {
-                                                          setState(() {
-                                                            isChecked = value!;
-                                                          });
-                                                        },
+                                          Positioned(
+                                            top: 2,
+                                            right: 2,
+                                            child: IconButton(
+                                              icon:
+                                                  Icon(Icons.delete, size: 20),
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    bool isChecked = false;
+                                                    return AlertDialog(
+                                                      title:
+                                                          Text('Delete Item'),
+                                                      content: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Text(
+                                                              'Are you sure you want to delete this item?'),
+                                                          Row(
+                                                            children: [
+                                                              Checkbox(
+                                                                value:
+                                                                    isChecked,
+                                                                onChanged:
+                                                                    (bool?
+                                                                        value) {
+                                                                  setState(() {
+                                                                    isChecked =
+                                                                        value!;
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Text(
+                                                                  "This has expired"),
+                                                            ],
+                                                          ),
+                                                        ],
                                                       ),
-                                                      Text("This has expired"),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Remove this line
-            },
-            child: Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () async {
-              final currentItem = widget.fridgeItems[index-1];
-              try {
-                final StorageService storageService = StorageService();
-                String? userID = await storageService.getStoredUserId();
-                
-                 if (userID != null) {
-    String itemIdString = itemId.toString();
-    await deleteItem(userID, itemIdString);
-                  
-                  // If the deletion was successful in the backend, remove from the local list
-                  setState(() {
-                    widget.fridgeItems.removeAt(index - 1); // Adjust index
-                  });
-                }
-              } catch (e) {
-                // Handle any exceptions that might occur during the deletion
-                print('Error deleting item: $e');
-              }
-              
-              Navigator.of(context).pop(); // Keep this line to close the dialog
-            },
-            child: Text('Delete'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      },
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(); // Remove this line
+                                                          },
+                                                          child: Text('Cancel'),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () async {
+                                                            final currentItem =
+                                                                widget.fridgeItems[
+                                                                    index - 1];
+                                                            try {
+                                                              final StorageService
+                                                                  storageService =
+                                                                  StorageService();
+                                                              String? userID =
+                                                                  await storageService
+                                                                      .getStoredUserId();
+
+                                                              if (userID !=
+                                                                  null) {
+                                                                String
+                                                                    itemIdString =
+                                                                    itemId
+                                                                        .toString();
+                                                                await deleteItem(
+                                                                    userID,
+                                                                    itemIdString);
+
+                                                                // If the deletion was successful in the backend, remove from the local list
+                                                                setState(() {
+                                                                  widget
+                                                                      .fridgeItems
+                                                                      .removeAt(
+                                                                          index -
+                                                                              1); // Adjust index
+                                                                });
+                                                              }
+                                                            } catch (e) {
+                                                              // Handle any exceptions that might occur during the deletion
+                                                              print(
+                                                                  'Error deleting item: $e');
+                                                            }
+
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(); // Keep this line to close the dialog
+                                                          },
+                                                          child: Text('Delete'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                           )
-                         );
-    }
+                                  )));
+                        }
                       },
                     )),
         ],
