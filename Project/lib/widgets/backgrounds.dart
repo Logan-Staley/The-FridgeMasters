@@ -40,7 +40,7 @@ class Background1 extends StatelessWidget {
 class Background2 extends StatelessWidget {
   const Background2({Key? key}) : super(key: key);
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return _buildBackgroundWithOverlay(Colors.grey[100]!);
   }

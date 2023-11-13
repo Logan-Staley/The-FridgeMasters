@@ -37,16 +37,20 @@ dependencies:
   cupertino_icons: ^1.0.2
   lottie: ^2.6.0
   flutter_barcode_scanner: ^2.0.0
-  flutter_dotenv: ^5.0.2
+  flutter_dotenv: ^5.1.0
   mysql1: ^0.20.0
   audioplayers: ^5.2.0
   flutter_secure_storage: ^5.0.2
   intl: ^0.18.0
   provider: ^6.0.5
   path_drawing: ^1.0.1
+
+  flutter_emoji: ">= 2.0.0"
+
   flutter_svg: ^2.0.7
   shared_preferences: ^2.0.15
   url_launcher: ^6.2.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -83,6 +87,7 @@ flutter:
 
 
 #    - sounds/app_launch.mp3
+     - images/foodchart.jpg
      - sounds/click_sound.mp3
      - sounds/login_sound.mp3
      - sounds/logout_sound.mp3
