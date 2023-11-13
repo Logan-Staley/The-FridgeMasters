@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/Aboutpage.dart';
 import 'package:fridgemasters/FAQpage.dart';
 import 'package:fridgemasters/System.dart';
+import 'package:fridgemasters/Tutorial.dart';
 import 'package:fridgemasters/widgets/language.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/login.dart';
@@ -84,6 +85,9 @@ class _SettingsState extends State<Settings> {
       case 'Display and Brightness':
         nextPage = DisplayBrightnessPage();
         break;
+      case 'Tutorial':
+        nextPage = Tutorialpage();
+        break;
 
       // Add more cases for other categories here...
     }
@@ -120,7 +124,7 @@ class _SettingsState extends State<Settings> {
       ),
       body: Stack(
         children: [
-          const Background(type: 'Background1'), // for Background1
+          const Background1(),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ListView(
@@ -160,6 +164,11 @@ class _SettingsState extends State<Settings> {
                   title: Text('Display and Brightness'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Display and Brightness'),
+                ),
+                ListTile(
+                  title: Text('Tutorial'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('Tutorialpage'),
                 ),
                 SizedBox(
                     height:
