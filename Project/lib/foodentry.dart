@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
 import 'inventory.dart';
@@ -32,6 +33,7 @@ class Recipe {
     );
   }
 }
+
 class FoodEntry extends StatefulWidget {
   final Function(FoodItem) onFoodItemAdded;
   const FoodEntry({super.key, required this.onFoodItemAdded});
