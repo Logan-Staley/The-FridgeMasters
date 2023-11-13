@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/Aboutpage.dart';
 import 'package:fridgemasters/FAQpage.dart';
 import 'package:fridgemasters/System.dart';
-import 'package:fridgemasters/Tutorial.dart';
+import 'package:fridgemasters/Tutorialpage.dart';
 import 'package:fridgemasters/widgets/language.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/login.dart';
@@ -86,7 +86,7 @@ class _SettingsState extends State<Settings> {
         nextPage = DisplayBrightnessPage();
         break;
       case 'Tutorial':
-        nextPage = Tutorialpage();
+        nextPage = TutorialPage();
         break;
 
       // Add more cases for other categories here...
