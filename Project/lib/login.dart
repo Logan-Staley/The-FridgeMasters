@@ -16,6 +16,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "Services/storage_service.dart";
 import 'package:provider/provider.dart';
 
+
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
@@ -100,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   )
                 //: _buildLoginContent(),
-                : _buildLoginContent(languageNotifier.currentLanguage, theme),
+                : _buildLoginContent(languageNotifier, theme),
 
           ),
         ],
@@ -108,15 +109,18 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildLoginContent(String currentLanguage, ThemeData theme) {
+  Widget _buildLoginContent(LanguageChangeNotifier languageNotifier, ThemeData theme) {
     //Color inputTextColor = theme.brightness == Brightness.dark ? Colors.black87 : theme.textTheme.bodyText1?.color ?? Colors.black87;
      // Update text based on currentLanguage
      Color inputTextColor = theme.brightness == Brightness.dark ?  Colors.black87 : theme.textTheme.bodyText1?.color ?? Colors.black87;
    // Color inputBackgroundColor = theme.brightness == Brightness.dark ? (Colors.grey[850] ?? Colors.black): Colors.grey[200]!;
 
-    String loginButtonText = getLocalizedString(currentLanguage, 'login');
-    String createAccountText = getLocalizedString(currentLanguage, 'createAccount');
-    String forgotPasswordText = getLocalizedString(currentLanguage, 'forgotPassword');
+    //String loginButtonText = getLocalizedString(currentLanguage, 'login');
+   // String createAccountText = getLocalizedString(currentLanguage, 'createAccount');
+    //String forgotPasswordText = getLocalizedString(currentLanguage, 'forgotPassword');
+String loginButtonText = languageNotifier.localizedStrings['login'] ?? 'Login';
+    String createAccountText = languageNotifier.localizedStrings['createAccount'] ?? 'Create Account';
+    String forgotPasswordText = languageNotifier.localizedStrings['forgotPassword'] ?? 'Forgot Password?';
 
     return SingleChildScrollView(
       child: Column( mainAxisAlignment: MainAxisAlignment.center, 

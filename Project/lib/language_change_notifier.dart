@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+// Assuming you have separate Dart files for each language like strings_en.dart
+import 'localization/strings_en.dart';
+import 'localization/strings_es.dart';
+import 'localization/strings_fr.dart';
 
 class LanguageChangeNotifier extends ChangeNotifier {
   String _currentLanguage = 'en';
+  Map<String, String> _localizedStrings = stringsEn; // Default to English
 
-  String get currentLanguage => _currentLanguage;
+  Map<String, String> get localizedStrings => _localizedStrings;
 
-  set currentLanguage(String newLanguage) {
-    _currentLanguage = newLanguage;
-    notifyListeners();
-    _saveLanguage(newLanguage);
-  }
-
-  LanguageChangeNotifier() {
-    _loadLanguage();
-  }
-
-  _saveLanguage(String lang) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('language', lang);
-  }
-
-  _loadLanguage() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _currentLanguage = prefs.getString('language') ?? 'en';
-    notifyListeners();
+  void changeLanguage(String newLanguage) {
+    if (newLanguage != _currentLanguage) {
+      _currentLanguage = newLanguage;
+      if (newLanguage == 'en') {
+        _localizedStrings = stringsEn;
+      } else if (newLanguage == 'es') {
+        _localizedStrings = stringsEs;
+      } else if (newLanguage == 'fr') {
+        _localizedStrings = stringsFr;
+      }
+      notifyListeners();
+    }
   }
 }

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart'; // Import theme.dart where you have lig
 import 'theme_notifier.dart'; // Import your ThemeNotifier
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'language_change_notifier.dart';
+import 'package:fridgemasters/language.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required if you're using async code before runApp
