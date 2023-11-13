@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
+import 'package:fridgemasters/widgets/backgrounds.dart';
 
 class NutritionPage extends StatelessWidget {
   final Map<String, dynamic> item; // Now it expects the entire item
@@ -14,9 +15,14 @@ class NutritionPage extends StatelessWidget {
     final name = item['name'] ?? 'Unknown Item'; // Extracting name from the item
     final highestNutrient = _findHighestNutrient(nutrients);
     return Scaffold(
-      backgroundColor: Colors.grey[400],
+      backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
+
         title: Text('Nutrition Facts for $name'),
+
+       // title: const Text('Nutrition Page'),
+         //backgroundColor: Theme.of(context).primaryColor,
+
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

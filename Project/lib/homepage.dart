@@ -13,6 +13,7 @@ import 'package:fridgemasters/Services/storage_service.dart';
 import 'package:fridgemasters/Services/deleteitem.dart';
 import 'package:path_drawing/path_drawing.dart';
 import 'package:uuid/uuid.dart';
+import 'package:fridgemasters/language_change_notifier.dart';
 
 String convertToDisplayFormat(String date) {
   var parts = date.split('-');
@@ -286,9 +287,11 @@ class _HomePageState extends State<HomePage> {
 
   /* @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(220, 48, 141, 160),
+        backgroundColor: theme.primaryColor,
+        //backgroundColor: Color.fromARGB(220, 48, 141, 160),
         elevation: 0, // Removes the default shadow
         shape: RoundedRectangleBorder(
           side: BorderSide(
@@ -434,6 +437,9 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           //const Background(type: 'Background1'),
+
+          Background(type: 'Background1'),
+
           Center(
               child: widget.fridgeItems.isEmpty
                   ? Column(
@@ -941,7 +947,8 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: Taskbar(
         currentIndex: 0,
-        backgroundColor: Color.fromARGB(255, 233, 232, 232),
+        backgroundColor: theme.bottomAppBarColor,
+        //backgroundColor: Color.fromARGB(255, 233, 232, 232),
         onTabChanged: (index) {},
         onFoodItemAdded: (foodItem) {
           // You need to provide this callback
@@ -950,7 +957,12 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _navigateToAddItem,
         child: Icon(Icons.add),
-        backgroundColor: const Color.fromARGB(210, 84, 85, 87),
+
+        //backgroundColor: const Color.fromARGB(210, 84, 85, 87),
+
+        //backgroundColor: const Color.fromARGB(210, 33, 149, 243),
+        backgroundColor: theme.colorScheme.secondary,
+
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

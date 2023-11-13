@@ -77,7 +77,7 @@ class _LanguageState extends State<Language> {
 
   Widget _buildLanguageOption(String value, LanguageChangeNotifier languageNotifier, Color activeColor) {
     return RadioListTile<String>(
-      title: Text(languageNotifier.localizedStrings[value]!, style: Theme.of(context).textTheme.subtitle1),
+      title: Text(languageNotifier.localizedStrings['title'] ?? 'Default Title', style: Theme.of(context).textTheme.subtitle1),
       value: value,
       groupValue: currentLanguage,
       onChanged: (String? selectedValue) {
