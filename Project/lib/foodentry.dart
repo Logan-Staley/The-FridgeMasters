@@ -41,7 +41,7 @@ class FoodEntry extends StatefulWidget {
 }
 
 class _FoodEntryState extends State<FoodEntry> {
-
+  
    String _productName = '';
   String _imageUrl = '';
 
