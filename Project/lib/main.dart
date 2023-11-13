@@ -1,4 +1,3 @@
-// main.dart
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/homepage.dart';
 import 'package:fridgemasters/login.dart';
