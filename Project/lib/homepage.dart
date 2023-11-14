@@ -309,12 +309,12 @@ class _HomePageState extends State<HomePage> {
         ), */
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(140.0), // Adjust the height as needed
         child: AppBar(
-          backgroundColor:
-              Colors.transparent, // Make the AppBar background transparent
+          backgroundColor: Theme.of(context).primaryColor, // Make the AppBar background transparent
           elevation: 0, // Removes the default shadow
           shape: RoundedRectangleBorder(
             side: BorderSide(

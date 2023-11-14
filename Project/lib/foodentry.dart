@@ -277,18 +277,15 @@ print("Nutrients Info: $_nutrientsInfo");
     );
   }
 
-
 @override
 Widget build(BuildContext context) {
-  final ThemeData theme = Theme.of(context);
   return Scaffold(
     appBar: AppBar(
       title: const Text('Add to Inventory'),
-      backgroundColor: theme.primaryColor,
     ),
     bottomNavigationBar: Taskbar(
       currentIndex: 1, // Assuming this is the second tab
-      backgroundColor: theme.bottomAppBarColor,
+      backgroundColor: Color.fromARGB(255, 233, 232, 232),
       onTabChanged: (index) {
         currentIndex: 0; // Handle tab change if necessary
       },
@@ -334,7 +331,6 @@ Widget build(BuildContext context) {
                   ),
                   SizedBox(height: 20), // Add spacing between buttons row and text
                 ],
-
               ),
               Text(
                 'UPC Number (Optional)', // Label for UPC Number
@@ -394,7 +390,6 @@ Widget build(BuildContext context) {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
-
               ),
               GestureDetector(
                 onTap: () => _selectDate(context, expirationDateController),
@@ -404,14 +399,6 @@ Widget build(BuildContext context) {
                     hint: 'Ex: 12/21/2023',
                     controller: expirationDateController,
                   ),
-
-                //const SizedBox(height: 20),
-                ElevatedButton(
-                  //text: 'Cancel'fi,
-                onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
-                  style: ElevatedButton.styleFrom() ,
-
                 ),
               ),
               const SizedBox(height: 20),
@@ -438,11 +425,8 @@ Widget build(BuildContext context) {
               ),
             ],
           ),
-
-          ),
-        ],
-      ),
-    );
-  }
-}
-
+        ),
+      ],
+    ),
+  );
+}}
