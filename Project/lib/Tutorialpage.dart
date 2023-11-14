@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
-class TutorialPage extends StatelessWidget {
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Tutorial Page'),
-      ),
-      body: Center(
-        child: Text('Welcome to the Tutorial!'),
+    return MaterialApp(
+      title: 'Basic Flutter Page',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Hello Flutter'),
+        ),
+        body: Center(
+          child: Text('Welcome to your first Flutter page!'),
+        ),
       ),
     );
   }
