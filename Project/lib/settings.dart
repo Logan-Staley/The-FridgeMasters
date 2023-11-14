@@ -166,7 +166,7 @@ class _SettingsState extends State<Settings> {
                   onTap: () => _navigateToSetting('Display and Brightness'),
                 ),
                 ListTile(
-                  title: Text('Tutorialpage'),
+                  title: Text('Tutorial'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Tutorialpage'),
                 ),
