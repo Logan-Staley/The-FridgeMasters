@@ -3,7 +3,7 @@
   "packages": [
     {
       "name": "archive",
-      "rootUri": "file:///C:/Users/tmass/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.4.6",
+      "rootUri": "file:///C:/Users/tmass/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.4.9",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -363,7 +363,7 @@
     },
     {
       "name": "provider",
-      "rootUri": "file:///C:/Users/tmass/AppData/Local/Pub/Cache/hosted/pub.dev/provider-6.0.5",
+      "rootUri": "file:///C:/Users/tmass/AppData/Local/Pub/Cache/hosted/pub.dev/provider-6.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -429,7 +429,7 @@
     },
     {
       "name": "uuid",
-      "rootUri": "file:///C:/Users/tmass/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.1.0",
+      "rootUri": "file:///C:/Users/tmass/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.2.1",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
@@ -494,7 +494,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-11-13T23:08:57.261058Z",
+  "generated": "2023-11-14T05:11:09.414160Z",
   "generator": "pub",
   "generatorVersion": "3.1.5"
 }
