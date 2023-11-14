@@ -405,10 +405,10 @@ Widget build(BuildContext context) {
                     controller: expirationDateController,
                   ),
 
-                const SizedBox(height: 20),
+                //const SizedBox(height: 20),
                 ElevatedButton(
                   //text: 'Cancel'fi,
-                  onPressed: () => Navigator.pop(context),
+                onPressed: () => Navigator.pop(context),
                   child: const Text('Cancel'),
                   style: ElevatedButton.styleFrom() ,
 
