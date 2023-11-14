@@ -89,7 +89,7 @@ class _NotificationListState extends State<NotificationList> {
       ),
       body: Stack (
         children: [ 
-           background(type: 'Background1'),
+           Background(type: 'Background1'),
           fridgeItemsNotify.isEmpty
           ? Center(
               child: Padding(
