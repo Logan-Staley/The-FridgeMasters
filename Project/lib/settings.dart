@@ -86,7 +86,7 @@ class _SettingsState extends State<Settings> {
         nextPage = DisplayBrightnessPage();
         break;
       case 'Tutorial':
-        nextPage = TutorialPage();
+        nextPage = Tutorialpage();
         break;
 
       // Add more cases for other categories here...
@@ -166,7 +166,7 @@ class _SettingsState extends State<Settings> {
                   onTap: () => _navigateToSetting('Display and Brightness'),
                 ),
                 ListTile(
-                  title: Text('Tutorial'),
+                  title: Text('Tutorialpage'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Tutorialpage'),
                 ),
