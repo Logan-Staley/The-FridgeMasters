@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/Aboutpage.dart';
 import 'package:fridgemasters/FAQpage.dart';
 import 'package:fridgemasters/System.dart';
-import 'package:fridgemasters/Tutorialpage.dart'
+import 'package:fridgemasters/Tutorialpage.dart';
 import 'package:fridgemasters/widgets/language.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/login.dart';
