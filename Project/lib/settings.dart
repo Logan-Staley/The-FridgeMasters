@@ -86,7 +86,7 @@ class _SettingsState extends State<Settings> {
         nextPage = DisplayBrightnessPage();
         break;
       case 'Tutorial':
-        nextPage = Tutorialpage();
+        nextPage = TutorialPage();
         break;
 
       // Add more cases for other categories here...
