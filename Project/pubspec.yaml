@@ -50,20 +50,10 @@ dependencies:
   flutter_emoji: ">= 2.0.0"
 
   flutter_svg: ^2.0.7
-  shared_preferences: ^2.0.15
-<<<<<<< HEAD
   url_launcher: ^6.2.1
   video_player: ^2.8.1
-  
-  
-
-=======
->>>>>>> parent of c0ea12f (commit)
-=======
->>>>>>> parent of 5f11636 (commit)
-=======
->>>>>>> parent of 5f11636 (commit)
   shared_preferences: ^2.0.15
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
