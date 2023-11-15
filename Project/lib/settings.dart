@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Aboutpage.dart';
-import 'package:fridgemasters/Tutorial.dart';
+import 'package:fridgemasters/FAQpage.dart';
+import 'package:fridgemasters/System.dart';
+import 'package:fridgemasters/Tutorialpage.dart';
 import 'package:fridgemasters/widgets/language.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/login.dart';
 import 'package:fridgemasters/widgets/account_settings.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:fridgemasters/audio_manager.dart';
+
+import 'package:fridgemasters/widgets/display_and_brightness.dart';
+//import 'package:fridgemasters/FAQpage.dart';
+//import 'package:fridgemasters/Aboutpage.dart';
 import 'package:fridgemasters/Notificationspage.dart';
-import 'package:provider/provider.dart';
-import 'package:fridgemasters/theme_notifier.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -61,19 +66,30 @@ class _SettingsState extends State<Settings> {
       case 'Account':
         nextPage = AccountSettings();
         break;
-    
+
       case 'Language':
         nextPage = Language();
         break;
       case 'Notifications':
         nextPage = Notificationspage();
         break;
-    
+      case 'System':
+        nextPage = System();
+        break;
+      case 'FAQs':
+        nextPage = FAQpage();
+        break;
       case 'About':
         nextPage = Aboutpage();
         break;
-    
-      
+      case 'Display and Brightness':
+        nextPage = DisplayBrightnessPage();
+        break;
+      case 'Tutorial':
+        nextPage = TutorialPage();
+        break;
+
+      // Add more cases for other categories here...
     }
 
     if (nextPage != null) {
@@ -87,11 +103,9 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-   final themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
-        backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -110,7 +124,7 @@ class _SettingsState extends State<Settings> {
       ),
       body: Stack(
         children: [
-          const Background(type: 'Background1'), // for Background1
+          const Background1(),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ListView(
@@ -120,7 +134,6 @@ class _SettingsState extends State<Settings> {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Account'),
                 ),
-                
                 ListTile(
                   title: Text('Language'),
                   trailing: Icon(Icons.arrow_forward_ios),
@@ -132,42 +145,31 @@ class _SettingsState extends State<Settings> {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Notifications'),
                 ),
-                
+                ListTile(
+                  title: Text('System'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('System'),
+                ),
+                ListTile(
+                  title: Text('FAQs'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('FAQs'),
+                ),
                 ListTile(
                   title: Text('About'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('About'),
                 ),
-//ListTile(title: Text('Watch Tutorial'),
-//onTap: () {Navigator.of(context).push (MaterialPageRoute(builder: (context)=> TutorialPage(onSkip: (){})),);},)
-//,
-ListTile(
-  title: Text('View Tutorial'),
-  leading: Icon(Icons.video_library),
-  onTap: () {
-    // Navigate to Tutorial Page
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => TutorialPage()),
-    );
-  },
-),
-
-
-            ListTile(
-            title: Text('Theme'),
-            trailing: ElevatedButton(
-              onPressed: () => Provider.of<ThemeNotifier>(context, listen: false).toggleTheme(),
-                //themeNotifier.toggleTheme();
-              
-              child: Text('Toggle Theme'
-                
-                //themeNotifier.themeMode == ThemeMode.dark ? 'Switch to Light Mode' : 'Switch to Dark Mode',
-              ),
-            ),
-           
-),
-
+                ListTile(
+                  title: Text('Display and Brightness'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('Display and Brightness'),
+                ),
+                ListTile(
+                  title: Text('Tutorial'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('Tutorial'),
+                ),
                 SizedBox(
                     height:
                         20), // Spacer doesn't work in ListView. Replacing with SizedBox.
