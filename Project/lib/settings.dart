@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Aboutpage.dart';
-<<<<<<< HEAD
-import 'package:fridgemasters/Tutorial.dart';
-=======
 import 'package:fridgemasters/FAQpage.dart';
 import 'package:fridgemasters/System.dart';
->>>>>>> parent of 5f11636 (commit)
 import 'package:fridgemasters/widgets/language.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/login.dart';
@@ -161,44 +157,11 @@ class _SettingsState extends State<Settings> {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('About'),
                 ),
-<<<<<<< HEAD
-//ListTile(title: Text('Watch Tutorial'),
-//onTap: () {Navigator.of(context).push (MaterialPageRoute(builder: (context)=> TutorialPage(onSkip: (){})),);},)
-//,
-ListTile(
-  title: Text('View Tutorial'),
-  leading: Icon(Icons.video_library),
-  onTap: () {
-    // Navigate to Tutorial Page
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => TutorialPage()),
-    );
-  },
-),
-
-
-            ListTile(
-            title: Text('Theme'),
-            trailing: ElevatedButton(
-              onPressed: () => Provider.of<ThemeNotifier>(context, listen: false).toggleTheme(),
-                //themeNotifier.toggleTheme();
-              
-              child: Text('Toggle Theme'
-                
-                //themeNotifier.themeMode == ThemeMode.dark ? 'Switch to Light Mode' : 'Switch to Dark Mode',
-              ),
-            ),
-           
-),
-
-=======
                 ListTile(
                   title: Text('Display and Brightness'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Display and Brightness'),
                 ),
->>>>>>> parent of 5f11636 (commit)
                 SizedBox(
                     height:
                         20), // Spacer doesn't work in ListView. Replacing with SizedBox.

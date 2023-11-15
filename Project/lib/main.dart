@@ -17,7 +17,6 @@ import 'package:provider/provider.dart';
 import 'package:fridgemasters/Services/user_provider.dart';
 import 'theme_notifier.dart';
 import 'material_theme_data.dart';
->>>>>>> parent of 5f11636 (commit)
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required if you're using async code before runApp
@@ -53,7 +52,6 @@ ChangeNotifierProvider(create: (context) => ThemeNotifier()),
           return MaterialApp(
             title: 'FridgeMasters App',
             theme: themeNotifier.themeData,
->>>>>>> parent of 5f11636 (commit)
             initialRoute: '/',
             routes: {
               '/': (context) =>

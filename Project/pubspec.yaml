@@ -45,6 +45,7 @@ dependencies:
   provider: ^6.0.5
   path_drawing: ^1.0.1
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   flutter_emoji: ">= 2.0.0"
 
@@ -58,6 +59,8 @@ dependencies:
 
 =======
 >>>>>>> parent of c0ea12f (commit)
+=======
+>>>>>>> parent of 5f11636 (commit)
 =======
 >>>>>>> parent of 5f11636 (commit)
 dev_dependencies:
