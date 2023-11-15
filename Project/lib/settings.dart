@@ -168,7 +168,7 @@ class _SettingsState extends State<Settings> {
                 ListTile(
                   title: Text('Tutorial'),
                   trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () => _navigateToSetting('Tutorialpage'),
+                  onTap: () => _navigateToSetting('Tutorial'),
                 ),
                 SizedBox(
                     height:
