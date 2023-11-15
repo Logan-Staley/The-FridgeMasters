@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Aboutpage.dart';
+import 'package:fridgemasters/Tutorial.dart';
 import 'package:fridgemasters/widgets/language.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/login.dart';
@@ -137,6 +138,22 @@ class _SettingsState extends State<Settings> {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('About'),
                 ),
+//ListTile(title: Text('Watch Tutorial'),
+//onTap: () {Navigator.of(context).push (MaterialPageRoute(builder: (context)=> TutorialPage(onSkip: (){})),);},)
+//,
+ListTile(
+  title: Text('View Tutorial'),
+  leading: Icon(Icons.video_library),
+  onTap: () {
+    // Navigate to Tutorial Page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TutorialPage()),
+    );
+  },
+),
+
+
             ListTile(
             title: Text('Theme'),
             trailing: ElevatedButton(
@@ -148,9 +165,7 @@ class _SettingsState extends State<Settings> {
                 //themeNotifier.themeMode == ThemeMode.dark ? 'Switch to Light Mode' : 'Switch to Dark Mode',
               ),
             ),
-            
-              
-  
+           
 ),
 
                 SizedBox(

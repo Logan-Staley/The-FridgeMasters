@@ -6,7 +6,8 @@ class Aboutpage extends StatelessWidget {
   void _sendEmail() async {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
-      path: 'support@fridgemasters.com', // Replace with your actual support email
+      path: 'TheFridgeMastersuhcl@gmail.com', // Replace with your actual support email
+       // Replace with your actual support email
     );
     if (await canLaunchUrl(emailLaunchUri)) {
       await launchUrl(emailLaunchUri);

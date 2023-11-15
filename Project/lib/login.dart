@@ -64,6 +64,10 @@ class _LoginPageState extends State<LoginPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(data["message"])),
         );
+ //Navigator.of(context).pushReplacement(
+    //  MaterialPageRoute(builder: (context) => VideoApp()),
+    //);
+
         return true;
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
