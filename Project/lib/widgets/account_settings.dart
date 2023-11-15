@@ -1,44 +1,29 @@
 import 'package:flutter/material.dart';
-import 'HouseholdMembersPage.dart';
-import 'PrivacySettingsPage.dart';
-import 'SyncingOptionPage.dart';
-import 'profile_information_page.dart';
-
+import 'ChangePasswordPage.dart'; // Make sure to create this page
+import 'ChangeUsernameEmailPage.dart'; // Make sure to create this page
 
 class AccountSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Account Settings')),
+      appBar: AppBar(title: Text('Account Settings'),
+      backgroundColor: Theme.of(context).primaryColor,),
       body: ListView(
         children: [
           ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Profile Information'),
+            leading: Icon(Icons.vpn_key),
+            title: Text('Change Password'),
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfileInformationPage()));
+              // Navigate to the ChangePasswordPage
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangePasswordPage()));
             },
           ),
           ListTile(
-            leading: Icon(Icons.sync),
-            title: Text('Syncing Options'),
+            leading: Icon(Icons.alternate_email),
+            title: Text('Change Username/Email'),
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => SyncingOptionsPage()));
-            },
-          ),
-          // ... [add the other settings pages similarly]
-          ListTile(
-            leading: Icon(Icons.group),
-            title: Text('Household Members'),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => HouseholdMembersPage()));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.lock_outline),
-            title: Text('Privacy Settings'),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => PrivacySettingsPage()));
+
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUsernameEmailPage()));
             },
           ),
         ],

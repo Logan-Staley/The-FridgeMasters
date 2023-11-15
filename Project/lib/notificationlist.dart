@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/cache/dismissednotifications.dart';
 import 'package:fridgemasters/Services/deleteitem.dart'; // Import the deleteItem function
 import 'package:fridgemasters/Services/storage_service.dart'; // Import StorageService
-import 'package:intl/intl.dart'; // Import DateFormat for date formatting
+import 'package:intl/intl.dart';
+import  'package:fridgemasters/widgets/backgrounds.dart' ; // Import DateFormat for date formatting
 
 class NotificationList extends StatefulWidget {
   final List<Map<String, dynamic>> fridgeItems;
@@ -82,15 +83,21 @@ class _NotificationListState extends State<NotificationList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title: Text('Notification List'),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: fridgeItemsNotify.isEmpty
+      body: Stack (
+        children: [ 
+           Background(type: 'Background1'),
+          fridgeItemsNotify.isEmpty
           ? Center(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
                   "No New Notifications",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+
                 ),
               ),
             )
@@ -106,6 +113,7 @@ class _NotificationListState extends State<NotificationList> {
                     ),
                   );
                 }
+                
                 var item = fridgeItemsNotify[index];
                 return ListTile(
                   leading:
@@ -157,6 +165,8 @@ class _NotificationListState extends State<NotificationList> {
                 );
               },
             ),
+          ],
+        ),
     );
   }
 }

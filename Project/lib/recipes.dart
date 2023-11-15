@@ -9,13 +9,16 @@ class Recipes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recipes Page'),
+        backgroundColor: theme.primaryColor,
       ),
       bottomNavigationBar: Taskbar(
         currentIndex: 2, // Assuming this is the second tab
-        backgroundColor: Color.fromARGB(255, 233, 232, 232),
+        backgroundColor: theme.bottomAppBarColor,
+        //Color.fromARGB(255, 233, 232, 232),
         onTabChanged: (index) {
           // Handle tab change if necessary
         },
@@ -31,19 +34,22 @@ class Recipes extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+
                 // White background with black text
                 Container(
-                  color: const Color.fromARGB(255, 117, 116, 116),
+                  //color: Color.fromARGB(243, 116, 117, 117),
+                  color: Colors.white,
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'Given the items in your fridge, these are some recipe suggestions you can try:',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: theme.textTheme.bodyText1?.color,),
+                   // style: TextStyle(
+                     // fontSize: 14,
+                      //fontWeight: FontWeight.bold,
+                      //color: Colors.white,
                     ),
                   ),
-                ),
+
                 const SizedBox(height: 30),
 
                 // First Recipe Button moved up
@@ -134,24 +140,18 @@ class Recipes extends StatelessWidget {
                 ),
                 const SizedBox(height: 50),
 
-                // Back Button with spacing
-                Container(
-                  
-                  child: ElevatedButton(
-  onPressed: () {
-    // Navigate back to the homepage at index 0
-    Navigator.of(context).pushReplacementNamed('/home');
-  },
-  style: ElevatedButton.styleFrom(
-    primary: const Color.fromARGB(0, 0, 0, 0), // Make the background color transparent
-  ),
-  child: Text(
-    'Back',
-    style: TextStyle(
-      color: Color.fromARGB(255, 255, 255, 255), // Text color
-    ),
-  ),
-),
+
+                // Back Button
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const Recipesinstructions()));
+                  },
+                  child: const Text('Back'),
+                  style: ElevatedButton.styleFrom(
+                    primary: theme.colorScheme.secondary,
+                )
+
                 )
               ],
             ),

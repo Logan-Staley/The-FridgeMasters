@@ -14,8 +14,7 @@ class _LanguageState extends State<Language> {
   _saveLanguage(String lang) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('language', lang);
-    Provider.of<LanguageChangeNotifier>(context, listen: false)
-        .changeLanguage(lang);
+    Provider.of<LanguageChangeNotifier>(context, listen: false).changeLanguage(lang);
   }
 
   _loadLanguage() async {
@@ -25,11 +24,15 @@ class _LanguageState extends State<Language> {
     });
   }
 
+
+
   @override
   void initState() {
     super.initState();
     _loadLanguage();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +47,8 @@ class _LanguageState extends State<Language> {
           languageNotifier.localizedStrings['title']!,
           style: theme.appBarTheme.titleTextStyle,
         ),
-        // backgroundColor: theme.appBarTheme.backgroundColor,
-        backgroundColor: Theme.of(context).primaryColor,
+       // backgroundColor: theme.appBarTheme.backgroundColor,
+       backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Stack(
         children: [
@@ -72,11 +75,9 @@ class _LanguageState extends State<Language> {
     );
   }
 
-  Widget _buildLanguageOption(String value,
-      LanguageChangeNotifier languageNotifier, Color activeColor) {
+  Widget _buildLanguageOption(String value, LanguageChangeNotifier languageNotifier, Color activeColor) {
     return RadioListTile<String>(
-      title: Text(languageNotifier.localizedStrings['title'] ?? 'Default Title',
-          style: Theme.of(context).textTheme.subtitle1),
+      title: Text(languageNotifier.localizedStrings['title'] ?? 'Default Title', style: Theme.of(context).textTheme.subtitle1),
       value: value,
       groupValue: currentLanguage,
       onChanged: (String? selectedValue) {
