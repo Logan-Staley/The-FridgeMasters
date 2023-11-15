@@ -44,25 +44,15 @@ dependencies:
   intl: ^0.18.0
   provider: ^6.0.5
   path_drawing: ^1.0.1
-<<<<<<< HEAD
-<<<<<<< HEAD
-
   flutter_emoji: ">= 2.0.0"
-
   flutter_svg: ^2.0.7
   shared_preferences: ^2.0.15
-<<<<<<< HEAD
   url_launcher: ^6.2.1
   video_player: ^2.8.1
   
   
 
-=======
->>>>>>> parent of c0ea12f (commit)
-=======
->>>>>>> parent of 5f11636 (commit)
-=======
->>>>>>> parent of 5f11636 (commit)
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
