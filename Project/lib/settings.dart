@@ -157,16 +157,11 @@ class _SettingsState extends State<Settings> {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('About'),
                 ),
-            ListTile(
-  title: Text('Theme'),
-      trailing: Switch(
-        value: themeNotifier.isDarkMode,
-        onChanged: (value) {
-          themeNotifier.toggleTheme();
-    },
-  ),
-),
-
+                ListTile(
+                  title: Text('Display and Brightness'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () => _navigateToSetting('Display and Brightness'),
+                ),
                 SizedBox(
                     height:
                         20), // Spacer doesn't work in ListView. Replacing with SizedBox.

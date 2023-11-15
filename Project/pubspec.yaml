@@ -63,7 +63,6 @@ dependencies:
 >>>>>>> parent of 5f11636 (commit)
 =======
 >>>>>>> parent of 5f11636 (commit)
-  shared_preferences: ^2.0.15
 dev_dependencies:
   flutter_test:
     sdk: flutter
