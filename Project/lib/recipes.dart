@@ -38,7 +38,7 @@ class Recipes extends StatelessWidget {
                 // White background with black text
                 Container(
                   //color: Color.fromARGB(243, 116, 117, 117),
-                  color: Colors.white,
+                  //color: Colors.white,
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'Given the items in your fridge, these are some recipe suggestions you can try:',

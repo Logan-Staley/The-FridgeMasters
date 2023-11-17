@@ -312,11 +312,13 @@ class _HomePageState extends State<HomePage> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: PreferredSize(
+        
         preferredSize: Size.fromHeight(140.0), // Adjust the height as needed
         child: AppBar(
-          backgroundColor: Theme.of(context).primaryColor, // Make the AppBar background transparent
+          backgroundColor: theme.primaryColor, // Make the AppBar background transparent
           elevation: 0, // Removes the default shadow
           shape: RoundedRectangleBorder(
+           
             side: BorderSide(
               color: Color.fromARGB(253, 253, 253, 253),
               width: 2,
@@ -335,7 +337,8 @@ class _HomePageState extends State<HomePage> {
                     top: 45.0), // Top margin to push AppBar down
                 decoration: BoxDecoration(
                   color:
-                      Color.fromARGB(255, 168, 169, 173), // Your AppBar color
+                     // Color.fromARGB(255, 168, 169, 173), // Your AppBar color
+                      theme.primaryColor,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                   border: Border.all(
                     color: const Color.fromARGB(255, 215, 215, 215),
@@ -346,8 +349,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           title: Column(
+            
             mainAxisSize: MainAxisSize.min, // Use min size for the column
             children: [
+             
               Padding(
                 padding: const EdgeInsets.only(
                     top: 35.0), // Adjust the padding to move the title down
