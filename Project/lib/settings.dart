@@ -61,19 +61,18 @@ class _SettingsState extends State<Settings> {
       case 'Account':
         nextPage = AccountSettings();
         break;
-    
+      /*Created by Freddie and removed by Freddie.
       case 'Language':
         nextPage = Language();
         break;
+      */
       case 'Notifications':
         nextPage = Notificationspage();
         break;
-    
+
       case 'About':
         nextPage = Aboutpage();
         break;
-    
-      
     }
 
     if (nextPage != null) {
@@ -87,7 +86,7 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-   final themeNotifier = Provider.of<ThemeNotifier>(context);
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -120,19 +119,19 @@ class _SettingsState extends State<Settings> {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Account'),
                 ),
-                
+                /*        Created by Freddie. Also, removed by Freddie.
                 ListTile(
                   title: Text('Language'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Language'),
                 ),
-
+                */
                 ListTile(
                   title: Text('Notifications'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Notifications'),
                 ),
-                
+
                 ListTile(
                   title: Text('About'),
                   trailing: Icon(Icons.arrow_forward_ios),
@@ -141,32 +140,32 @@ class _SettingsState extends State<Settings> {
 //ListTile(title: Text('Watch Tutorial'),
 //onTap: () {Navigator.of(context).push (MaterialPageRoute(builder: (context)=> TutorialPage(onSkip: (){})),);},)
 //,
-ListTile(
-  title: Text('View Tutorial'),
-  leading: Icon(Icons.video_library),
-  onTap: () {
-    // Navigate to Tutorial Page
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => TutorialPage()),
-    );
-  },
-),
+                ListTile(
+                  title: Text('View Tutorial'),
+                  leading: Icon(Icons.video_library),
+                  onTap: () {
+                    // Navigate to Tutorial Page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TutorialPage()),
+                    );
+                  },
+                ),
 
+                ListTile(
+                  title: Text('Theme'),
+                  trailing: ElevatedButton(
+                    onPressed: () =>
+                        Provider.of<ThemeNotifier>(context, listen: false)
+                            .toggleTheme(),
+                    //themeNotifier.toggleTheme();
 
-            ListTile(
-            title: Text('Theme'),
-            trailing: ElevatedButton(
-              onPressed: () => Provider.of<ThemeNotifier>(context, listen: false).toggleTheme(),
-                //themeNotifier.toggleTheme();
-              
-              child: Text('Toggle Theme'
-                
-                //themeNotifier.themeMode == ThemeMode.dark ? 'Switch to Light Mode' : 'Switch to Dark Mode',
-              ),
-            ),
-           
-),
+                    child: Text('Toggle Theme'
+
+                        //themeNotifier.themeMode == ThemeMode.dark ? 'Switch to Light Mode' : 'Switch to Dark Mode',
+                        ),
+                  ),
+                ),
 
                 SizedBox(
                     height:
