@@ -1,0 +1,17 @@
+
+Project/.dart_tool/package_config.json
+*.json
+Project/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+*.java
+Project/ios/Runner/GeneratedPluginRegistrant.m
+*.m
+Project/linux/flutter/generated_plugin_registrant.cc
+*.cc
+Project/linux/flutter/generated_plugins.cmake
+*.cmake
+Project/macos/Flutter/GeneratedPluginRegistrant.swift
+*.swift
+Project/windows/flutter/generated_plugin_registrant.cc
+*.cc
+Project/windows/flutter/generated_plugins.cmake
+*.cmake

@@ -22,7 +22,7 @@ class AccountSettings extends StatelessWidget {
             leading: Icon(Icons.alternate_email),
             title: Text('Change Username/Email'),
             onTap: () {
-              
+
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUsernameEmailPage()));
             },
           ),
@@ -31,5 +31,3 @@ class AccountSettings extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,4 +1,3 @@
-// TODO// TODO Implement this library.// ChangeUsernameEmailPage.dart
 import 'package:flutter/material.dart';
 
 class ChangeUsernameEmailPage extends StatefulWidget {
@@ -43,4 +42,4 @@ class _ChangeUsernameEmailPageState extends State<ChangeUsernameEmailPage> {
     );
   }
 }
-// Implement this library.
+// Implement this library
