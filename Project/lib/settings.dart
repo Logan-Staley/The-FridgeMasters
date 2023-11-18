@@ -126,12 +126,12 @@ class _SettingsState extends State<Settings> {
                   onTap: () => _navigateToSetting('Language'),
                 ),
                 */
-                ListTile(
+                /* ListTile(
                   title: Text('Notifications'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Notifications'),
                 ),
-
+                */
                 ListTile(
                   title: Text('About'),
                   trailing: Icon(Icons.arrow_forward_ios),
