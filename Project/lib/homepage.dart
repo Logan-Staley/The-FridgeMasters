@@ -285,40 +285,17 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  /* @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: theme.primaryColor,
-        //backgroundColor: Color.fromARGB(220, 48, 141, 160),
-        elevation: 0, // Removes the default shadow
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-              color: const Color.fromARGB(255, 215, 215, 215),
-              width: 2), // Blue border
-        ),
-         title: Column(
-          mainAxisSize: MainAxisSize.min, // Use min size for the column
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 35.0), // Adjust the padding to move the title down
-              child: Center(child: Text('The Fridge Masters')),
-            ),
-          ],
-        ), */
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: PreferredSize(
-        
         preferredSize: Size.fromHeight(140.0), // Adjust the height as needed
         child: AppBar(
-          backgroundColor: theme.primaryColor, // Make the AppBar background transparent
+          backgroundColor:
+              theme.primaryColor, // Make the AppBar background transparent
           elevation: 0, // Removes the default shadow
           shape: RoundedRectangleBorder(
-           
             side: BorderSide(
               color: Color.fromARGB(253, 253, 253, 253),
               width: 2,
@@ -337,7 +314,7 @@ class _HomePageState extends State<HomePage> {
                     top: 45.0), // Top margin to push AppBar down
                 decoration: BoxDecoration(
                   color:
-                     // Color.fromARGB(255, 168, 169, 173), // Your AppBar color
+                      // Color.fromARGB(255, 168, 169, 173), // Your AppBar color
                       theme.primaryColor,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                   border: Border.all(
@@ -349,10 +326,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           title: Column(
-            
             mainAxisSize: MainAxisSize.min, // Use min size for the column
             children: [
-             
               Padding(
                 padding: const EdgeInsets.only(
                     top: 35.0), // Adjust the padding to move the title down
@@ -488,44 +463,6 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),
-                              /* SizedBox(height: 5),
-          Center(
-            child: RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Expiry Color Legend: ',
-                    style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold), 
-                  ),
-                  TextSpan(
-                    text: '🟡',
-                    style: TextStyle(color: Color.fromARGB(255, 4, 114, 8), fontSize: 17, fontWeight: FontWeight.bold), 
-                  ),
-                  TextSpan(
-                    text: ' - Safe to Eat (>1wk) | ',
-                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
-                  ),
-                  TextSpan(
-                    text: '🟡',
-                    style: TextStyle(color: Color.fromARGB(255, 250, 228, 28), fontSize: 17, fontWeight: FontWeight.bold),
-                  ),
-                  TextSpan(
-                    text: ' - Nearing Expiry (≤1wk) | ',
-                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
-                  ),
-                  TextSpan(
-                    text: '🟡',
-                    style: TextStyle(color: Color.fromARGB(255, 226, 50, 50), fontSize: 17, fontWeight: FontWeight.bold),
-                  ),
-                  TextSpan(
-                    text: ' - Expired',
-                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
-                  ),
-                ],
-              ),
-            ),
-          ),*/
                               SizedBox(height: 10),
                             ],
                           );
@@ -540,14 +477,6 @@ class _HomePageState extends State<HomePage> {
                             return Color.fromRGBO(240, 240, 240,
                                 1); // Opacity is set to 1 for a solid color
                           }
-
-                          /*Color _getPastelColor(int index) {
-                          final r = (70 + (index * 50) % 135).toDouble();
-                          final g = (90 + (index * 80) % 85).toDouble();
-                          final b = (120 + (index * 30) % 55).toDouble();
-                          return Color.fromRGBO(
-                              r.toInt(), g.toInt(), b.toInt(), 0.9);
-                        }*/
 
                           ImageProvider getImageProvider(String? imageUrl) {
                             // Check if imageUrl is a network URL
@@ -698,13 +627,7 @@ class _HomePageState extends State<HomePage> {
                                                                               18,
                                                                           color:
                                                                               Colors.black,
-                                                                          /* color: Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                            255),decoration: TextDecoration.underline*/
-                                                                        )), // User-entered text size
+                                                                        )),
                                                                   ],
                                                                 ),
                                                               ),
@@ -733,12 +656,6 @@ class _HomePageState extends State<HomePage> {
                                                                               FontWeight.bold,
                                                                           fontSize:
                                                                               16,
-                                                                          /*color: Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                            255)*/
                                                                         )),
                                                                   ],
                                                                 ),
@@ -776,12 +693,6 @@ class _HomePageState extends State<HomePage> {
                                                                               15.5,
                                                                           color:
                                                                               Colors.black,
-                                                                          /*color: Color
-                                                                        .fromARGB(
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                            255)*/
                                                                         )),
                                                                   ],
                                                                 ),
@@ -828,18 +739,6 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                             ],
                                           ),
-                                          /*Positioned(
-                                    bottom: 1, // adjust as needed
-                                    left: 38, // adjust as needed
-                                    child: Text(
-                                      '    Click Image for\nNutritional Insights!', // replace with dynamic data if needed
-                                      style: TextStyle(
-                                        fontSize: 8,
-                                        color: Color.fromARGB(255, 255, 255,
-                                            255), // or any color you prefer
-                                      ),
-                                    ),
-                                  ),*/
                                           Positioned(
                                             top: 2,
                                             right: 2,
@@ -953,7 +852,6 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: Taskbar(
         currentIndex: 0,
         backgroundColor: theme.bottomAppBarColor,
-        //backgroundColor: Color.fromARGB(255, 233, 232, 232),
         onTabChanged: (index) {},
         onFoodItemAdded: (foodItem) {
           // You need to provide this callback
@@ -962,17 +860,9 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _navigateToAddItem,
         child: Icon(Icons.add),
-
-        //backgroundColor: const Color.fromARGB(210, 84, 85, 87),
-
-        //backgroundColor: const Color.fromARGB(210, 33, 149, 243),
         backgroundColor: theme.colorScheme.secondary,
-
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
-
-
-//check
