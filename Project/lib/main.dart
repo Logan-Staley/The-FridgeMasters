@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-
 import 'package:fridgemasters/homepage.dart';
 import 'package:fridgemasters/login.dart';
-import 'splash_screen.dart'; // Import the SplashScreen widget
+import 'package:fridgemasters/widgets/theme.dart';
+import 'package:provider/provider.dart'; // Import theme.dart where you have lightTheme and darkTheme definitions
+import 'theme_notifier.dart'; // Import your ThemeNotifier
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'audio_manager.dart';
-import 'package:provider/provider.dart';
-import 'package:fridgemasters/Services/user_provider.dart';
-import 'theme_notifier.dart';
-import 'material_theme_data.dart';
+import 'language_change_notifier.dart';
+import 'package:fridgemasters/language.dart';
+import 'package:fridgemasters/Tutorial.dart';
 
 void main() async {
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Required if you're using async code before runApp
   await dotenv.load(fileName: 'edamam.env');
   runApp(MyApp());
 }
@@ -20,23 +21,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ThemeNotifier(lightTheme)),
-        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => ThemeNotifier()),
+        ChangeNotifierProvider(create: (context) => LanguageChangeNotifier()),
       ],
-      child: Consumer2<ThemeNotifier, UserProvider>(
-        builder: (context, themeNotifier, userProvider, child) {
+      //create: (context) => ThemeNotifier(),
+      child: Consumer2<ThemeNotifier, LanguageChangeNotifier>(
+        builder: (context, themeNotifier, languageNotifier, child) {
           return MaterialApp(
             title: 'FridgeMasters App',
-            theme: themeNotifier.themeData,
+            theme: lightTheme,
+            darkTheme: darkTheme, // Assuming you have a dark theme defined
+            themeMode: themeNotifier.themeMode,
             initialRoute: '/',
             routes: {
-              '/': (context) =>
-                  LoginPage(), // Or LoginPage() if you want to start with the login page
-              '/home': (context) => HomePage(
-                    fridgeItems: [],
-                  ),
-              '/login': (context) => LoginPage(),
-              // ... add other routes if needed
+              '/': (context) => LoginPage(),
+              '/home': (context) => HomePage(fridgeItems: []),
+              '/login': (context) =>
+                  LoginPage(), // Replace with your initial page
+              // Define other routes here
+              '/tutorial': (context) => TutorialPage(),
             },
           );
         },
