@@ -173,11 +173,15 @@ class _HomePageState extends State<HomePage> {
   final List<Map<String, dynamic>> fridgeItems = [];
   final TextEditingController _searchController = TextEditingController();
   final DatabaseService dbService = DatabaseService();
+  List<Map<String, dynamic>> filteredItems = [];
 
   @override
   void initState() {
     super.initState();
     _loadFridgeItems();
+      _searchController.addListener(() {
+    _updateSearchQuery(_searchController.text);
+  });
   }
 
   void _loadFridgeItems() async {
@@ -218,6 +222,7 @@ class _HomePageState extends State<HomePage> {
             'Formatted Items: $formattedItems'); // Print the formattedItems list
         setState(() {
           widget.fridgeItems.addAll(formattedItems);
+          filteredItems = List.from(widget.fridgeItems);
         });
       } else {
         print('No user ID found in storage.');
@@ -227,6 +232,18 @@ class _HomePageState extends State<HomePage> {
       // Handle any errors, maybe show a notification to the user
     }
   }
+
+void _updateSearchQuery(String query) {
+  setState(() {
+    if (query.isEmpty) {
+      filteredItems = List.from(widget.fridgeItems);
+    } else {
+      filteredItems = widget.fridgeItems.where((item) {
+        return item['name'].toLowerCase().contains(query.toLowerCase());
+      }).toList();
+    }
+  });
+}
 
   void _navigateToAddItem() async {
     final FoodItem? newFoodItem = await Navigator.push(
@@ -430,10 +447,10 @@ class _HomePageState extends State<HomePage> {
                       ],
                     )
                   : ListView.builder(
-                      itemCount: widget.fridgeItems.length +
-                          1, // +1 for the header (date and legend)
+                      itemCount: filteredItems.length, // +1 for the header (date and legend)
 
                       itemBuilder: (context, index) {
+                        final item = filteredItems[index];
                         // This is for the header, which contains the date and legend
                         if (index == 0) {
                           return Column(
