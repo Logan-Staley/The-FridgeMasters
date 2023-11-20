@@ -279,13 +279,16 @@ print("Nutrients Info: $_nutrientsInfo");
 
 @override
 Widget build(BuildContext context) {
+  final theme = Theme.of(context);
   return Scaffold(
     appBar: AppBar(
+      backgroundColor: Theme.of(context).primaryColor,
       title: const Text('Add to Inventory'),
     ),
     bottomNavigationBar: Taskbar(
       currentIndex: 1, // Assuming this is the second tab
-      backgroundColor: Color.fromARGB(255, 233, 232, 232),
+      //backgroundColor: Color.fromARGB(255, 233, 232, 232),
+      backgroundColor: theme.bottomAppBarColor,
       onTabChanged: (index) {
         currentIndex: 0; // Handle tab change if necessary
       },
@@ -422,6 +425,7 @@ Widget build(BuildContext context) {
               TextOnlyButton(
                 text: 'Cancel',
                 onPressed: () => Navigator.pop(context),
+                
               ),
             ],
           ),
