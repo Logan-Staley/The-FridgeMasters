@@ -62,29 +62,47 @@ class resetpassword extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('images/fridgemasters-logo.png'), // Logo Image
+                Image.asset('images/FinalLOGO.png'), // Logo Image
                 const SizedBox(height: 20),
                 // Provide the controllers to the InputTextBox widgets
                 InputTextBox(
                   controller: usernameController,
                   isPassword: false,
                   hint: 'Email',
+                  textColor: Colors.black87,
+          backgroundColor: Colors.grey[200]!,
                 ),
-                Button(
-                  onPressed:
-                      //logic for password reset
-                      () => login(context),
-                  buttonText: 'Reset',
-                  nextPage: LoginPage(),
-                ),
-                // Added the "Back" button below the "Reset" button
-                Button(
-                  onPressed:
-                      //logic for going back, replace with your desired logic
-                      () => login(context),
-                  buttonText: 'Back',
-                  nextPage: LoginPage(),
-                ),
+                SizedBox(height: 20), // Add spacing between the textbox and buttons
+Padding(
+  padding: const EdgeInsets.symmetric(horizontal: 50.0), // Adjust the horizontal padding as needed
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    mainAxisSize: MainAxisSize.min, // Make the row only as wide as necessary
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(right: 8.0), // Spacing between buttons
+        child: Button(
+          onPressed: () async {
+            return await login(context); // Return the result of login function
+          },
+          buttonText: 'Reset',
+          nextPage: LoginPage(),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(left: 8.0), // Spacing between buttons
+        child: Button(
+          onPressed: () {
+            Navigator.of(context).pop(); // Go back
+            return Future.value(true); // Return a completed future
+          },
+          buttonText: 'Back',
+          nextPage: LoginPage(),
+        ),
+      ),
+    ],
+  ),
+),
               ],
             ),
           ),
@@ -92,4 +110,7 @@ class resetpassword extends StatelessWidget {
       ),
     );
   }
+
+
 }
+

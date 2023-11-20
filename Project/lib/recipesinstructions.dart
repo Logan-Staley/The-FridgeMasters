@@ -8,6 +8,7 @@ class Recipesinstructions extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Recipe Instructions Page'),
+         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: const Center(
         child: Text('This is the Recipe Instructions page.'),
