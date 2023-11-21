@@ -110,6 +110,10 @@ class _NotificationListState extends State<NotificationList> {
                     child: ElevatedButton(
                       onPressed: _dismissAllItems,
                       child: Text('Dismiss All'),
+                      style: ElevatedButton.styleFrom(
+      primary: Theme.of(context).colorScheme.secondary, // Background color of the button
+      onPrimary: Colors.white,),
+       // Text color
                     ),
                   );
                 }
@@ -128,7 +132,7 @@ class _NotificationListState extends State<NotificationList> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.delete, size: 24),
+                        icon: Icon(Icons.delete, size: 24, color: Theme.of(context).primaryColor),
                         onPressed: () {
                           showDialog(
                             context: context,
@@ -157,7 +161,7 @@ class _NotificationListState extends State<NotificationList> {
                         },
                       ),
                       IconButton(
-                        icon: Icon(Icons.notifications_off_outlined, size: 24),
+                        icon: Icon(Icons.notifications_off_outlined, size: 24, color: Theme.of(context).primaryColor),
                         onPressed: () => _dismissItem(item['itemId']),
                       ),
                     ],
