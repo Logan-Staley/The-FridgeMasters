@@ -7,7 +7,7 @@ import 'theme_notifier.dart'; // Import your ThemeNotifier
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'language_change_notifier.dart';
 import 'package:fridgemasters/language.dart';
-import 'package:fridgemasters/Tutorial.dart';
+import 'package:fridgemasters/Tutorialpage.dart';
 
 void main() async {
   WidgetsFlutterBinding
