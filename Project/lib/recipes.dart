@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:fridgemasters/recipesinstructions.dart';
 import 'package:fridgemasters/widgets/button.dart'; // Import your Button widget
 import 'package:fridgemasters/widgets/backgrounds.dart';
@@ -12,7 +13,10 @@ class Recipes extends StatelessWidget {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Recipes Page'),
+        title: Text('Recipes Page',style: GoogleFonts.calligraffitti(fontSize: 24.0,
+      fontWeight: FontWeight.bold,),
+        
+        ),
         backgroundColor: theme.primaryColor,
       ),
       bottomNavigationBar: Taskbar(
