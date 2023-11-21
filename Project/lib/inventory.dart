@@ -9,7 +9,7 @@ class FoodItem {
   final String dateOfPurchase;
   final String expirationDate;
   final String imageUrl; 
-  final Map<String, dynamic> nutrients; // Add this line for nutritional data
+  final Map<String, dynamic> nutrients; // For nutritional data
 
   FoodItem({
     required this.itemId, 
@@ -20,6 +20,19 @@ class FoodItem {
     required this.imageUrl,
     required this.nutrients,
   });
+
+  // Add a factory constructor to create an instance from JSON data
+  factory FoodItem.fromJson(Map<String, dynamic> json) {
+  return FoodItem(
+    itemId: json['itemId'].toString(),
+    name: json['productName'],
+    quantity: int.parse(json['quantity'].toString()),
+    dateOfPurchase: json['dateOfPurchase'],
+    expirationDate: json['expirationDate'],
+    imageUrl: json['imageUrl'] ?? 'default_image.png',
+    nutrients: json['nutrients'] ?? {},
+  );
+}
 }
 
 class Inventory extends StatefulWidget {
@@ -39,7 +52,10 @@ class _InventoryState extends State<Inventory> {
       });
     });
   }
-
+ // Add a method to get food item names
+  List<String> getFoodItemNames() {
+    return foodItemList.map((item) => item.name).toList();
+  }
 Future<List<FoodItem>> fetchUserInventory() async {
   // Send the HTTP request
   final response = await http.post(
@@ -94,6 +110,7 @@ Future<List<FoodItem>> fetchUserInventory() async {
           final foodItem = foodItemList[index];
           return ListTile(
             title: Text('Food Item: ${foodItem.name}'),
+            
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -102,6 +119,7 @@ Future<List<FoodItem>> fetchUserInventory() async {
                 Text('Expiration Date: ${foodItem.expirationDate}'),
               ],
             ),
+            
           );
         },
       ),

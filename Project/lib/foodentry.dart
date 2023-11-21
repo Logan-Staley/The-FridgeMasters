@@ -12,24 +12,33 @@ import 'package:fridgemasters/widgets/taskbar.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Recipe {
+  final String uri;
   final String label;
-  final String image;
+  final String imageUrl;
   final String source;
   final String url;
+  final List<String> ingredientLines;
+  final Map<String, dynamic> totalNutrients;
 
   Recipe({
+    required this.uri,
     required this.label,
-    required this.image,
+    required this.imageUrl,
     required this.source,
     required this.url,
+    required this.ingredientLines,
+    required this.totalNutrients,
   });
 
-  factory Recipe.fromMap(Map<String, dynamic> data) {
+  factory Recipe.fromJson(Map<String, dynamic> json) {
     return Recipe(
-      label: data['label'] ?? '',
-      image: data['image'] ?? '',
-      source: data['source'] ?? '',
-      url: data['url'] ?? '',
+      uri: json['uri'] ?? '',
+      label: json['label'] ?? '',
+      imageUrl: json['image'] ?? '',
+      source: json['source'] ?? '',
+      url: json['url'] ?? '',
+      ingredientLines: List<String>.from(json['ingredientLines'] ?? []),
+      totalNutrients: json['totalNutrients'] as Map<String, dynamic>,
     );
   }
 }
@@ -132,14 +141,7 @@ if (upcCode.isNotEmpty) {
  print("Edamam URL: $edamamUrlFood");
 
   // ... And similarly for Recipes
-  final String appIdRecipes = dotenv.env['EDAMAM_APP_ID_RECIPIES'] ?? "default_id";
-  final String appKeyRecipes = dotenv.env['EDAMAM_APP_KEY_RECIPIES'] ?? "default_key";
-  final String appUrlRecipes = dotenv.env['EDAMAM_APP_URL_RECIPIES'] ?? "default_url";
 
-  // Make sure to use the correct URL depending on what type of data you're fetching
-  // For example, if you're fetching food information, use edamamUrlFood
-  // If you're fetching nutrition information, use the appropriate URL and keys
-  // And the same goes for recipes
 
 
   try {
