@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 class ChangePasswordPage extends StatefulWidget {
   @override
   _ChangePasswordPageState createState() => _ChangePasswordPageState();
@@ -11,9 +12,25 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   String _newPassword = '';
   String _retypePassword = '';
 
-  void _changePassword() {
-    // Implement your change password logic here
+  void _changePassword() async {
+  final response = await http.post(
+      Uri.parse(
+          'http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/create_account.php'),
+      body: {
+        'CurrentPassword': _currentPassword,
+        'NewPassword': _newPassword,
+        'RetypePassword': _retypePassword,
+      },
+    );
+
+  if (response.statusCode == 200) {
+    // Handle success
+    print('Password changed successfully');
+  } else {
+    // Handle error
+    print('Failed to change password');
   }
+}
 
   bool _isPasswordCompliant(String password, [int minLength = 5]) {
     if (password.isEmpty) {
