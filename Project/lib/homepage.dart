@@ -1,5 +1,6 @@
 //import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:fridgemasters/inventory.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
@@ -307,63 +308,70 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ), */
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Scaffold(
-      appBar: PreferredSize(
-        
-        preferredSize: Size.fromHeight(140.0), // Adjust the height as needed
-        child: AppBar(
-          backgroundColor: theme.primaryColor, // Make the AppBar background transparent
-          elevation: 0, // Removes the default shadow
-          shape: RoundedRectangleBorder(
-           
-            side: BorderSide(
-              color: Color.fromARGB(253, 253, 253, 253),
-              width: 2,
-            ),
+ @override
+Widget build(BuildContext context) {
+  final theme = Theme.of(context);
+  var screenWidth = MediaQuery.of(context).size.width;
+ var iconPadding = EdgeInsets.all(screenWidth * 0.02); 
+ 
+ 
+  return Scaffold(
+    appBar: PreferredSize(
+      preferredSize: const Size.fromHeight(142.0), // Adjust the height as needed
+      child: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+          //title: const Text(''),// Make the AppBar background transparent
+        elevation: 0, // Removes the default shadow
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Theme.of(context).primaryColor,
+            width: 2,
           ),
-
-          flexibleSpace: Padding(
-            // Apply padding to the flexibleSpace
-            padding: const EdgeInsets.symmetric(
-                horizontal: 21.0), // Set horizontal padding
-            child: ClipRRect(
-              borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(20)), // Rounded corners at the bottom
-              child: Container(
-                margin: const EdgeInsets.only(
-                    top: 45.0), // Top margin to push AppBar down
-                decoration: BoxDecoration(
-                  color:
-                     // Color.fromARGB(255, 168, 169, 173), // Your AppBar color
-                      theme.primaryColor,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 215, 215, 215),
-                    width: 2,
-                  ),
+        ),
+   flexibleSpace: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 21.0),
+          /*child: ClipRRect(
+            borderRadius: BorderRadius.circular(20), // Apply rounded corners to all sides
+            child: Container(
+              margin: const EdgeInsets.only(top: 45.0),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(20), // Apply rounded corners to all sides
+                border: Border.all(
+                  color: const Color.fromARGB(255, 215, 215, 215),
+                  width: 1,*/
+                  
+          
                 ),
-              ),
-            ),
-          ),
-          title: Column(
-            
-            mainAxisSize: MainAxisSize.min, // Use min size for the column
-            children: [
-             
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 35.0), // Adjust the padding to move the title down
-                child: Center(child: Text('The Fridge Masters')),
-              ),
-            ],
-          ),
+              //),
+          //  ),
+        //  ),
+       // ),
+        title: Column(
+  mainAxisSize: MainAxisSize.min, // Use min size for the column
+  children: [
+    Padding(
+      padding: const EdgeInsets.only(top: 20.0), // Adjust the padding to move the title down
+      child: Center(
+        child: Text(
+          'The Fridge Masters',
+          style: GoogleFonts.calligraffitti(
+    textStyle: TextStyle(
+      fontSize: 28.0,
+      fontWeight: FontWeight.bold, // Apply DM Serif Display font
+        ),
+      ),
+    ),
+      ),
+    ), 
+  ],
+),
 
-          leading: Transform.translate(
-            offset: Offset(11, 19),
-            child: IconButton(
+          leading:  Transform.translate(
+        offset: Offset(11, 19), 
+        
+       child: IconButton(
+            //icon: IconButton(
               icon: Icon(Icons.notifications),
               onPressed: () {
                 Navigator.push(
@@ -377,8 +385,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           actions: [
-            Transform.translate(
-                offset: Offset(-11, 19),
+           Transform.translate(
+          offset: Offset(-11, 19),
                 child: IconButton(
                   icon: Icon(Icons.settings),
                   onPressed: () {
@@ -396,7 +404,7 @@ class _HomePageState extends State<HomePage> {
             preferredSize: Size.fromHeight(60),
             child: Padding(
               //padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              padding: const EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 10.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
               child: Theme(
                 data: Theme.of(context).copyWith(
                   colorScheme: Theme.of(context).colorScheme.copyWith(
@@ -411,6 +419,7 @@ class _HomePageState extends State<HomePage> {
                         Colors.white, // Changes the selection handle color
                   ),
                 ),
+                
                 child: TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
@@ -974,5 +983,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
-//check
