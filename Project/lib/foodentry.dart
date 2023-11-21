@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
 import 'inventory.dart';
@@ -283,9 +283,7 @@ Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
       backgroundColor: Theme.of(context).primaryColor,
-      title: Text('Add to Inventory', style: GoogleFonts.calligraffitti(fontSize: 24.0,
-      fontWeight: FontWeight.bold,),
-      ),
+      title: const Text('Add to Inventory'),
     ),
     bottomNavigationBar: Taskbar(
       currentIndex: 1, // Assuming this is the second tab
