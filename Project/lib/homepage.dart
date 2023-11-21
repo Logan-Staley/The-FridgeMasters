@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/inventory.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
@@ -179,16 +178,15 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _loadFridgeItems();
-      _searchController.addListener(() {
-    _updateSearchQuery(_searchController.text);
-  });
+    _searchController.addListener(() {
+      _updateSearchQuery(_searchController.text);
+    });
   }
 
   void _loadFridgeItems() async {
     try {
       final storageService = StorageService();
 
-      // Fetch stored userId from storage
       String? userID = await storageService.getStoredUserId();
 
       if (userID != null) {
@@ -233,17 +231,21 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-void _updateSearchQuery(String query) {
-  setState(() {
-    if (query.isEmpty) {
-      filteredItems = List.from(widget.fridgeItems);
-    } else {
-      filteredItems = widget.fridgeItems.where((item) {
-        return item['name'].toLowerCase().contains(query.toLowerCase());
-      }).toList();
-    }
-  });
-}
+  void _updateSearchQuery(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredItems = List.from(widget.fridgeItems);
+      } else {
+        filteredItems = widget.fridgeItems.where((item) {
+          bool matches =
+              item['name'].toLowerCase().contains(query.toLowerCase());
+          print("Item: ${item['name']}, Matches: $matches"); // Debugging line
+          return matches;
+        }).toList();
+      }
+      print("Filtered Items Count: ${filteredItems.length}"); // Debugging line
+    });
+  }
 
   void _navigateToAddItem() async {
     final FoodItem? newFoodItem = await Navigator.push(
