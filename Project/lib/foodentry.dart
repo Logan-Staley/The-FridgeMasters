@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
 import 'inventory.dart';
@@ -283,7 +283,9 @@ Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
       backgroundColor: Theme.of(context).primaryColor,
-      title: const Text('Add to Inventory'),
+      title: Text('Add to Inventory', style: GoogleFonts.calligraffitti(fontSize: 24.0,
+      fontWeight: FontWeight.bold,),
+      ),
     ),
     bottomNavigationBar: Taskbar(
       currentIndex: 1, // Assuming this is the second tab
@@ -420,13 +422,19 @@ Widget build(BuildContext context) {
   },
   child: const Text('Add to Fridge'),
 ),
+SizedBox(height: 20),
+ElevatedButton(
+  onPressed: () => Navigator.pop(context),
+  child: const Text('Cancel'),
+  style: ElevatedButton.styleFrom(
+    primary: Theme.of(context).colorScheme.secondary, // Use the secondary color from the theme
+    onPrimary: Colors.white, // Text color
+    //shape: RoundedRectangleBorder(
+      //borderRadius: BorderRadius.circular(30), // Match the border radius
+    ),
+  ),
 
-              const SizedBox(height: 20),
-              TextOnlyButton(
-                text: 'Cancel',
-                onPressed: () => Navigator.pop(context),
-                
-              ),
+      
             ],
           ),
         ),
