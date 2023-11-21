@@ -174,7 +174,7 @@ class _HomePageState extends State<HomePage> {
   final List<Map<String, dynamic>> fridgeItems = [];
   final TextEditingController _searchController = TextEditingController();
   final DatabaseService dbService = DatabaseService();
-
+  List<Map<String, dynamic>> filteredItems = [];
   @override
   void initState() {
     super.initState();
@@ -188,6 +188,7 @@ class _HomePageState extends State<HomePage> {
     try {
       final storageService = StorageService();
 
+      // Fetch stored userId from storage
       String? userID = await storageService.getStoredUserId();
 
       if (userID != null) {
@@ -237,13 +238,9 @@ class _HomePageState extends State<HomePage> {
         filteredItems = List.from(widget.fridgeItems);
       } else {
         filteredItems = widget.fridgeItems.where((item) {
-          bool matches =
-              item['name'].toLowerCase().contains(query.toLowerCase());
-          print("Item: ${item['name']}, Matches: $matches"); // Debugging line
-          return matches;
+          return item['name'].toLowerCase().contains(query.toLowerCase());
         }).toList();
       }
-      print("Filtered Items Count: ${filteredItems.length}"); // Debugging line
     });
   }
 
@@ -326,29 +323,29 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ), */
- @override
-Widget build(BuildContext context) {
-  final theme = Theme.of(context);
-  var screenWidth = MediaQuery.of(context).size.width;
- var iconPadding = EdgeInsets.all(screenWidth * 0.02); 
- 
- 
-  return Scaffold(
-    appBar: PreferredSize(
-      preferredSize: const Size.fromHeight(142.0), // Adjust the height as needed
-      child: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    var screenWidth = MediaQuery.of(context).size.width;
+    var iconPadding = EdgeInsets.all(screenWidth * 0.02);
+
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize:
+            const Size.fromHeight(142.0), // Adjust the height as needed
+        child: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
           //title: const Text(''),// Make the AppBar background transparent
-        elevation: 0, // Removes the default shadow
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: Theme.of(context).primaryColor,
-            width: 2,
+          elevation: 0, // Removes the default shadow
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: Theme.of(context).primaryColor,
+              width: 2,
+            ),
           ),
-        ),
-   flexibleSpace: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 21.0),
-          /*child: ClipRRect(
+          flexibleSpace: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 21.0),
+            /*child: ClipRRect(
             borderRadius: BorderRadius.circular(20), // Apply rounded corners to all sides
             child: Container(
               margin: const EdgeInsets.only(top: 45.0),
@@ -358,38 +355,37 @@ Widget build(BuildContext context) {
                 border: Border.all(
                   color: const Color.fromARGB(255, 215, 215, 215),
                   width: 1,*/
-                  
-          
-                ),
-              //),
+          ),
+          //),
           //  ),
-        //  ),
-       // ),
-        title: Column(
-  mainAxisSize: MainAxisSize.min, // Use min size for the column
-  children: [
-    Padding(
-      padding: const EdgeInsets.only(top: 20.0), // Adjust the padding to move the title down
-      child: Center(
-        child: Text(
-          'The Fridge Masters',
-          style: GoogleFonts.calligraffitti(
-    textStyle: TextStyle(
-      fontSize: 28.0,
-      fontWeight: FontWeight.bold, // Apply DM Serif Display font
-        ),
-      ),
-    ),
-      ),
-    ), 
-  ],
-),
+          //  ),
+          // ),
+          title: Column(
+            mainAxisSize: MainAxisSize.min, // Use min size for the column
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 20.0), // Adjust the padding to move the title down
+                child: Center(
+                  child: Text(
+                    'The Fridge Masters',
+                    style: GoogleFonts.calligraffitti(
+                      textStyle: TextStyle(
+                        fontSize: 28.0,
+                        fontWeight:
+                            FontWeight.bold, // Apply DM Serif Display font
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
 
-          leading:  Transform.translate(
-        offset: Offset(11, 19), 
-        
-       child: IconButton(
-            //icon: IconButton(
+          leading: Transform.translate(
+            offset: Offset(11, 19),
+            child: IconButton(
+              //icon: IconButton(
               icon: Icon(Icons.notifications),
               onPressed: () {
                 Navigator.push(
@@ -993,7 +989,6 @@ Widget build(BuildContext context) {
 
         //backgroundColor: const Color.fromARGB(210, 33, 149, 243),
         backgroundColor: theme.colorScheme.secondary,
-
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
