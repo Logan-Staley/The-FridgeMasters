@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         builder: (context, themeNotifier, languageNotifier, child) {
           return MaterialApp(
             title: 'FridgeMasters App',
+            debugShowCheckedModeBanner: false,
             theme: lightTheme,
             darkTheme: darkTheme, // Assuming you have a dark theme defined
             themeMode: themeNotifier.themeMode,
