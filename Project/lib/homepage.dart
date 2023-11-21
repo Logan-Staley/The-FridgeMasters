@@ -1,4 +1,4 @@
-
+//import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fridgemasters/inventory.dart';
@@ -174,15 +174,11 @@ class _HomePageState extends State<HomePage> {
   final List<Map<String, dynamic>> fridgeItems = [];
   final TextEditingController _searchController = TextEditingController();
   final DatabaseService dbService = DatabaseService();
-  List<Map<String, dynamic>> filteredItems = [];
 
   @override
   void initState() {
     super.initState();
     _loadFridgeItems();
-      _searchController.addListener(() {
-    _updateSearchQuery(_searchController.text);
-  });
   }
 
   void _loadFridgeItems() async {
@@ -223,7 +219,6 @@ class _HomePageState extends State<HomePage> {
             'Formatted Items: $formattedItems'); // Print the formattedItems list
         setState(() {
           widget.fridgeItems.addAll(formattedItems);
-          filteredItems = List.from(widget.fridgeItems);
         });
       } else {
         print('No user ID found in storage.');
@@ -233,18 +228,6 @@ class _HomePageState extends State<HomePage> {
       // Handle any errors, maybe show a notification to the user
     }
   }
-
-void _updateSearchQuery(String query) {
-  setState(() {
-    if (query.isEmpty) {
-      filteredItems = List.from(widget.fridgeItems);
-    } else {
-      filteredItems = widget.fridgeItems.where((item) {
-        return item['name'].toLowerCase().contains(query.toLowerCase());
-      }).toList();
-    }
-  });
-}
 
   void _navigateToAddItem() async {
     final FoodItem? newFoodItem = await Navigator.push(
@@ -302,7 +285,6 @@ void _updateSearchQuery(String query) {
       child: child,
     );
   }
-
 
   /* @override
   Widget build(BuildContext context) {
@@ -384,58 +366,6 @@ Widget build(BuildContext context) {
     ), 
   ],
 ),
---------------------Mireya's Code-----------------------
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(140.0), // Adjust the height as needed
-        child: AppBar(
-          backgroundColor:
-              theme.primaryColor, // Make the AppBar background transparent
-          elevation: 0, // Removes the default shadow
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: Color.fromARGB(253, 253, 253, 253),
-              width: 2,
-            ),
-          ),
-
-          flexibleSpace: Padding(
-            // Apply padding to the flexibleSpace
-            padding: const EdgeInsets.symmetric(
-                horizontal: 21.0), // Set horizontal padding
-            child: ClipRRect(
-              borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(20)), // Rounded corners at the bottom
-              child: Container(
-                margin: const EdgeInsets.only(
-                    top: 45.0), // Top margin to push AppBar down
-                decoration: BoxDecoration(
-                  color:
-                      // Color.fromARGB(255, 168, 169, 173), // Your AppBar color
-                      theme.primaryColor,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 215, 215, 215),
-                    width: 2,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          title: Column(
-            mainAxisSize: MainAxisSize.min, // Use min size for the column
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 35.0), // Adjust the padding to move the title down
-                child: Center(child: Text('The Fridge Masters')),
-              ),
-            ],
-          ),
-
 
           leading:  Transform.translate(
         offset: Offset(11, 19), 
@@ -534,10 +464,10 @@ Widget build(BuildContext context) {
                       ],
                     )
                   : ListView.builder(
-                      itemCount: filteredItems.length, // +1 for the header (date and legend)
+                      itemCount: widget.fridgeItems.length +
+                          1, // +1 for the header (date and legend)
 
                       itemBuilder: (context, index) {
-                        final item = filteredItems[index];
                         // This is for the header, which contains the date and legend
                         if (index == 0) {
                           return Column(
@@ -567,6 +497,44 @@ Widget build(BuildContext context) {
                                   ),
                                 ),
                               ),
+                              /* SizedBox(height: 5),
+          Center(
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Expiry Color Legend: ',
+                    style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold), 
+                  ),
+                  TextSpan(
+                    text: '🟡',
+                    style: TextStyle(color: Color.fromARGB(255, 4, 114, 8), fontSize: 17, fontWeight: FontWeight.bold), 
+                  ),
+                  TextSpan(
+                    text: ' - Safe to Eat (>1wk) | ',
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
+                  ),
+                  TextSpan(
+                    text: '🟡',
+                    style: TextStyle(color: Color.fromARGB(255, 250, 228, 28), fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(
+                    text: ' - Nearing Expiry (≤1wk) | ',
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
+                  ),
+                  TextSpan(
+                    text: '🟡',
+                    style: TextStyle(color: Color.fromARGB(255, 226, 50, 50), fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(
+                    text: ' - Expired',
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16, fontWeight: FontWeight.bold), 
+                  ),
+                ],
+              ),
+            ),
+          ),*/
                               SizedBox(height: 10),
                             ],
                           );
@@ -581,6 +549,14 @@ Widget build(BuildContext context) {
                             return Color.fromRGBO(240, 240, 240,
                                 1); // Opacity is set to 1 for a solid color
                           }
+
+                          /*Color _getPastelColor(int index) {
+                          final r = (70 + (index * 50) % 135).toDouble();
+                          final g = (90 + (index * 80) % 85).toDouble();
+                          final b = (120 + (index * 30) % 55).toDouble();
+                          return Color.fromRGBO(
+                              r.toInt(), g.toInt(), b.toInt(), 0.9);
+                        }*/
 
                           ImageProvider getImageProvider(String? imageUrl) {
                             // Check if imageUrl is a network URL
@@ -731,7 +707,13 @@ Widget build(BuildContext context) {
                                                                               18,
                                                                           color:
                                                                               Colors.black,
-                                                                        )),
+                                                                          /* color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                            255),decoration: TextDecoration.underline*/
+                                                                        )), // User-entered text size
                                                                   ],
                                                                 ),
                                                               ),
@@ -760,6 +742,12 @@ Widget build(BuildContext context) {
                                                                               FontWeight.bold,
                                                                           fontSize:
                                                                               16,
+                                                                          /*color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                            255)*/
                                                                         )),
                                                                   ],
                                                                 ),
@@ -797,6 +785,12 @@ Widget build(BuildContext context) {
                                                                               15.5,
                                                                           color:
                                                                               Colors.black,
+                                                                          /*color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                            255)*/
                                                                         )),
                                                                   ],
                                                                 ),
@@ -843,6 +837,18 @@ Widget build(BuildContext context) {
                                               ),
                                             ],
                                           ),
+                                          /*Positioned(
+                                    bottom: 1, // adjust as needed
+                                    left: 38, // adjust as needed
+                                    child: Text(
+                                      '    Click Image for\nNutritional Insights!', // replace with dynamic data if needed
+                                      style: TextStyle(
+                                        fontSize: 8,
+                                        color: Color.fromARGB(255, 255, 255,
+                                            255), // or any color you prefer
+                                      ),
+                                    ),
+                                  ),*/
                                           Positioned(
                                             top: 2,
                                             right: 2,
@@ -956,6 +962,7 @@ Widget build(BuildContext context) {
       bottomNavigationBar: Taskbar(
         currentIndex: 0,
         backgroundColor: theme.bottomAppBarColor,
+        //backgroundColor: Color.fromARGB(255, 233, 232, 232),
         onTabChanged: (index) {},
         onFoodItemAdded: (foodItem) {
           // You need to provide this callback
@@ -964,11 +971,14 @@ Widget build(BuildContext context) {
       floatingActionButton: FloatingActionButton(
         onPressed: _navigateToAddItem,
         child: Icon(Icons.add),
+
+        //backgroundColor: const Color.fromARGB(210, 84, 85, 87),
+
+        //backgroundColor: const Color.fromARGB(210, 33, 149, 243),
         backgroundColor: theme.colorScheme.secondary,
+
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
-
-
