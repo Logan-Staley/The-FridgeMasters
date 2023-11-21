@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Aboutpage.dart';
-import 'package:fridgemasters/Tutorial.dart';
+import 'package:fridgemasters/Tutorialpage.dart';
 import 'package:fridgemasters/widgets/language.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/login.dart';
@@ -126,12 +126,12 @@ class _SettingsState extends State<Settings> {
                   onTap: () => _navigateToSetting('Language'),
                 ),
                 */
-                ListTile(
+                /* ListTile(
                   title: Text('Notifications'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () => _navigateToSetting('Notifications'),
                 ),
-
+                */
                 ListTile(
                   title: Text('About'),
                   trailing: Icon(Icons.arrow_forward_ios),
