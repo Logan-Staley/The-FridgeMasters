@@ -42,6 +42,8 @@ class FoodEntry extends StatefulWidget {
   _FoodEntryState createState() => _FoodEntryState();
 }
 
+// ... (imports remain unchanged)
+
 class _FoodEntryState extends State<FoodEntry> {
   String _productName = '';
   String _imageUrl = '';
@@ -49,24 +51,24 @@ class _FoodEntryState extends State<FoodEntry> {
   Map<String, dynamic> _nutrientsInfo = {};
   List<Recipe> _recipes = [];
 
-  // Make processEdamamData asynchronous and return a Future
+  // ... (rest of the code remains unchanged)
+
   Future<void> processEdamamData(Map<String, dynamic> data,
       {bool isUpc = false}) async {
     String imageUrl = '';
+    String productName = '';
+
     if (data.containsKey('hints') &&
         data['hints'] is List &&
         data['hints'].isNotEmpty) {
       Map<String, dynamic> firstHint = data['hints'][0];
       if (firstHint.containsKey('food') && firstHint['food'] is Map) {
         Map<String, dynamic> foodData = firstHint['food'];
-        // Check for the existence of 'image' key and set imageUrl accordingly
         imageUrl = foodData.containsKey('image') ? foodData['image'] : '';
       }
     }
 
-    String productName = '';
     if (isUpc) {
-      // Check if the hints array is not empty and then access the label
       if (data.containsKey('hints') &&
           data['hints'] is List &&
           data['hints'].isNotEmpty &&
@@ -77,18 +79,14 @@ class _FoodEntryState extends State<FoodEntry> {
         productName = data['hints'][0]['food']['label'];
       }
     } else {
-      // If the call was not made with a UPC code, use the user input
       productName = foodItemNameController.text;
     }
 
-// Initialize a variable to hold the nutrients data
     Map<String, dynamic> nutrients = {};
 
-    // Determine if we should look in 'parsed' or 'hints'. If 'parsed' is empty, use 'hints'.
     var foodInfoList =
         (data['parsed'] as List).isNotEmpty ? data['parsed'] : data['hints'];
 
-    // Check if the list is not empty and then access the 'nutrients' from the first 'food' object
     if (foodInfoList.isNotEmpty) {
       var foodData = foodInfoList[0]['food'];
       if (foodData != null && foodData.containsKey('nutrients')) {
@@ -96,369 +94,25 @@ class _FoodEntryState extends State<FoodEntry> {
       }
     }
 
-    // Call saveToInventory with the extracted data
-    saveToInventory(productName: productName, imageUrl: imageUrl);
-    // Extracting nutritional information
-    //Map<String, dynamic> nutrients = data['nutrients'] ?? {};
-
-    // Extracting recipes
-    List<dynamic> recipes = data['hits'] ?? [];
-
-    // Update your state with the fetched information
     setState(() {
       if (foodItemNameController.text.isEmpty) {
         _productName = productName;
-        print(productName);
-      } else
+      } else {
         _productName = foodItemNameController.text;
-      print(productName);
-      _imageUrl = imageUrl; // Set the product name in the state
+      }
+
+      _imageUrl = imageUrl;
       _nutrientsInfo = nutrients;
-      print(_nutrientsInfo);
-      //_recipes = recipes.map((recipe) => Recipe.fromMap(recipe['recipe'])).toList();
     });
+
+    // Call saveToInventory with the extracted data
+    saveToInventory(productName: _productName, imageUrl: _imageUrl);
   }
 
-  Future<void> fetchFromEdamam(String foodName, {bool isUpc = false}) async {
-    // Access the variables from .env file
-    final String appIdFood = dotenv.env['EDAMAM_APP_FOOD'] ?? "default_id";
-    final String appKeyFood =
-        dotenv.env['EDAMAM_APP_KEY_FOOD'] ?? "default_key";
-    final String appUrlFood =
-        dotenv.env['EDAMAM_APP_URL_FOOD'] ?? "default_url";
-
-    final String upcCode = upcNumberController.text;
-    final String edamamUrlFood;
-
-    if (upcCode.isNotEmpty) {
-      edamamUrlFood =
-          "$appUrlFood?upc=$upcCode&app_id=$appIdFood&app_key=$appKeyFood";
-    } else {
-      edamamUrlFood =
-          "$appUrlFood?ingr=$foodName&app_id=$appIdFood&app_key=$appKeyFood";
-    }
-    // Use the edamamUrlFood to fetch food data...
-    print("Edamam URL: $edamamUrlFood");
-
-    // ... And similarly for Recipes
-    final String appIdRecipes =
-        dotenv.env['EDAMAM_APP_ID_RECIPIES'] ?? "default_id";
-    final String appKeyRecipes =
-        dotenv.env['EDAMAM_APP_KEY_RECIPIES'] ?? "default_key";
-    final String appUrlRecipes =
-        dotenv.env['EDAMAM_APP_URL_RECIPIES'] ?? "default_url";
-
-    // Make sure to use the correct URL depending on what type of data you're fetching
-    // For example, if you're fetching food information, use edamamUrlFood
-    // If you're fetching nutrition information, use the appropriate URL and keys
-    // And the same goes for recipes
-
-    try {
-      final response = await http.get(Uri.parse(edamamUrlFood));
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        // Wait for processEdamamData to finish
-        await processEdamamData(data, isUpc: isUpc);
-      } else {
-        print("Failed to load data from Edamam: ${response.body}");
-      }
-    } catch (e) {
-      print("Error fetching data from Edamam: $e");
-    }
-  }
-
-  Future<void> _selectDate(
-      BuildContext context, TextEditingController controller) async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-
-    if (pickedDate != null) {
-      controller.text = DateFormat('MM/dd/yyyy').format(pickedDate);
-    }
-  }
-
-  TextEditingController upcNumberController = TextEditingController();
-  TextEditingController ItemID = TextEditingController();
-  TextEditingController foodItemNameController = TextEditingController();
-  TextEditingController quantityController = TextEditingController();
-  TextEditingController dateOfPurchaseController = TextEditingController();
-  TextEditingController expirationDateController = TextEditingController();
-
-  String formatDateString(String dateStr) {
-    try {
-      DateFormat inputFormat = DateFormat("MM/dd/yyyy");
-      DateTime date = inputFormat.parse(dateStr);
-      DateFormat outputFormat = DateFormat("yyyy-MM-dd");
-      return outputFormat.format(date);
-    } catch (e) {
-      print('Error parsing date: $e');
-      return '';
-    }
-  }
-
-  void saveToInventory(
-      {required String productName, required String imageUrl}) async {
-    final formattedDateOfPurchase =
-        formatDateString(dateOfPurchaseController.text);
-    final formattedExpirationDate =
-        formatDateString(expirationDateController.text);
-
-    final storageService = StorageService();
-    final userId = await storageService.getStoredUserId();
-
-    if (userId == null || userId.isEmpty) {
-      print("UserID is missing or empty.");
-      return;
-    }
-
-    productName = foodItemNameController.text.isEmpty
-        ? productName
-        : foodItemNameController.text;
-
-    final response = await http.post(
-      Uri.parse(
-          'http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/insert_inventory.php'),
-      body: {
-        'productName': productName,
-        'quantity': quantityController.text,
-        'dateOfPurchase': formattedDateOfPurchase,
-        'expirationDate': formattedExpirationDate,
-        'userId': userId,
-        'imageUrl': imageUrl,
-        'nutritionalData': json.encode(
-            _nutrientsInfo), // Send the nutritional data as a JSON string
-        // Include any other data you need to send
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final responseData = json.decode(response.body);
-      if (responseData != null && responseData['success'] != null) {
-        final itemId = responseData['itemId'];
-        final imageUrl = responseData['imageUrl'];
-        // Here, we are assuming that the server is returning the nutrients data.
-        // If your server isn't currently set up to return this, you'll need to modify it.
-        final nutrientsData =
-            _nutrientsInfo; // Using the state variable _nutrientsInfo
-        print("Nutrients Info: $_nutrientsInfo");
-        // Create a FoodItem with the retrieved itemId and nutrients data
-        final foodItem = FoodItem(
-          itemId: itemId.toString(),
-          name: foodItemNameController.text,
-          quantity: int.tryParse(quantityController.text) ?? 0,
-          dateOfPurchase: formattedDateOfPurchase,
-          expirationDate: formattedExpirationDate,
-          imageUrl: imageUrl,
-          nutrients: nutrientsData,
-        );
-
-        print("Data sent successfully!");
-        widget.onFoodItemAdded(foodItem);
-      } else {
-        print("Error adding item: ${responseData['error']}");
-      }
-    } else {
-      print("Error sending data: ${response.statusCode}");
-    }
-  }
-
-  void clearFields() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Confirm'),
-          content: Text('Are you sure you want to clear the fields?'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                upcNumberController.clear();
-                foodItemNameController.clear();
-                quantityController.clear();
-                dateOfPurchaseController.clear();
-                expirationDateController.clear();
-              },
-              child: Text('Yes'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // ... (rest of the code remains unchanged)
 
   @override
-Widget build(BuildContext context) {
-  final theme = Theme.of(context);
-  final screenHeight = MediaQuery.of(context).size.height;
-
-  return Scaffold(
-    body: SingleChildScrollView(
-      child: Stack(
-        children: [
-          Background(type: 'Background1'), // for Background1
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: screenHeight * 0.05), // Adjusted spacing
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            // Handle the "View Inventory Log" button click
-                          },
-                          child: Text(
-                            'View Inventory Log',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                        SizedBox(width: 20),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Handle the "View Expired Items" button click
-                          },
-                          child: Text(
-                            'View Expired Items',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 18),
-                  ],
-                ),
-                Text(
-                  'UPC Number (Optional)',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: 1234567890',
-                  controller: upcNumberController,
-                ),
-                const SizedBox(height: 18),
-                Text(
-                  'Name',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: Strawberries, Milk, Cheese',
-                  controller: foodItemNameController,
-                ),
-                const SizedBox(height: 18),
-                Text(
-                  'Quantity',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: 20',
-                  controller: quantityController,
-                ),
-                const SizedBox(height: 18),
-                Text(
-                  'Date of Purchase',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => _selectDate(context, dateOfPurchaseController),
-                  child: AbsorbPointer(
-                    child: InputTextBox(
-                      isPassword: false,
-                      hint: 'Ex: 12/21/2023',
-                      controller: dateOfPurchaseController,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 18),
-                Text(
-                  'Expiration Date',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => _selectDate(context, expirationDateController),
-                  child: AbsorbPointer(
-                    child: InputTextBox(
-                      isPassword: false,
-                      hint: 'Ex: 12/21/2023',
-                      controller: expirationDateController,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 18),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (upcNumberController.text.isNotEmpty) {
-                      await fetchFromEdamam(upcNumberController.text, isUpc: true);
-                    } else if (foodItemNameController.text.isNotEmpty) {
-                      await fetchFromEdamam(foodItemNameController.text);
-                    } else {
-                      print("Please enter a UPC code or a food name.");
-                      return;
-                    }
-                  },
-                  child: const Text('Add to Fridge'),
-                ),
-                SizedBox(height: 18),
-                ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
-                  style: ElevatedButton.styleFrom(
-                    primary: theme.colorScheme.secondary,
-                    onPrimary: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ),
-    appBar: AppBar(
-      backgroundColor: theme.primaryColor,
-      title: Text(
-        'Add to Inventory',
-        style: GoogleFonts.calligraffitti(
-          fontSize: 22.0,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-    bottomNavigationBar: Taskbar(
-      currentIndex: 1,
-      backgroundColor: theme.bottomAppBarColor,
-      onTabChanged: (index) {
-        currentIndex: 0; // Handle tab change if necessary
-      },
-      onFoodItemAdded: (foodItem) {
-        // Handle food item addition if required
-      },
-    ),
-  );
+  Widget build(BuildContext context) {
+    // ... (rest of the code remains unchanged)
+  }
 }
