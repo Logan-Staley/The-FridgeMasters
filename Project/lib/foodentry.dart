@@ -299,47 +299,24 @@ class _FoodEntryState extends State<FoodEntry> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text(
-          'Add to Inventory',
-          style: GoogleFonts.calligraffitti(
-            fontSize: 22.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      bottomNavigationBar: Taskbar(
-        currentIndex: 1, // Assuming this is the second tab
-        //backgroundColor: Color.fromARGB(255, 233, 232, 232),
-        backgroundColor: theme.bottomAppBarColor,
-        onTabChanged: (index) {
-          currentIndex:
-          0; // Handle tab change if necessary
-        },
-        // If you don't need food item addition functionality in this page, you can remove this callback or make it optional in the Taskbar widget
-        onFoodItemAdded: (foodItem) {
-          // Handle food item addition if required
-        },
-      ),
-      body: Stack(
+Widget build(BuildContext context) {
+  final theme = Theme.of(context);
+  final screenHeight = MediaQuery.of(context).size.height;
+
+  return Scaffold(
+    body: SingleChildScrollView(
+      child: Stack(
         children: [
           Background(type: 'Background1'), // for Background1
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Add spacing between buttons row and text
-                SizedBox(height: 20),
+                SizedBox(height: screenHeight * 0.05), // Adjusted spacing
                 Column(
                   children: [
                     Row(
-                      // Use Row to place buttons side by side
-                      mainAxisAlignment: MainAxisAlignment
-                          .center, // Center-align the buttons horizontally
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
                           onPressed: () {
@@ -347,32 +324,28 @@ class _FoodEntryState extends State<FoodEntry> {
                           },
                           child: Text(
                             'View Inventory Log',
-                            style: TextStyle(
-                                fontSize: 16), // Increase button text size
+                            style: TextStyle(fontSize: 16),
                           ),
                         ),
-                        SizedBox(
-                            width: 20), // Add some spacing between the buttons
+                        SizedBox(width: 20),
                         ElevatedButton(
                           onPressed: () {
                             // Handle the "View Expired Items" button click
                           },
                           child: Text(
                             'View Expired Items',
-                            style: TextStyle(
-                                fontSize: 14), // Increase button text size
+                            style: TextStyle(fontSize: 16),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
-                        height: 18), // Add spacing between buttons row and text
+                    SizedBox(height: 18),
                   ],
                 ),
                 Text(
-                  'UPC Number (Optional)', // Label for UPC Number
+                  'UPC Number (Optional)',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold, // Make the text bold
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 InputTextBox(
@@ -442,11 +415,8 @@ class _FoodEntryState extends State<FoodEntry> {
                 ElevatedButton(
                   onPressed: () async {
                     if (upcNumberController.text.isNotEmpty) {
-                      // Fetch data using the UPC code
-                      await fetchFromEdamam(upcNumberController.text,
-                          isUpc: true);
+                      await fetchFromEdamam(upcNumberController.text, isUpc: true);
                     } else if (foodItemNameController.text.isNotEmpty) {
-                      // Fetch data using the food name
                       await fetchFromEdamam(foodItemNameController.text);
                     } else {
                       print("Please enter a UPC code or a food name.");
@@ -460,12 +430,8 @@ class _FoodEntryState extends State<FoodEntry> {
                   onPressed: () => Navigator.pop(context),
                   child: const Text('Cancel'),
                   style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context)
-                        .colorScheme
-                        .secondary, // Use the secondary color from the theme
-                    onPrimary: Colors.white, // Text color
-                    //shape: RoundedRectangleBorder(
-                    //borderRadius: BorderRadius.circular(25), // Match the border radius
+                    primary: theme.colorScheme.secondary,
+                    onPrimary: Colors.white,
                   ),
                 ),
               ],
@@ -473,6 +439,26 @@ class _FoodEntryState extends State<FoodEntry> {
           ),
         ],
       ),
-    );
-  }
+    ),
+    appBar: AppBar(
+      backgroundColor: theme.primaryColor,
+      title: Text(
+        'Add to Inventory',
+        style: GoogleFonts.calligraffitti(
+          fontSize: 22.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+    bottomNavigationBar: Taskbar(
+      currentIndex: 1,
+      backgroundColor: theme.bottomAppBarColor,
+      onTabChanged: (index) {
+        currentIndex: 0; // Handle tab change if necessary
+      },
+      onFoodItemAdded: (foodItem) {
+        // Handle food item addition if required
+      },
+    ),
+  );
 }
