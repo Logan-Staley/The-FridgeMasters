@@ -263,8 +263,8 @@ class _HomePageState extends State<HomePage> {
       context,
       MaterialPageRoute(
         builder: (context) => FoodEntry(onFoodItemAdded: (foodItem) {
-          Navigator.pop(
-              context, foodItem); // Return the food item back to this page
+          Navigator.pop(context, foodItem);
+           // Return the food item back to this page
         }),
       ),
     );
@@ -884,6 +884,7 @@ class _HomePageState extends State<HomePage> {
                                                                             'itemId'] ==
                                                                         currentItem[
                                                                             'itemId']);
+                                                                    
                                                                   });
                                                                 }
                                                               } catch (e) {
