@@ -134,6 +134,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_emoji",
+      "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_emoji-2.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_lints",
       "rootUri": "file:///C:/Users/Michael%20Ndudim/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.3",
       "packageUri": "lib/",
@@ -446,7 +452,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-11-10T17:59:06.758198Z",
+  "generated": "2023-11-12T15:51:24.767046Z",
   "generator": "pub",
   "generatorVersion": "3.1.5"
 }
