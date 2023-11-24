@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:fridgemasters/recipesinstructions.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
@@ -81,9 +82,14 @@ class _RecipesState extends State<Recipes> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Recipes Page'),
+       title: Text('Recipes Page',style: GoogleFonts.calligraffitti(fontSize: 24.0,
+      fontWeight: FontWeight.bold,),
+        
+        ),
+        backgroundColor: theme.primaryColor,
       ),
       body: FutureBuilder<List<Recipe>>(
         future: recipesFuture,
@@ -119,3 +125,5 @@ class _RecipesState extends State<Recipes> {
     );
   }
 }
+
+// Example destination page for a recipe details screen

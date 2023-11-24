@@ -7,7 +7,7 @@ import 'theme_notifier.dart'; // Import your ThemeNotifier
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'language_change_notifier.dart';
 import 'package:fridgemasters/language.dart';
-import 'package:fridgemasters/Tutorial.dart';
+import 'package:fridgemasters/Tutorialpage.dart';
 
 void main() async {
   WidgetsFlutterBinding
@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         builder: (context, themeNotifier, languageNotifier, child) {
           return MaterialApp(
             title: 'FridgeMasters App',
+            debugShowCheckedModeBanner: false,
             theme: lightTheme,
             darkTheme: darkTheme, // Assuming you have a dark theme defined
             themeMode: themeNotifier.themeMode,
