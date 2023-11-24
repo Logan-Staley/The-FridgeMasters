@@ -33,6 +33,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
 
   Future<bool> login(BuildContext context) async {
+    //Logan S
+//Michael Ndudim
     final storageService = StorageService();
     try {
       final response = await http.post(

@@ -1,3 +1,6 @@
+
+
+
 import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +14,8 @@ import 'package:http/http.dart' as http;
 import 'package:fridgemasters/widgets/taskbar.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+
+//Michael Ndudim
 class Recipe {
   final String uri;
   final String label;
@@ -20,6 +25,7 @@ class Recipe {
   final List<String> ingredientLines;
   final Map<String, dynamic> totalNutrients;
 
+//Michael Ndudim
   Recipe({
     required this.uri,
     required this.label,
@@ -114,6 +120,8 @@ class _FoodEntryState extends State<FoodEntry> {
     List<dynamic> recipes = data['hits'] ?? [];
 
     // Update your state with the fetched information
+    //Logan S
+//Michael Ndudim
     setState(() {
       if (foodItemNameController.text.isEmpty) {
         _productName = productName;
@@ -128,6 +136,7 @@ class _FoodEntryState extends State<FoodEntry> {
     });
   }
 
+//Michael Ndudim
   Future<void> fetchFromEdamam(String foodName, {bool isUpc = false}) async {
     // Access the variables from .env file
     final String appIdFood = dotenv.env['EDAMAM_APP_FOOD'] ?? "default_id";
@@ -200,6 +209,8 @@ class _FoodEntryState extends State<FoodEntry> {
     }
   }
 
+//Logan S - SavetoInventory
+//Michael Ndudim -SavetoInventory
   void saveToInventory(
       {required String productName, required String imageUrl}) async {
     void resetEntryState() {

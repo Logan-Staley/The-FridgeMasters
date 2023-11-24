@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +10,8 @@ class ChangeUsernameEmailPage extends StatefulWidget {
       _ChangeUsernameEmailPageState();
 }
 
-class _ChangeUsernameEmailPageState extends State<ChangeUsernameEmailPage> {
+class _ChangeUsernameEmailPageState extends State<ChangeUsernameEmailPage> {//Logan S
+//Logan S
   final _formKey = GlobalKey<FormState>();
   String _newUsernameEmail = '';
 

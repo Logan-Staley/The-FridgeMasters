@@ -188,6 +188,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _loadFridgeItems() async {
+    //Logan S
+//Michael Ndudim
     try {
       final storageService = StorageService();
 
@@ -237,6 +239,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _updateSearchQuery(String query) {
+    //Logan S
+//Michael Ndudim
     if (query.isEmpty) {
       setState(() {
         filteredItems = [...widget.fridgeItems];
@@ -262,6 +266,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _navigateToAddItem() async {
+    //Logan S
+    //Michael Ndudim
     final FoodItem? newFoodItem = await Navigator.push(
       context,
       MaterialPageRoute(
