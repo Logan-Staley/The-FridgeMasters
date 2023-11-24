@@ -80,6 +80,7 @@ class _ExpiringItemTileState extends State<ExpiringItemTile>
         return Container(
           decoration: BoxDecoration(
             border: Border.all(color: color!, width: 2.0),
+            borderRadius: BorderRadius.circular(70),
           ),
           child: child,
         );
@@ -148,8 +149,10 @@ class YourWidget extends StatelessWidget {
         Text(
           'Today\'s Date: $currentDate',
           style: TextStyle(
+            color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.bold,
+             
           ),
           textAlign: TextAlign.center,
         ),
@@ -307,7 +310,7 @@ class _HomePageState extends State<HomePage> {
     else if (expiryDate.isBefore(purchaseDateParsed)) {
       return Color.fromARGB(255, 177, 21, 21);
     } else if (daysLeft <= 7) {
-      return Colors.yellow;
+      return const Color.fromARGB(255, 226, 166, 76);
     } else {
       return Color.fromARGB(255, 20, 220, 27);
     }
@@ -405,7 +408,7 @@ class _HomePageState extends State<HomePage> {
             preferredSize: Size.fromHeight(60),
             child: Padding(
               //padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              padding: const EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 10.0),
+              padding: const EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 20.0),
               child: Theme(
                 data: Theme.of(context).copyWith(
                   colorScheme: Theme.of(context).colorScheme.copyWith(
@@ -429,17 +432,17 @@ class _HomePageState extends State<HomePage> {
                       borderSide: BorderSide(
                           color: Colors.white), // Choose border color
                       borderRadius:
-                          BorderRadius.circular(20), // Choose border radius
+                          BorderRadius.circular(10), // Choose border radius
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                           color: Colors
                               .white), // Changes the border color when the TextField is focused
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                 ),
@@ -489,7 +492,7 @@ class _HomePageState extends State<HomePage> {
                                         text:
                                             '${DateTime.now().month}/${DateTime.now().day}/${DateTime.now().year}',
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Colors.black,
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -584,9 +587,13 @@ class _HomePageState extends State<HomePage> {
                                                                   193,
                                                                   191),
                                                               width: 3),
+                                                               borderRadius: BorderRadius.circular(10), 
                                                         ),
+                                                        
                                                         width: 100,
-                                                        height: 100,
+                                                      height: 100,
+                                                 
+
                                                         child: Image.network(
                                                           item['imageUrl']
                                                                   .toString() ??
@@ -634,14 +641,15 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                 ),
                                                 Expanded(
-                                                  flex: 7,
+                                                  flex: 6,
                                                   child: Column(
                                                     children: [
                                                       Expanded(
                                                         child: Row(
                                                           children: [
                                                             Expanded(
-                                                              child: Center(
+                                                              child: Align(
+                                                                alignment: Alignment.centerLeft,
                                                                 child: RichText(
                                                                   textAlign:
                                                                       TextAlign
@@ -802,7 +810,7 @@ class _HomePageState extends State<HomePage> {
                                               right: 2,
                                               child: IconButton(
                                                 icon: Icon(Icons.delete,
-                                                    size: 20),
+                                                    size: 22),
                                                 onPressed: () {
                                                   showDialog(
                                                     context: context,
