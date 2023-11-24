@@ -26,7 +26,7 @@ final Color backgroundColor;
       currentIndex: currentIndex,
       backgroundColor: backgroundColor,// Inside your Taskbar widget build method
 onTap: (index) {
-  //AudioManager().playClickSound();  // Play the click sound
+  AudioManager().playClickSound();  // Play the click sound
   switch (index) {
     case 0:
       if (ModalRoute.of(context)?.settings.name != '/home') {

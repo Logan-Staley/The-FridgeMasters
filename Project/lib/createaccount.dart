@@ -25,24 +25,18 @@ class CreateAccountPage extends StatelessWidget {
 
     var data = jsonDecode(response.body);
     if (data["success"]) {
-      // Handle successful registration
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(data["message"])),
       );
-      // Clear the text fields
-      usernameController.clear();
-      emailController.clear();
-      passwordController.clear();
     } else {
-      // Handle error based on the message received from the server
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(data["message"])),
       );
-      // Clear the text fields
-      usernameController.clear();
-      emailController.clear();
-      passwordController.clear();
     }
+
+    usernameController.clear();
+    emailController.clear();
+    passwordController.clear();
   }
 
   void handleSubmit(BuildContext context) {
@@ -51,45 +45,78 @@ class CreateAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final Color fixedButtonColor = Colors.blue;
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Create Account',  style: TextStyle(
+            color: Colors.white, 
+            // Default to white if titleTextStyle is not set
+            fontSize: 20 // You can adjust the font size as needed
+        //style: theme.textTheme.headline6),
+       // backgroundColor: theme.appBarTheme.backgroundColor,
+      ),
+        ),
+        //backgroundColor: theme.primaryColor,
+        backgroundColor: Colors.blue,
+
+      ),
       body: Stack(
         children: [
-          const Background(type: 'Background1'), // for Background1
+          Background(type: 'Background1'), // Consistent background
           Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InputTextBox(
+            child: SingleChildScrollView( // Makes the page scrollable
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InputTextBox(
                     controller: usernameController,
                     isPassword: false,
-                    hint: 'Create username'),
-                const SizedBox(height: 20),
-                InputTextBox(
+                    hint: 'Create username',
+                    textColor: Colors.black87,
+          backgroundColor: Colors.grey[200]!,
+                  ),
+                  const SizedBox(height: 20),
+                  InputTextBox(
                     controller: emailController,
                     isPassword: false,
-                    hint: 'Enter E-Mail'),
-                const SizedBox(height: 20),
-                InputTextBox(
+                    hint: 'Enter E-Mail',
+                    textColor: Colors.black87,
+          backgroundColor: Colors.grey[200]!,
+                  ),
+                  const SizedBox(height: 20),
+                  InputTextBox(
                     controller: passwordController,
                     isPassword: true,
-                    hint: 'Create Password'),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () => handleSubmit(context),
-                  child: const Text('Submit'),
-                ),
-                const SizedBox(height: 20),
-                TextOnlyButton(
-                  text: 'Return To Login',
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
+                    hint: 'Create Password',
+                    textColor: Colors.black87,
+          backgroundColor: Colors.grey[200]!,
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () => handleSubmit(context),
+                    child: const Text('Submit'),
+                    style: ElevatedButton.styleFrom(
+                      primary: fixedButtonColor,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  TextButton(
+                    
+                    onPressed: () => Navigator.pop(context),
+                    child: Text ( 'Return To Login',
+                    style: TextStyle ( color: fixedButtonColor,) ,),
+                      
+                  ),
+                ],
             ),
+              ),
           ),
         ],
       ),
+      
     );
   }
 }

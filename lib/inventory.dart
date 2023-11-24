@@ -8,17 +8,13 @@ class FoodItem {
   final int quantity;
   final String dateOfPurchase;
   final String expirationDate;
-  final String imageUrl; 
-  final Map<String, dynamic> nutrients; // Add this line for nutritional data
 
   FoodItem({
-    required this.itemId, 
+    required this.itemId,
     required this.name,
     required this.quantity,
     required this.dateOfPurchase,
     required this.expirationDate,
-    required this.imageUrl,
-    required this.nutrients,
   });
 }
 
@@ -40,47 +36,24 @@ class _InventoryState extends State<Inventory> {
     });
   }
 
-Future<List<FoodItem>> fetchUserInventory() async {
-  // Send the HTTP request
-  final response = await http.post(
-    Uri.parse('http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/get_user_inventory.php'));
-
-  // Print the raw response body for debugging
-  print('Response Body: ${response.body}');
-
-  // Decode the JSON response
-  final Map<String, dynamic> responseData = json.decode(response.body);
-
-  // Check and handle the response status
-  if (responseData['status'] == 'success') {
-    final List<dynamic> data = responseData['data'];
-
-    // Print the raw data list for debugging
-    print('Raw Data: $data');
-
-    // Parse the data into FoodItem objects
-    List<FoodItem> items = data.map((item) => FoodItem(
-      itemId: item['ItemID'],
-      name: item['name'],
-      quantity: int.parse(item['quantity']),
-      dateOfPurchase: item['dateOfPurchase'],
-      expirationDate: item['expirationDate'],
-      imageUrl: item['imageUrl'] ?? 'default_image.png',
-      nutrients: item['nutrients'] ?? {}, // Ensure this matches the backend response
-    )).toList();
-
-    // Print the parsed FoodItem objects for debugging
-    for (var foodItem in items) {
-      print('FoodItem: ${foodItem.name}, Nutrients: ${foodItem.nutrients}');
+  Future<List<FoodItem>> fetchUserInventory() async {
+    final response = await http.post(Uri.parse('http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/get_user_inventory.php'));
+    final Map<String, dynamic> responseData = json.decode(response.body);
+    
+    if (responseData['status'] == 'success') {
+      final List<dynamic> data = responseData['data'];
+      return data.map((item) => FoodItem(
+        itemId: item['ItemID'],
+        name: item['name'],
+        quantity: int.parse(item['quantity']),
+        dateOfPurchase: item['dateOfPurchase'],
+        expirationDate: item['expirationDate'],
+      )).toList();
+    } else {
+      // Handle error accordingly
+      throw Exception('Failed to load inventory.');
     }
-
-    return items;
-  } else {
-    // Handle error accordingly
-    print('Error: Failed to load inventory. Status: ${responseData['status']}');
-    throw Exception('Failed to load inventory.');
   }
-}
 
   @override
   Widget build(BuildContext context) {

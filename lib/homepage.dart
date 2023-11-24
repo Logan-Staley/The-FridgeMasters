@@ -1,4 +1,4 @@
-//import 'dart:math';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/inventory.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
@@ -59,10 +59,8 @@ class _ExpiringItemTileState extends State<ExpiringItemTile> with SingleTickerPr
   Widget _nonExpiringBorder(Widget child) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Color.fromARGB(255, 168, 169, 173), width: 0.8),
-         borderRadius: BorderRadius.circular(70), 
+        border: Border.all(color: Color.fromARGB(255, 20, 220, 27), width: 2.0),
       ),
-      
       child: child,
     );
   }
@@ -94,14 +92,10 @@ class _ExpiringItemTileState extends State<ExpiringItemTile> with SingleTickerPr
         ).lerp(_animationController.value);
         return Container(
           decoration: BoxDecoration(
-      border: Border.all(
-        color: Color.fromARGB(255, 168, 169, 173),
-        width: 0.8,
-      ),
-      borderRadius: BorderRadius.circular(70), // Rounded corners
-    ),
-    child: child,
-  );
+            border: Border.all(color: color!, width: 2.0),
+          ),
+          child: child,
+        );
       },
     );
   }
@@ -188,7 +182,6 @@ class _HomePageState extends State<HomePage> {
 
 // Map the loadedItems to the expected format
         List<Map<String, dynamic>> formattedItems = loadedItems.map((item) {
-          String imageUrl = item['imageUrl'] ?? 'images/default_image.png'; // Use the image URL from the database if available
           return {
             'itemId': item['itemId'], // Include the itemId
             'name': item['productName'],
@@ -199,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                 .split(" ")[0], // Only take the date part, exclude the time
 
             'imageUrl':
-                item['imageUrl'], // Keep as default or adjust as necessary
+                'images/default_image.png', // Keep as default or adjust as necessary
           };
         }).toList();
 print('Formatted Items: $formattedItems'); // Print the formattedItems list
@@ -235,7 +228,7 @@ print('Formatted Items: $formattedItems'); // Print the formattedItems list
           'purchaseDate': newFoodItem.dateOfPurchase.toString(),
           'expirationDate': newFoodItem.expirationDate.toString(),
           'imageUrl':
-              ['imageUrl'],
+              'images/default_image.png',
         });
       });
     }
@@ -267,13 +260,12 @@ Widget _nonExpiringBorder(Widget child) {
   return Container(
     decoration: BoxDecoration(
       border: Border.all(color: Color.fromARGB(255, 20, 220, 27), width: 2.0),
-      borderRadius: BorderRadius.circular(30),
     ),
     child: child,
   );
 }
 
- /* @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -284,63 +276,8 @@ Widget _nonExpiringBorder(Widget child) {
               color: const Color.fromARGB(255, 215, 215, 215),
               width: 2), // Blue border
         ),
-         title: Column(
-          mainAxisSize: MainAxisSize.min, // Use min size for the column
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 35.0), // Adjust the padding to move the title down
-              child: Center(child: Text('The Fridge Masters')),
-            ),
-          ],
-        ), */
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: PreferredSize(
-      preferredSize: Size.fromHeight(140.0), // Adjust the height as needed
-      child: AppBar(
-        backgroundColor: Colors.transparent, // Make the AppBar background transparent
-        elevation: 0, // Removes the default shadow
-         shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: Color.fromARGB(253, 253, 253, 253),
-            width: 2,
-          ),
-        ),
-       
-        flexibleSpace: Padding( // Apply padding to the flexibleSpace
-          padding: const EdgeInsets.symmetric(horizontal: 21.0), // Set horizontal padding
-          child: ClipRRect(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)), // Rounded corners at the bottom
-            child: Container(
-              margin: const EdgeInsets.only(top: 45.0), // Top margin to push AppBar down
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 168, 169, 173), // Your AppBar color
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                border: Border.all(
-                  color: const Color.fromARGB(255, 215, 215, 215),
-                  width: 2,
-                  
-                ),
-              ),
-            ),
-          ),
-        ),
-        title: Column(
-          mainAxisSize: MainAxisSize.min, // Use min size for the column
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 35.0), // Adjust the padding to move the title down
-              child: Center(child: Text('The Fridge Masters')),
-            ),
-          ],
-        ),
-
-        leading:  Transform.translate(
-        offset: Offset(11, 19), 
         
-       child: IconButton(
-          
+        leading: IconButton(
           icon: Icon(Icons.notifications),
           onPressed: () {
             Navigator.push(
@@ -351,12 +288,8 @@ Widget build(BuildContext context) {
             );
           },
         ),
-        ),
         actions: [
-          Transform.translate(
-          offset: Offset(-11, 19),
-
-          child:IconButton(
+          IconButton(
             icon: Icon(Icons.settings),
             onPressed: () {
               Navigator.push(
@@ -366,56 +299,29 @@ Widget build(BuildContext context) {
                 ),
               );
             },
-          )),
+          ),
         ],
-      
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(60),
           child: Padding(
-            //padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            padding: const EdgeInsets.fromLTRB(50.0, 0.0, 50.0, 10.0),
-            child: Theme(
-      data: Theme.of(context).copyWith(
-        colorScheme: Theme.of(context).colorScheme.copyWith(
-          primary: Colors.white, // Changes the cursor and selection handle color
-        ),
-        textSelectionTheme: TextSelectionThemeData(
-          cursorColor: Colors.white, // Changes the cursor color
-          selectionColor: Colors.white.withOpacity(0.5), // Changes the selection color
-          selectionHandleColor: Colors.white, // Changes the selection handle color
-        ),
-      ),
-
-
-
-
+            padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-               hintText: 'Filter based on food items',
-          prefixIcon: Icon(Icons.search), // Icon for search
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white), // Choose border color
-            borderRadius: BorderRadius.circular(20), // Choose border radius
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white), // Changes the border color when the TextField is focused
-            borderRadius: BorderRadius.circular(20),
+                hintText: 'Filter based on food items',
+                border: OutlineInputBorder(
+                  //backgroundColor: color.Yellow,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                prefixIcon: Icon(Icons.search),
               ),
             ),
           ),
         ),
       ),
-      ),
-      ),
-    ),
       body: Stack(
         children: [
-          //const Background(type: 'Background1'),
+          const Background(type: 'Background1'),
           Center(
               child: widget.fridgeItems.isEmpty
                   ? Column(
@@ -460,14 +366,14 @@ Widget build(BuildContext context) {
         ),
       ),
     ),
-   /* SizedBox(height: 5),
+    SizedBox(height: 5),
           Center(
             child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Expiry Color Legend: ',
+                    text: 'Expiry Legend: ',
                     style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold), 
                   ),
                   TextSpan(
@@ -497,7 +403,7 @@ Widget build(BuildContext context) {
                 ],
               ),
             ),
-          ),*/
+          ),
           SizedBox(height: 10),
         ],
       );
@@ -506,48 +412,20 @@ Widget build(BuildContext context) {
                         final item = widget.fridgeItems[index-1];
                         final itemId = item['itemId'];
                         print('Item ID at index $index: $itemId');
-
-                           Color _getLightGrayColor() {
-  // Light gray color #F0F0F0
-                         return Color.fromRGBO(240, 240, 240, 1); // Opacity is set to 1 for a solid color
-}
-
-                        /*Color _getPastelColor(int index) {
+                        Color _getPastelColor(int index) {
                           final r = (70 + (index * 50) % 135).toDouble();
                           final g = (90 + (index * 80) % 85).toDouble();
                           final b = (120 + (index * 30) % 55).toDouble();
                           return Color.fromRGBO(
                               r.toInt(), g.toInt(), b.toInt(), 0.9);
-                        }*/
+                        }
 
-                     ImageProvider getImageProvider(String? imageUrl) {
-  // Check if imageUrl is a network URL
-  if (imageUrl != null && Uri.tryParse(imageUrl)?.hasAbsolutePath == true) {
-    // If it's a valid URL, return a NetworkImage
-    return NetworkImage(imageUrl);
-  } else {
-    // If it's not a valid URL (or is null), return a AssetImage
-    return AssetImage('images/default_image.png');
-  }
-}  
+                       
                            return Padding(
   padding: const EdgeInsets.all(8.0),
   child: Card(
-    color: _getLightGrayColor(),
-    
-    //color: _getPastelColor(index),
-    elevation: 4.0,
-   shape: RoundedRectangleBorder(
-  side: BorderSide(
-    color: Color.fromARGB(255, 168, 169, 173), // Same color
-    width: 0.8, // Same width
-  ),
-  borderRadius: BorderRadius.circular(70), // Same rounded corners as in _expiredBorder
-),
-
-
-
-   
+    color: _getPastelColor(index),
+    elevation: 4.0, // Added shadow
     child:  ExpiringItemTile(
       expirationDate: item['expirationDate'],
       purchaseDate: item['purchaseDate'],
@@ -560,36 +438,27 @@ Widget build(BuildContext context) {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
-  flex: 3,
-  child: Padding(
-    padding: const EdgeInsets.all(16.0), // Image padding
-    child: Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromARGB(255, 197, 193, 191), width: 3),
-      ),
-      width: 100,
-      height: 100,
-      child: Image.network(
-        item['imageUrl'].toString() ?? '',
-        fit: BoxFit.cover,
-        errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-          // In case of an error (like a 404), use the default image
-          return Image.asset('images/default_image.png', fit: BoxFit.cover);
-        },
-        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) return child;
-          return Center(
-            child: CircularProgressIndicator(
-              value: loadingProgress.expectedTotalBytes != null
-                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                  : null,
-            ),
-          );
-        },
-      ),
-    ),
-  ),
-),
+                                        flex: 3,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(
+                                              16.0), // Image padding
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.brown,
+                                                  width: 3),
+                                              image: DecorationImage(
+                                                image: NetworkImage(item[
+                                                        'imageUrl'] ??
+                                                    'images/default_image.png'), // Explicit Null Check for imageUrl
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            width: 100,
+                                            height: 100,
+                                          ),
+                                        ),
+                                      ),
                                       Expanded(
                                         flex: 7,
                                         child: Column(
@@ -624,13 +493,12 @@ Widget build(BuildContext context) {
                                                                             .bold,
                                                                     fontSize:
                                                                         18,
-                                                                        color: Colors.black,
-                                                                   /* color: Color
+                                                                    color: Color
                                                                         .fromARGB(
                                                                             255,
                                                                             255,
                                                                             255,
-                                                                            255),decoration: TextDecoration.underline*/)), // User-entered text size
+                                                                            255),decoration: TextDecoration.underline)), // User-entered text size
                                                           ],
                                                         ),
                                                       ),
@@ -660,13 +528,13 @@ Widget build(BuildContext context) {
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
-                                                                        16,
-                                                                    /*color: Color
+                                                                        17,
+                                                                    color: Color
                                                                         .fromARGB(
                                                                             255,
                                                                             255,
                                                                             255,
-                                                                            255)*/)),
+                                                                            255))),
                                                           ],
                                                         ),
                                                       ),
@@ -700,14 +568,13 @@ Widget build(BuildContext context) {
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
-                                                                        15.5,
-                                                                         color: Colors.black,
-                                                                    /*color: Color
+                                                                        17.5,
+                                                                    color: Color
                                                                         .fromARGB(
                                                                             255,
                                                                             255,
                                                                             255,
-                                                                            255)*/)),
+                                                                            255))),
                                                           ],
                                                         ),
                                                       ),
@@ -754,21 +621,21 @@ Widget build(BuildContext context) {
                                       ),
                                     ],
                                   ),
-                                  /*Positioned(
-                                    bottom: 1, // adjust as needed
-                                    left: 38, // adjust as needed
+                                  Positioned(
+                                    bottom: 5, // adjust as needed
+                                    left: 30, // adjust as needed
                                     child: Text(
-                                      '    Click Image for\nNutritional Insights!', // replace with dynamic data if needed
+                                      'Click Image for Nutritional Insights!', // replace with dynamic data if needed
                                       style: TextStyle(
-                                        fontSize: 8,
+                                        fontSize: 12,
                                         color: Color.fromARGB(255, 255, 255,
                                             255), // or any color you prefer
                                       ),
                                     ),
-                                  ),*/
+                                  ),
                                    Positioned(
-                                    top: 2,
-                                    right: 2,
+                                    top: 0,
+                                    right: 0,
                                     child: IconButton(
                                       icon: Icon(Icons.delete, size: 20),
                                       onPressed: () {
@@ -800,36 +667,41 @@ Widget build(BuildContext context) {
                                                 ],
                                               ),
                                               actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Remove this line
-            },
-            child: Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () async {
-              final currentItem = widget.fridgeItems[index-1];
-              try {
-                final StorageService storageService = StorageService();
-                String? userID = await storageService.getStoredUserId();
-                
-                 if (userID != null) {
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context)
+                                                        .pop(); // Close the dialog
+                                                  },
+                                                  child: Text('Cancel'),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () async {
+                                                    final currentItem = widget
+                                                        .fridgeItems[index-1];
+                                                   try {
+  final StorageService storageService = StorageService();
+  String? userID = await storageService.getStoredUserId();
+  
+  if (userID != null) {
     String itemIdString = itemId.toString();
     await deleteItem(userID, itemIdString);
-                  
-                  // If the deletion was successful in the backend, remove from the local list
-                  setState(() {
-                    widget.fridgeItems.removeAt(index - 1); // Adjust index
-                  });
-                }
-              } catch (e) {
-                // Handle any exceptions that might occur during the deletion
-                print('Error deleting item: $e');
-              }
-              
-              Navigator.of(context).pop(); // Keep this line to close the dialog
-            },
-            child: Text('Delete'),
+    
+    // If the deletion was successful in the backend, remove from the local list
+    setState(() {
+      widget.fridgeItems.removeAt(index-1);
+    });
+  } else {
+    // Handle the case where userID is null, e.g., show an error message
+    print("User ID is null");
+  }
+}  catch (e) {
+                                                      print(
+                                                          "Error deleting item: $e");
+                                                      // Here you can show some error message or handle it as per your needs
+                                                    }
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text('Delete'),
                                                 ),
                                               ],
                                             );

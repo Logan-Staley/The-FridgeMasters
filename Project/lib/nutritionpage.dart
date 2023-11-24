@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/widgets/taskbar.dart';
+import 'package:fridgemasters/widgets/backgrounds.dart';
 
 class NutritionPage extends StatelessWidget {
   final Map<String, dynamic> item; // Now it expects the entire item
@@ -10,26 +11,39 @@ class NutritionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final nutrients = item['nutrients']; // Extracting nutrients from the item
     final name = item['name'] ?? 'Unknown Item'; // Extracting name from the item
     final highestNutrient = _findHighestNutrient(nutrients);
     return Scaffold(
-      backgroundColor: Colors.grey[400],
+      //backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
+        
+
         title: Text('Nutrition Facts for $name'),
+
+       // title: const Text('Nutrition Page'),
+         backgroundColor: Theme.of(context).primaryColor,
+
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+      body: Stack(
+        children: [
+          Background(type:'Background1'),
+        SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
         child: Column(
+          
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+           // Background(type: 'Background1'),
             Center(
   child: Text(
     'Discover the Nutritional Power of $name!',
     style: TextStyle(
       fontSize: 24.0,
       fontWeight: FontWeight.bold,
-      color: Color.fromARGB(255, 95, 83, 12),
+      //color: Color.fromARGB(255, 95, 83, 12),
+      color: Colors.amber,
     ),
   ),
 ),
@@ -64,9 +78,12 @@ class NutritionPage extends StatelessWidget {
           ],
         ),
       ),
+        ],
+      ),
       bottomNavigationBar: Taskbar(
         currentIndex: 0,
-        backgroundColor: Color.fromARGB(255, 233, 232, 232),
+        //backgroundColor: Color.fromARGB(255, 233, 232, 232),
+         backgroundColor: theme.bottomAppBarColor,
         onTabChanged: (index) {},
         onFoodItemAdded: (foodItem) {
           // You need to provide this callback
