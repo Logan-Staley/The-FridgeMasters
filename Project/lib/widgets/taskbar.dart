@@ -49,7 +49,7 @@ onTap: (index) {
     case 2:
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const Recipes()),
+        MaterialPageRoute(builder: (context) => Recipes()), // Removed const
       );
       break;
     default:
