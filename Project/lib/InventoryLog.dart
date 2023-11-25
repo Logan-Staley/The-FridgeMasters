@@ -4,6 +4,7 @@ import 'package:fridgemasters/inventory.dart'; // Using the FoodItem class
 import 'package:fridgemasters/Services/database_service.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class InventoryList extends StatefulWidget {
   @override
@@ -72,7 +73,13 @@ class _InventoryListState extends State<InventoryList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Historical Inventory Log'),
+        title: Text(
+          'Historical Inventory Log',
+          style: GoogleFonts.calligraffitti(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
