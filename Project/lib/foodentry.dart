@@ -1,6 +1,3 @@
-
-
-
 import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:fridgemasters/widgets/taskbar.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
+import 'package:fridgemasters/InventoryLog.dart';
 
 //Michael Ndudim
 class Recipe {
@@ -158,8 +155,7 @@ class _FoodEntryState extends State<FoodEntry> {
     // Use the edamamUrlFood to fetch food data...
     print("Edamam URL: $edamamUrlFood");
 
-  // ... And similarly for Recipes
-
+    // ... And similarly for Recipes
 
     try {
       final response = await http.get(Uri.parse(edamamUrlFood));
@@ -364,7 +360,11 @@ class _FoodEntryState extends State<FoodEntry> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            // Handle the "View Inventory Log" button click
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        InventoryList())); // Navigate to InventoryLog
                           },
                           child: Text(
                             'View Inventory Log',
@@ -376,7 +376,9 @@ class _FoodEntryState extends State<FoodEntry> {
                             width: 20), // Add some spacing between the buttons
                         ElevatedButton(
                           onPressed: () {
-                            // Handle the "View Expired Items" button click
+                            /*MaterialPageRoute(
+                                builder: (context) =>
+                                   Log());*/ //  button click
                           },
                           child: Text(
                             'View Expired Items',
