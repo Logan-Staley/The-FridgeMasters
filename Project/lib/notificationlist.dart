@@ -3,7 +3,8 @@ import 'package:fridgemasters/cache/dismissednotifications.dart';
 import 'package:fridgemasters/Services/deleteitem.dart'; // Import the deleteItem function
 import 'package:fridgemasters/Services/storage_service.dart'; // Import StorageService
 import 'package:intl/intl.dart';
-import  'package:fridgemasters/widgets/backgrounds.dart' ; // Import DateFormat for date formatting
+import  'package:fridgemasters/widgets/backgrounds.dart' ;
+import 'package:google_fonts/google_fonts.dart'; // Import DateFormat for date formatting
 
 class NotificationList extends StatefulWidget {
   final List<Map<String, dynamic>> fridgeItems;
@@ -84,8 +85,12 @@ class _NotificationListState extends State<NotificationList> {
     return Scaffold(
       appBar: AppBar(
 
-        title: Text('Notification List'),
+        title: Text('Notification List' , style: GoogleFonts.calligraffitti(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+          ),),
         backgroundColor: Theme.of(context).primaryColor,
+         
       ),
       body: Stack (
         children: [ 
