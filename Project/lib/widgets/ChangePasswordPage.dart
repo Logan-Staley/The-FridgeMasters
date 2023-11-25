@@ -1,6 +1,9 @@
+
 import 'package:flutter/material.dart';
+import 'package:fridgemasters/Services/storage_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
 class ChangePasswordPage extends StatefulWidget {
   @override
   _ChangePasswordPageState createState() => _ChangePasswordPageState();
@@ -13,31 +16,36 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   String _retypePassword = '';
 
   void _changePassword() async {
-  final response = await http.post(
+    //Logan S
+    final storageService = StorageService();
+    String? UserID = await storageService.getStoredUserId();
+    final response = await http.post(
       Uri.parse(
-          'http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/create_account.php'),
+          'http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/Changepassword.php'),
       body: {
-        'CurrentPassword': _currentPassword,
-        'NewPassword': _newPassword,
-        'RetypePassword': _retypePassword,
+        'userId':
+            UserID, // Make sure this matches the PHP script's expected key
+        'newPassword': _newPassword,
+        'currentPassword': _currentPassword,
       },
     );
 
-  if (response.statusCode == 200) {
-    // Handle success
-    print('Password changed successfully');
-  } else {
-    // Handle error
-    print('Failed to change password');
+    if (response.statusCode == 200) {
+      // Handle success
+      print('Password changed successfully');
+    } else {
+      // Handle error
+      print('Failed to change password');
+    }
   }
-}
 
   bool _isPasswordCompliant(String password, [int minLength = 5]) {
     if (password.isEmpty) {
       return false;
     }
     bool hasMinLength = password.length >= minLength;
-    bool hasSpecialCharacter = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    bool hasSpecialCharacter =
+        password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
 
     return hasMinLength && hasSpecialCharacter;
   }

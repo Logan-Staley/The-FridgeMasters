@@ -80,15 +80,7 @@ class NutritionPage extends StatelessWidget {
       ),
         ],
       ),
-      bottomNavigationBar: Taskbar(
-        currentIndex: 0,
-        //backgroundColor: Color.fromARGB(255, 233, 232, 232),
-         backgroundColor: theme.bottomAppBarColor,
-        onTabChanged: (index) {},
-        onFoodItemAdded: (foodItem) {
-          // You need to provide this callback
-        },
-      ),
+      
     );
   }
 

@@ -3,7 +3,7 @@ import 'package:fridgemasters/Services/fetchinventoryItems.dart';
 import 'package:fridgemasters/homepage.dart';
 import 'package:fridgemasters/language_change_notifier.dart';
 import 'package:fridgemasters/widgets/button.dart';
-import 'package:fridgemasters/resetpassword.dart';
+import 'package:fridgemasters/resetpasswordRequest.dart';
 import 'widgets/inputtextbox.dart';
 import 'widgets/textonlybutton.dart';
 import 'createaccount.dart';
@@ -15,7 +15,6 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "Services/storage_service.dart";
 import 'package:provider/provider.dart';
-
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
@@ -34,6 +33,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
 
   Future<bool> login(BuildContext context) async {
+    //Logan S
+//Michael Ndudim
     final storageService = StorageService();
     try {
       final response = await http.post(
@@ -64,9 +65,9 @@ class _LoginPageState extends State<LoginPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(data["message"])),
         );
- //Navigator.of(context).pushReplacement(
-    //  MaterialPageRoute(builder: (context) => VideoApp()),
-    //);
+        //Navigator.of(context).pushReplacement(
+        //  MaterialPageRoute(builder: (context) => VideoApp()),
+        //);
 
         return true;
       } else {
@@ -90,8 +91,8 @@ class _LoginPageState extends State<LoginPage> {
     //Color backgroundColor = theme.brightness == Brightness.dark ? Colors.black : Colors.white;
     return Scaffold(
       //backgroundColor: theme.backgroundColor,
-     // backgroundColor: Colors.white,
-     backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           const Background(type: 'Background1'), // for Background1
@@ -106,83 +107,92 @@ class _LoginPageState extends State<LoginPage> {
                   )
                 //: _buildLoginContent(),
                 : _buildLoginContent(languageNotifier, theme),
-
           ),
         ],
       ),
     );
   }
 
-  Widget _buildLoginContent(LanguageChangeNotifier languageNotifier, ThemeData theme) {
+  Widget _buildLoginContent(
+      LanguageChangeNotifier languageNotifier, ThemeData theme) {
     //Color inputTextColor = theme.brightness == Brightness.dark ? Colors.black87 : theme.textTheme.bodyText1?.color ?? Colors.black87;
-     // Update text based on currentLanguage
-     Color inputTextColor = theme.brightness == Brightness.dark ?  Colors.black87 : theme.textTheme.bodyText1?.color ?? Colors.black87;
-   // Color inputBackgroundColor = theme.brightness == Brightness.dark ? (Colors.grey[850] ?? Colors.black): Colors.grey[200]!;
+    // Update text based on currentLanguage
+    Color inputTextColor = theme.brightness == Brightness.dark
+        ? Colors.black87
+        : theme.textTheme.bodyText1?.color ?? Colors.black87;
+    // Color inputBackgroundColor = theme.brightness == Brightness.dark ? (Colors.grey[850] ?? Colors.black): Colors.grey[200]!;
 
     //String loginButtonText = getLocalizedString(currentLanguage, 'login');
-   // String createAccountText = getLocalizedString(currentLanguage, 'createAccount');
+    // String createAccountText = getLocalizedString(currentLanguage, 'createAccount');
     //String forgotPasswordText = getLocalizedString(currentLanguage, 'forgotPassword');
-String loginButtonText = languageNotifier.localizedStrings['login'] ?? 'Login';
-    String createAccountText = languageNotifier.localizedStrings['createAccount'] ?? 'Create Account';
-    String forgotPasswordText = languageNotifier.localizedStrings['forgotPassword'] ?? 'Forgot Password?';
+    String loginButtonText =
+        languageNotifier.localizedStrings['login'] ?? 'Login';
+    String createAccountText =
+        languageNotifier.localizedStrings['createAccount'] ?? 'Create Account';
+    String forgotPasswordText =
+        languageNotifier.localizedStrings['forgotPassword'] ??
+            'Forgot Password?';
 
     return SingleChildScrollView(
-      child: Column( mainAxisAlignment: MainAxisAlignment.center, 
-      //children: [ LogoWidget(width: MediaQuery.of(context).size.width * 0.3),
-      children: [ SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-      Image.asset('images/FinalLOGO.png', width: MediaQuery.of(context).size.width * 0.3),
-      //SizedBox(height: 20),
-      //mainAxisAlignment: MainAxisAlignment.center,
-      //children: [
-        //mage.asset('images/FinalLOGO.png'),
-        const SizedBox(height: 20),
-        InputTextBox(
-          controller: usernameController,
-          isPassword: false,
-          hint: 'Username or Email',
-          textColor: inputTextColor,
-          backgroundColor: Colors.grey[200]!,
-        ),
-        const SizedBox(height: 20),
-        InputTextBox(
-          controller: passwordController,
-          isPassword: true,
-          hint: 'Enter your password',
-          textColor: Colors.black87,
-          backgroundColor: Colors.grey[200]!,
-        ),
-        const SizedBox(height: 20),
-        Button(
-          onPressed: () => login(context),
-          buttonText: 'Login',
-          nextPage: HomePage(fridgeItems: []),
-        ),
-        const SizedBox(height: 20),
-        TextOnlyButton(
-          text: 'Create Account',
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CreateAccountPage()),
-            );
-          },
-        ),
-        const SizedBox(height: 20),
-        TextOnlyButton(
-          text: 'Forgot Password?',
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => resetpassword()),
-            );
-          },
-        ),
-      ],
-    ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        //children: [ LogoWidget(width: MediaQuery.of(context).size.width * 0.3),
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+          Image.asset('images/FinalLOGO.png',
+              width: MediaQuery.of(context).size.width * 0.3),
+          //SizedBox(height: 20),
+          //mainAxisAlignment: MainAxisAlignment.center,
+          //children: [
+          //mage.asset('images/FinalLOGO.png'),
+          const SizedBox(height: 20),
+          InputTextBox(
+            controller: usernameController,
+            isPassword: false,
+            hint: 'Username or Email',
+            textColor: inputTextColor,
+            backgroundColor: Colors.grey[200]!,
+          ),
+          const SizedBox(height: 20),
+          InputTextBox(
+            controller: passwordController,
+            isPassword: true,
+            hint: 'Enter your password',
+            textColor: Colors.black87,
+            backgroundColor: Colors.grey[200]!,
+          ),
+          const SizedBox(height: 20),
+          Button(
+            onPressed: () => login(context),
+            buttonText: 'Login',
+            nextPage: HomePage(fridgeItems: []),
+          ),
+          const SizedBox(height: 20),
+          TextOnlyButton(
+            text: 'Create Account',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CreateAccountPage()),
+              );
+            },
+          ),
+          const SizedBox(height: 20),
+          TextOnlyButton(
+            text: 'Forgot Password?',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ResetPassword()),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 
-    String getLocalizedString(String currentLanguage, String key) {
+  String getLocalizedString(String currentLanguage, String key) {
     Map<String, Map<String, String>> localizedStrings = {
       'en': {
         'login': 'Login',
