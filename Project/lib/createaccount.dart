@@ -1,3 +1,7 @@
+// This page was created by: 
+//Logan S
+//Michael Ndudim
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/widgets/inputtextbox.dart';
@@ -11,7 +15,9 @@ class CreateAccountPage extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
 
   CreateAccountPage({super.key});
-
+//Register function created by:
+//Logan S
+//Michael Ndudim
   Future<void> registerUser(BuildContext context) async {
     final response = await http.post(
       Uri.parse(
