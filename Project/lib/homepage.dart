@@ -15,6 +15,23 @@ import 'package:fridgemasters/Services/deleteitem.dart';
 import 'package:path_drawing/path_drawing.dart';
 import 'package:uuid/uuid.dart';
 import 'package:fridgemasters/language_change_notifier.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+
+Future<void> _logItemDeletion(Map<String, dynamic> item) async {
+  final directory = await getApplicationDocumentsDirectory();
+  final path = directory.path;
+  final file = File('$path/inventory_log1.txt');
+
+  String logEntry =
+      'Deleted Item: ${item['name']}, Quantity: ${item['quantity']}, Expiration Date: ${item['expirationDate']}, Purchase Date: ${item['purchaseDate']}\n';
+
+  try {
+    await file.writeAsString(logEntry, mode: FileMode.append);
+  } catch (e) {
+    print('Error writing to log file: $e');
+  }
+}
 
 String convertToDisplayFormat(String date) {
   var parts = date.split('-');
@@ -152,7 +169,6 @@ class YourWidget extends StatelessWidget {
             color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
-             
           ),
           textAlign: TextAlign.center,
         ),
@@ -273,7 +289,7 @@ class _HomePageState extends State<HomePage> {
       MaterialPageRoute(
         builder: (context) => FoodEntry(onFoodItemAdded: (foodItem) {
           Navigator.pop(context, foodItem);
-           // Return the food item back to this page
+          // Return the food item back to this page
         }),
       ),
     );
@@ -331,7 +347,8 @@ class _HomePageState extends State<HomePage> {
       child: child,
     );
   }
-///Mireya Changes///
+
+  ///Mireya Changes///
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -457,8 +474,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-
-      
       body: Stack(
         children: [
           //const Background(type: 'Background1'),
@@ -480,17 +495,20 @@ class _HomePageState extends State<HomePage> {
 
                       itemBuilder: (context, index) {
                         // This is for the header, which contains the date and legend
-Color _getTextColor(BuildContext context) {
-  // Determine if the theme is dark or light
-  bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+                        Color _getTextColor(BuildContext context) {
+                          // Determine if the theme is dark or light
+                          bool isDarkMode =
+                              Theme.of(context).brightness == Brightness.dark;
 
-  // Set text color based on the theme
-  return isDarkMode ? Colors.white : Colors.black;
-}
+                          // Set text color based on the theme
+                          return isDarkMode ? Colors.white : Colors.black;
+                        }
 
                         if (index == 0) {
-                          bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-                           Color textColor = isDarkMode ? Colors.white : Colors.black;
+                          bool isDarkMode =
+                              Theme.of(context).brightness == Brightness.dark;
+                          Color textColor =
+                              isDarkMode ? Colors.white : Colors.black;
                           return Column(
                             children: [
                               SizedBox(height: 10),
@@ -509,7 +527,7 @@ Color _getTextColor(BuildContext context) {
                                         text:
                                             '${DateTime.now().month}/${DateTime.now().day}/${DateTime.now().year}',
                                         style: TextStyle(
-                                          color:_getTextColor(context),
+                                          color: _getTextColor(context),
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -557,7 +575,8 @@ Color _getTextColor(BuildContext context) {
                                     elevation: 4.0,
                                     shape: RoundedRectangleBorder(
                                       side: BorderSide(
-                                        color: Color.fromARGB(255, 120, 124, 141), // Same color
+                                        color: Color.fromARGB(
+                                            255, 120, 124, 141), // Same color
                                         width: 0.8, // Same width
                                       ),
                                       borderRadius: BorderRadius.circular(
@@ -603,13 +622,12 @@ Color _getTextColor(BuildContext context) {
                                                                   193,
                                                                   191),
                                                               width: 3),
-                                                               borderRadius: BorderRadius.circular(10), 
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(10),
                                                         ),
-                                                        
                                                         width: 100,
-                                                      height: 100,
-                                                 
-
+                                                        height: 100,
                                                         child: Image.network(
                                                           item['imageUrl']
                                                                   .toString() ??
@@ -665,7 +683,9 @@ Color _getTextColor(BuildContext context) {
                                                           children: [
                                                             Expanded(
                                                               child: Align(
-                                                                alignment: Alignment.center,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
                                                                 child: RichText(
                                                                   textAlign:
                                                                       TextAlign
@@ -681,7 +701,8 @@ Color _getTextColor(BuildContext context) {
                                                                               'Name: ',
                                                                           style: TextStyle(
                                                                               fontWeight: FontWeight.normal,
-                                                                              fontSize: 12, color: Colors.black)), // Descriptor size
+                                                                              fontSize: 12,
+                                                                              color: Colors.black)), // Descriptor size
                                                                       TextSpan(
                                                                           text:
                                                                               '${item['name']}',
@@ -717,8 +738,9 @@ Color _getTextColor(BuildContext context) {
                                                                       TextSpan(
                                                                           text:
                                                                               'Purchased: ',
-                                                                          style:
-                                                                              TextStyle(fontWeight: FontWeight.normal,color:  Colors.black)),
+                                                                          style: TextStyle(
+                                                                              fontWeight: FontWeight.normal,
+                                                                              color: Colors.black)),
                                                                       TextSpan(
                                                                           text: convertToDisplayFormat(item[
                                                                               'purchaseDate']),
@@ -727,7 +749,9 @@ Color _getTextColor(BuildContext context) {
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                             fontSize:
-                                                                                16,color:  Colors.black,
+                                                                                16,
+                                                                            color:
+                                                                                Colors.black,
                                                                             /*color: Color
                                                                         .fromARGB(
                                                                             255,
@@ -758,8 +782,9 @@ Color _getTextColor(BuildContext context) {
                                                                       TextSpan(
                                                                           text:
                                                                               'Qty: ',
-                                                                          style:
-                                                                              TextStyle(fontWeight: FontWeight.normal, color:  Colors.black)),
+                                                                          style: TextStyle(
+                                                                              fontWeight: FontWeight.normal,
+                                                                              color: Colors.black)),
                                                                       TextSpan(
                                                                           text:
                                                                               '${item['quantity']}',
@@ -795,9 +820,9 @@ Color _getTextColor(BuildContext context) {
                                                                       TextSpan(
                                                                           text:
                                                                               'Expiry: ',
-                                                                              
-                                                                          style:
-                                                                              TextStyle(fontWeight: FontWeight.normal,color:  Colors.black)),
+                                                                          style: TextStyle(
+                                                                              fontWeight: FontWeight.normal,
+                                                                              color: Colors.black)),
                                                                       TextSpan(
                                                                         text: convertToDisplayFormat(
                                                                             item['expirationDate']),
@@ -826,9 +851,11 @@ Color _getTextColor(BuildContext context) {
                                               top: 2,
                                               right: 2,
                                               child: IconButton(
-                                                icon: Icon(Icons.delete,
-
-                                                    size: 22,  color:  Colors.black,),
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  size: 22,
+                                                  color: Colors.black,
+                                                ),
                                                 onPressed: () {
                                                   showDialog(
                                                     context: context,
@@ -881,6 +908,8 @@ Color _getTextColor(BuildContext context) {
                                                               final currentItem =
                                                                   widget.fridgeItems[
                                                                       adjustedIndex];
+                                                              await _logItemDeletion(
+                                                                  currentItem);
                                                               try {
                                                                 final StorageService
                                                                     storageService =
@@ -910,7 +939,6 @@ Color _getTextColor(BuildContext context) {
                                                                             'itemId'] ==
                                                                         currentItem[
                                                                             'itemId']);
-                                                                    
                                                                   });
                                                                 }
                                                               } catch (e) {
