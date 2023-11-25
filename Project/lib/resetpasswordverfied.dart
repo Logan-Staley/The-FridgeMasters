@@ -1,41 +1,45 @@
-
+//Page implemented by Logan S
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
+import 'package:fridgemasters/login.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-class ChangePasswordPage extends StatefulWidget {
+class resetpasswordverfied extends StatefulWidget {
   @override
-  _ChangePasswordPageState createState() => _ChangePasswordPageState();
+  _PasswordChangePageState createState() => _PasswordChangePageState();
 }
 
-class _ChangePasswordPageState extends State<ChangePasswordPage> {
+class _PasswordChangePageState extends State<resetpasswordverfied> {
   final _formKey = GlobalKey<FormState>();
-  String _currentPassword = '';
   String _newPassword = '';
   String _retypePassword = '';
 
   void _changePassword() async {
-    //Logan S
     final storageService = StorageService();
     String? UserID = await storageService.getStoredUserId();
     final response = await http.post(
       Uri.parse(
-          'http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/Changepassword.php'),
+          'http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/ChangepasswordRequest.php'),
       body: {
-        'userId':
-            UserID, // Make sure this matches the PHP script's expected key
+        'userId': UserID, // Use the stored UserID
         'newPassword': _newPassword,
-        'currentPassword': _currentPassword,
       },
     );
-
-    if (response.statusCode == 200) {
+    var data = jsonDecode(response.body);
+    if (data["success"]) {
       // Handle success
-      print('Password changed successfully');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Password changed successfully')),
+      );
+
+      // Navigate to the login page
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
     } else {
       // Handle error
-      print('Failed to change password');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Failed to change password')));
     }
   }
 
@@ -59,13 +63,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         child: ListView(
           padding: EdgeInsets.all(16.0),
           children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Current Password'),
-              obscureText: true,
-              onChanged: (value) => _currentPassword = value,
-              // Add validators as necessary
-            ),
-            SizedBox(height: 16.0),
             TextFormField(
               decoration: InputDecoration(labelText: 'New Password'),
               obscureText: true,

@@ -1,3 +1,5 @@
+//Logan S
+//Michael Ndudim
 import 'dart:convert';
 import 'package:fridgemasters/inventory.dart';
 import 'package:http/http.dart' as http;
