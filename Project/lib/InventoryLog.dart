@@ -9,7 +9,7 @@ class InventoryLog extends StatefulWidget {
 }
 
 class _InventoryLogState extends State<InventoryLog> {
-  String logContents = '';
+  List<String> logEntries = [];
 
   @override
   void initState() {
@@ -19,13 +19,13 @@ class _InventoryLogState extends State<InventoryLog> {
 
   Future<void> _loadLog() async {
     try {
-      // Read the log file content
-      logContents = await logFile.readAsString();
-      setState(() {}); // Update the UI with the log contents
+      String fileContents = await logFile.readAsString();
+      logEntries = fileContents.split('\n');
+      setState(() {});
     } catch (e) {
       print('Error reading log file: $e');
       setState(() {
-        logContents = 'Error loading log contents.';
+        logEntries = ['Error loading log contents.'];
       });
     }
   }
@@ -42,11 +42,22 @@ class _InventoryLogState extends State<InventoryLog> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8.0),
-        child:
-            Text(logContents.isEmpty ? 'No log data available.' : logContents),
-      ),
+      body: logEntries.isEmpty
+          ? Center(child: Text('No log data available.'))
+          : ListView.builder(
+              padding: const EdgeInsets.all(8.0),
+              itemCount: logEntries.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  child: ListTile(
+                    title: Text(
+                      logEntries[index],
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                  ),
+                );
+              },
+            ),
     );
   }
 }
