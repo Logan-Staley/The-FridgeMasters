@@ -149,7 +149,7 @@ class YourWidget extends StatelessWidget {
         Text(
           'Today\'s Date: $currentDate',
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 18,
             fontWeight: FontWeight.bold,
              
@@ -331,7 +331,7 @@ class _HomePageState extends State<HomePage> {
       child: child,
     );
   }
-
+///Mireya Changes///
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -457,6 +457,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+
+      
       body: Stack(
         children: [
           //const Background(type: 'Background1'),
@@ -478,8 +480,17 @@ class _HomePageState extends State<HomePage> {
 
                       itemBuilder: (context, index) {
                         // This is for the header, which contains the date and legend
+Color _getTextColor(BuildContext context) {
+  // Determine if the theme is dark or light
+  bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+  // Set text color based on the theme
+  return isDarkMode ? Colors.white : Colors.black;
+}
 
                         if (index == 0) {
+                          bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+                           Color textColor = isDarkMode ? Colors.white : Colors.black;
                           return Column(
                             children: [
                               SizedBox(height: 10),
@@ -490,7 +501,7 @@ class _HomePageState extends State<HomePage> {
                                       TextSpan(
                                         text: 'Today\'s Date: ',
                                         style: TextStyle(
-                                            color: Colors.black,
+                                            color: _getTextColor(context),
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -498,7 +509,7 @@ class _HomePageState extends State<HomePage> {
                                         text:
                                             '${DateTime.now().month}/${DateTime.now().day}/${DateTime.now().year}',
                                         style: TextStyle(
-                                          color: Colors.black,
+                                          color:_getTextColor(context),
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -546,8 +557,7 @@ class _HomePageState extends State<HomePage> {
                                     elevation: 4.0,
                                     shape: RoundedRectangleBorder(
                                       side: BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 168, 169, 173), // Same color
+                                        color: Color.fromARGB(255, 120, 124, 141), // Same color
                                         width: 0.8, // Same width
                                       ),
                                       borderRadius: BorderRadius.circular(
@@ -655,7 +665,7 @@ class _HomePageState extends State<HomePage> {
                                                           children: [
                                                             Expanded(
                                                               child: Align(
-                                                                alignment: Alignment.centerLeft,
+                                                                alignment: Alignment.center,
                                                                 child: RichText(
                                                                   textAlign:
                                                                       TextAlign
@@ -671,7 +681,7 @@ class _HomePageState extends State<HomePage> {
                                                                               'Name: ',
                                                                           style: TextStyle(
                                                                               fontWeight: FontWeight.normal,
-                                                                              fontSize: 12)), // Descriptor size
+                                                                              fontSize: 12, color: Colors.black)), // Descriptor size
                                                                       TextSpan(
                                                                           text:
                                                                               '${item['name']}',
@@ -708,7 +718,7 @@ class _HomePageState extends State<HomePage> {
                                                                           text:
                                                                               'Purchased: ',
                                                                           style:
-                                                                              TextStyle(fontWeight: FontWeight.normal)),
+                                                                              TextStyle(fontWeight: FontWeight.normal,color:  Colors.black)),
                                                                       TextSpan(
                                                                           text: convertToDisplayFormat(item[
                                                                               'purchaseDate']),
@@ -717,7 +727,7 @@ class _HomePageState extends State<HomePage> {
                                                                             fontWeight:
                                                                                 FontWeight.bold,
                                                                             fontSize:
-                                                                                16,
+                                                                                16,color:  Colors.black,
                                                                             /*color: Color
                                                                         .fromARGB(
                                                                             255,
@@ -749,7 +759,7 @@ class _HomePageState extends State<HomePage> {
                                                                           text:
                                                                               'Qty: ',
                                                                           style:
-                                                                              TextStyle(fontWeight: FontWeight.normal)),
+                                                                              TextStyle(fontWeight: FontWeight.normal, color:  Colors.black)),
                                                                       TextSpan(
                                                                           text:
                                                                               '${item['quantity']}',
@@ -785,8 +795,9 @@ class _HomePageState extends State<HomePage> {
                                                                       TextSpan(
                                                                           text:
                                                                               'Expiry: ',
+                                                                              
                                                                           style:
-                                                                              TextStyle(fontWeight: FontWeight.normal)),
+                                                                              TextStyle(fontWeight: FontWeight.normal,color:  Colors.black)),
                                                                       TextSpan(
                                                                         text: convertToDisplayFormat(
                                                                             item['expirationDate']),
@@ -816,7 +827,8 @@ class _HomePageState extends State<HomePage> {
                                               right: 2,
                                               child: IconButton(
                                                 icon: Icon(Icons.delete,
-                                                    size: 22),
+
+                                                    size: 22,  color:  Colors.black,),
                                                 onPressed: () {
                                                   showDialog(
                                                     context: context,
