@@ -11,6 +11,9 @@ import 'package:fridgemasters/Tutorialpage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
+// Global variable for the log file
+late File logFile;
+
 void main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Required if you're using async code before runApp
@@ -26,9 +29,9 @@ Future<void> _initializeLogFile() async {
   try {
     final directory = await getApplicationDocumentsDirectory();
     final path = directory.path;
-    final file = File('$path/inventory_log1.txt');
-    if (!await file.exists()) {
-      await file.create(recursive: true);
+    logFile = File('$path/inventory_log1.txt'); // Assign to the global variable
+    if (!await logFile.exists()) {
+      await logFile.create(recursive: true);
     }
   } catch (e) {
     print('Error creating log file: $e');

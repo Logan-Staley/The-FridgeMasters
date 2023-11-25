@@ -380,7 +380,7 @@ class _FoodEntryState extends State<FoodEntry> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        InventoryList())); // Navigate to InventoryLog
+                                        InventoryLog())); // Navigate to InventoryLog
                           },
                           child: Text(
                             'View Inventory Log',
