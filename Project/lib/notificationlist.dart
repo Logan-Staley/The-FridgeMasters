@@ -5,6 +5,23 @@ import 'package:fridgemasters/Services/storage_service.dart'; // Import StorageS
 import 'package:intl/intl.dart';
 import 'package:fridgemasters/widgets/backgrounds.dart'; // Import DateFormat for date formatting
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+
+Future<void> _logItemDeletion(Map<String, dynamic> item) async {
+  final directory = await getApplicationDocumentsDirectory();
+  final path = directory.path;
+  final file = File('$path/inventory_log1.txt');
+
+  String logEntry =
+      'Deleted Item: ${item['name']}, Quantity: ${item['quantity']}, Expiration Date: ${item['expirationDate']}, Purchase Date: ${item['purchaseDate']}\n';
+
+  try {
+    await file.writeAsString(logEntry, mode: FileMode.append);
+  } catch (e) {
+    print('Error writing to log file: $e');
+  }
+}
 
 class NotificationList extends StatefulWidget {
   final List<Map<String, dynamic>> fridgeItems;
@@ -46,15 +63,30 @@ class _NotificationListState extends State<NotificationList> {
 
   Future<void> _deleteItem(dynamic itemId) async {
     try {
-      final StorageService storageService = StorageService();
-      String? userID = await storageService.getStoredUserId();
+      // Finding the item to delete, safely handling if it's not found
+      final itemToDelete = fridgeItemsNotify.firstWhere(
+        (item) => item['itemId'] == itemId,
+        orElse: () =>
+            <String, dynamic>{}, // Return an empty map instead of null
+      );
 
-      if (userID != null) {
-        await deleteItem(userID, itemId.toString());
-        setState(() {
-          fridgeItemsNotify.removeWhere((item) => item['itemId'] == itemId);
-          widget.fridgeItems.removeWhere((item) => item['itemId'] == itemId);
-        });
+      // Check if itemToDelete is not empty, implying an item was found
+      if (itemToDelete.isNotEmpty) {
+        // Log the deletion
+        await _logItemDeletion(itemToDelete);
+
+        final StorageService storageService = StorageService();
+        String? userID = await storageService.getStoredUserId();
+
+        if (userID != null) {
+          await deleteItem(userID, itemId.toString());
+          setState(() {
+            fridgeItemsNotify.removeWhere((item) => item['itemId'] == itemId);
+            widget.fridgeItems.removeWhere((item) => item['itemId'] == itemId);
+          });
+        }
+      } else {
+        print('Item not found for deletion');
       }
     } catch (e) {
       // Handle any exceptions that might occur during the deletion
