@@ -49,13 +49,8 @@ dependencies:
   shared_preferences: ^2.0.15
   url_launcher: ^6.2.1
   video_player: ^2.8.1
-<<<<<<< HEAD
   google_fonts: ^4.0.4 
   
-=======
-  google_fonts: ^4.0.4
-  path_provider: ^2.0.5
->>>>>>> 785764f13936bb1301616d210ccc97d59cc50e92
   
 
 
