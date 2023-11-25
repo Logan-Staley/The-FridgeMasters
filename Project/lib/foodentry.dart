@@ -11,6 +11,8 @@ import 'package:http/http.dart' as http;
 import 'package:fridgemasters/widgets/taskbar.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fridgemasters/InventoryLog.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 //Michael Ndudim
 class Recipe {
@@ -207,6 +209,8 @@ class _FoodEntryState extends State<FoodEntry> {
 
 //Logan S - SavetoInventory
 //Michael Ndudim -SavetoInventory
+// ... [Other parts of the FoodEntry class]
+
   void saveToInventory(
       {required String productName, required String imageUrl}) async {
     void resetEntryState() {
@@ -256,11 +260,10 @@ class _FoodEntryState extends State<FoodEntry> {
       if (responseData != null && responseData['success'] != null) {
         final itemId = responseData['itemId'];
         final imageUrl = responseData['imageUrl'];
-        // Here, we are assuming that the server is returning the nutrients data.
-        // If your server isn't currently set up to return this, you'll need to modify it.
         final nutrientsData =
             _nutrientsInfo; // Using the state variable _nutrientsInfo
         print("Nutrients Info: $_nutrientsInfo");
+
         // Create a FoodItem with the retrieved itemId and nutrients data
         final foodItem = FoodItem(
           itemId: itemId.toString(),
@@ -274,14 +277,27 @@ class _FoodEntryState extends State<FoodEntry> {
 
         print("Data sent successfully!");
         widget.onFoodItemAdded(foodItem);
+
+        // After successful addition, log the item details
+        await _logFoodItem(foodItem);
       } else {
         print("Error adding item: ${responseData['error']}");
       }
     } else {
       print("Error sending data: ${response.statusCode}");
     }
+
     foodItemNameController.clear();
     resetEntryState();
+  }
+
+  Future<void> _logFoodItem(FoodItem foodItem) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/inventory_log1.txt');
+
+    String logEntry =
+        'Food Item Added: ${foodItem.name}, Quantity: ${foodItem.quantity}, Date of Purchase: ${foodItem.dateOfPurchase}, Expiration Date: ${foodItem.expirationDate}, Timestamp: ${DateTime.now()}\n';
+    await file.writeAsString(logEntry, mode: FileMode.append);
   }
 
   void clearFields() {

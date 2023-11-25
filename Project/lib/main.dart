@@ -8,12 +8,31 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'language_change_notifier.dart';
 import 'package:fridgemasters/language.dart';
 import 'package:fridgemasters/Tutorialpage.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 void main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // Required if you're using async code before runApp
   await dotenv.load(fileName: 'edamam.env');
+
+  // Initialize log file
+  await _initializeLogFile();
+
   runApp(MyApp());
+}
+
+Future<void> _initializeLogFile() async {
+  try {
+    final directory = await getApplicationDocumentsDirectory();
+    final path = directory.path;
+    final file = File('$path/inventory_log1.txt');
+    if (!await file.exists()) {
+      await file.create(recursive: true);
+    }
+  } catch (e) {
+    print('Error creating log file: $e');
+  }
 }
 
 class MyApp extends StatelessWidget {
