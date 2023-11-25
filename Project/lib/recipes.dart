@@ -143,7 +143,8 @@ Future<void> fetchAndSetRecipes() async {
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
-          : Column(
+          : SingleChildScrollView(
+          child: Column(
   children: [
     Padding(
       padding: const EdgeInsets.all(2.0),
@@ -169,8 +170,8 @@ Future<void> fetchAndSetRecipes() async {
       ),
     ),
                 
-                Expanded(
-                  flex: 2,
+                Container(
+                  height: 280,
                   child: ListView.builder(
                     itemCount: filteredFridgeItems.length,
                     itemBuilder: (context, index) {
@@ -201,8 +202,8 @@ Future<void> fetchAndSetRecipes() async {
                   },
                   child: Text('Find Recipes'),
                 ),
-                Expanded(
-  flex: 4,
+                Container(
+  height: 300,
   child: recipes.isEmpty && !isLoading
       ? Center(
           child: noRecipesFound
@@ -237,6 +238,7 @@ Future<void> fetchAndSetRecipes() async {
                 
               ],
             ),
+          ),
           bottomNavigationBar: Taskbar(
       currentIndex: 2, // Make sure this is managed based on the state
       backgroundColor: theme.bottomAppBarColor,

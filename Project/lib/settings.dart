@@ -9,6 +9,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:fridgemasters/Notificationspage.dart';
 import 'package:provider/provider.dart';
 import 'package:fridgemasters/theme_notifier.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -89,7 +90,10 @@ class _SettingsState extends State<Settings> {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title:  Text('Settings', style: GoogleFonts.calligraffitti(
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+          ),),
         backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

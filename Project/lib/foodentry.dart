@@ -358,7 +358,8 @@ class _FoodEntryState extends State<FoodEntry> {
           // Handle food item addition if required
         },
       ),
-      body: Stack(
+      body: SingleChildScrollView(
+      child: Stack(
         children: [
           Background(type: 'Background1'), // for Background1
           Center(
@@ -511,6 +512,7 @@ class _FoodEntryState extends State<FoodEntry> {
             ),
           ),
         ],
+      ),
       ),
     );
   }

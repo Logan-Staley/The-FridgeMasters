@@ -23,6 +23,7 @@ Future<void> _logItemDeletion(Map<String, dynamic> item) async {
   }
 }
 
+
 class NotificationList extends StatefulWidget {
   final List<Map<String, dynamic>> fridgeItems;
 
@@ -116,14 +117,12 @@ class _NotificationListState extends State<NotificationList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text(
-          'Notification List',
-          style: GoogleFonts.calligraffitti(
+        title: Text('Notification List' , style: GoogleFonts.calligraffitti(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
-          ),
-        ),
+          ),),
+        backgroundColor: Theme.of(context).primaryColor,
+         
       ),
       body: Stack(
         children: [
