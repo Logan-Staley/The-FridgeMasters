@@ -3,8 +3,26 @@ import 'package:fridgemasters/cache/dismissednotifications.dart';
 import 'package:fridgemasters/Services/deleteitem.dart'; // Import the deleteItem function
 import 'package:fridgemasters/Services/storage_service.dart'; // Import StorageService
 import 'package:intl/intl.dart';
-import  'package:fridgemasters/widgets/backgrounds.dart' ;
-import 'package:google_fonts/google_fonts.dart'; // Import DateFormat for date formatting
+import 'package:fridgemasters/widgets/backgrounds.dart'; // Import DateFormat for date formatting
+import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+
+Future<void> _logItemDeletion(Map<String, dynamic> item) async {
+  final directory = await getApplicationDocumentsDirectory();
+  final path = directory.path;
+  final file = File('$path/inventory_log1.txt');
+
+  String logEntry =
+      'Deleted Item: ${item['name']}, Quantity: ${item['quantity']}, Expiration Date: ${item['expirationDate']}, Purchase Date: ${item['purchaseDate']}\n';
+
+  try {
+    await file.writeAsString(logEntry, mode: FileMode.append);
+  } catch (e) {
+    print('Error writing to log file: $e');
+  }
+}
+
 
 class NotificationList extends StatefulWidget {
   final List<Map<String, dynamic>> fridgeItems;
@@ -46,15 +64,30 @@ class _NotificationListState extends State<NotificationList> {
 
   Future<void> _deleteItem(dynamic itemId) async {
     try {
-      final StorageService storageService = StorageService();
-      String? userID = await storageService.getStoredUserId();
+      // Finding the item to delete, safely handling if it's not found
+      final itemToDelete = fridgeItemsNotify.firstWhere(
+        (item) => item['itemId'] == itemId,
+        orElse: () =>
+            <String, dynamic>{}, // Return an empty map instead of null
+      );
 
-      if (userID != null) {
-        await deleteItem(userID, itemId.toString());
-        setState(() {
-          fridgeItemsNotify.removeWhere((item) => item['itemId'] == itemId);
-          widget.fridgeItems.removeWhere((item) => item['itemId'] == itemId);
-        });
+      // Check if itemToDelete is not empty, implying an item was found
+      if (itemToDelete.isNotEmpty) {
+        // Log the deletion
+        await _logItemDeletion(itemToDelete);
+
+        final StorageService storageService = StorageService();
+        String? userID = await storageService.getStoredUserId();
+
+        if (userID != null) {
+          await deleteItem(userID, itemId.toString());
+          setState(() {
+            fridgeItemsNotify.removeWhere((item) => item['itemId'] == itemId);
+            widget.fridgeItems.removeWhere((item) => item['itemId'] == itemId);
+          });
+        }
+      } else {
+        print('Item not found for deletion');
       }
     } catch (e) {
       // Handle any exceptions that might occur during the deletion
@@ -84,7 +117,6 @@ class _NotificationListState extends State<NotificationList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         title: Text('Notification List' , style: GoogleFonts.calligraffitti(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
@@ -92,90 +124,98 @@ class _NotificationListState extends State<NotificationList> {
         backgroundColor: Theme.of(context).primaryColor,
          
       ),
-      body: Stack (
-        children: [ 
-           Background(type: 'Background1'),
+      body: Stack(
+        children: [
+          Background(type: 'Background1'),
           fridgeItemsNotify.isEmpty
-          ? Center(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  "No New Notifications",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-
-                ),
-              ),
-            )
-          : ListView.builder(
-              itemCount: fridgeItemsNotify.length + 1,
-              itemBuilder: (context, index) {
-                if (index == fridgeItemsNotify.length) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    child: ElevatedButton(
-                      onPressed: _dismissAllItems,
-                      child: Text('Dismiss All'),
-                      style: ElevatedButton.styleFrom(
-      primary: Theme.of(context).colorScheme.secondary, // Background color of the button
-      onPrimary: Colors.white,),
-       // Text color
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      "No New Notifications",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                  );
-                }
-                
-                var item = fridgeItemsNotify[index];
-                return ListTile(
-                  leading:
-                      item['imageUrl'] != null && item['imageUrl'].isNotEmpty
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: fridgeItemsNotify.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == fridgeItemsNotify.length) {
+                      return Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        child: ElevatedButton(
+                          onPressed: _dismissAllItems,
+                          child: Text('Dismiss All'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Theme.of(context)
+                                .colorScheme
+                                .secondary, // Background color of the button
+                            onPrimary: Colors.white,
+                          ),
+                          // Text color
+                        ),
+                      );
+                    }
+
+                    var item = fridgeItemsNotify[index];
+                    return ListTile(
+                      leading: item['imageUrl'] != null &&
+                              item['imageUrl'].isNotEmpty
                           ? Image.network(item['imageUrl'],
                               width: 50, height: 50, fit: BoxFit.cover)
                           : Image.asset('images/default_image.png',
                               width: 50, height: 50),
-                  title: Text(item['name']),
-                  subtitle: Text(_getExpirationStatus(item)),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.delete, size: 24, color: Theme.of(context).primaryColor),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Delete Item'),
-                                content: Text(
-                                    'Are you sure you want to delete this item?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    child: Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      _deleteItem(item['itemId']);
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('Delete'),
-                                  ),
-                                ],
+                      title: Text(item['name']),
+                      subtitle: Text(_getExpirationStatus(item)),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.delete,
+                                size: 24,
+                                color: Theme.of(context).primaryColor),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Delete Item'),
+                                    content: Text(
+                                        'Are you sure you want to delete this item?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                        child: Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          _deleteItem(item['itemId']);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Delete'),
+                                      ),
+                                    ],
+                                  );
+                                },
                               );
                             },
-                          );
-                        },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.notifications_off_outlined,
+                                size: 24,
+                                color: Theme.of(context).primaryColor),
+                            onPressed: () => _dismissItem(item['itemId']),
+                          ),
+                        ],
                       ),
-                      IconButton(
-                        icon: Icon(Icons.notifications_off_outlined, size: 24, color: Theme.of(context).primaryColor),
-                        onPressed: () => _dismissItem(item['itemId']),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+                    );
+                  },
+                ),
+        ],
+      ),
     );
   }
 }
