@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fridgemasters/ExpiryLog.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
@@ -359,160 +360,164 @@ class _FoodEntryState extends State<FoodEntry> {
         },
       ),
       body: SingleChildScrollView(
-      child: Stack(
-        children: [
-          Background(type: 'Background1'), // for Background1
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Add spacing between buttons row and text
-                SizedBox(height: 20),
-                Column(
-                  children: [
-                    Row(
-                      // Use Row to place buttons side by side
-                      mainAxisAlignment: MainAxisAlignment
-                          .center, // Center-align the buttons horizontally
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        InventoryLog())); // Navigate to InventoryLog
-                          },
-                          child: Text(
-                            'View Inventory Log',
-                            style: TextStyle(
-                                fontSize: 16), // Increase button text size
+        child: Stack(
+          children: [
+            Background(type: 'Background1'), // for Background1
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Add spacing between buttons row and text
+                  SizedBox(height: 20),
+                  Column(
+                    children: [
+                      Row(
+                        // Use Row to place buttons side by side
+                        mainAxisAlignment: MainAxisAlignment
+                            .center, // Center-align the buttons horizontally
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          InventoryLog())); // Navigate to InventoryLog
+                            },
+                            child: Text(
+                              'View Inventory Log',
+                              style: TextStyle(
+                                  fontSize: 16), // Increase button text size
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                            width: 20), // Add some spacing between the buttons
-                        ElevatedButton(
-                          onPressed: () {
-                            /*MaterialPageRoute(
-                                builder: (context) =>
-                                   Log());*/ //  button click
-                          },
-                          child: Text(
-                            'View Expired Items',
-                            style: TextStyle(
-                                fontSize: 16), // Increase button text size
+                          SizedBox(
+                              width:
+                                  20), // Add some spacing between the buttons
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ExpiryLog())); // Navigate to InventoryLog
+                            },
+                            child: Text(
+                              'View Expired Items',
+                              style: TextStyle(
+                                  fontSize: 16), // Increase button text size
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                        height: 20), // Add spacing between buttons row and text
-                  ],
-                ),
-                Text(
-                  'UPC Number (Optional)', // Label for UPC Number
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold, // Make the text bold
+                        ],
+                      ),
+                      SizedBox(
+                          height:
+                              20), // Add spacing between buttons row and text
+                    ],
                   ),
-                ),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: 1234567890',
-                  controller: upcNumberController,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Name',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: Strawberries, Milk, Cheese',
-                  controller: foodItemNameController,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Quantity',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: 20',
-                  controller: quantityController,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Date of Purchase',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => _selectDate(context, dateOfPurchaseController),
-                  child: AbsorbPointer(
-                    child: InputTextBox(
-                      isPassword: false,
-                      hint: 'Ex: 12/21/2023',
-                      controller: dateOfPurchaseController,
+                  Text(
+                    'UPC Number (Optional)', // Label for UPC Number
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold, // Make the text bold
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Expiration Date',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                  InputTextBox(
+                    isPassword: false,
+                    hint: 'Ex: 1234567890',
+                    controller: upcNumberController,
                   ),
-                ),
-                GestureDetector(
-                  onTap: () => _selectDate(context, expirationDateController),
-                  child: AbsorbPointer(
-                    child: InputTextBox(
-                      isPassword: false,
-                      hint: 'Ex: 12/21/2023',
-                      controller: expirationDateController,
+                  const SizedBox(height: 20),
+                  Text(
+                    'Name',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (upcNumberController.text.isNotEmpty) {
-                      // Fetch data using the UPC code
-                      await fetchFromEdamam(upcNumberController.text,
-                          isUpc: true);
-                    } else if (foodItemNameController.text.isNotEmpty) {
-                      // Fetch data using the food name
-                      await fetchFromEdamam(foodItemNameController.text);
-                    } else {
-                      print("Please enter a UPC code or a food name.");
-                      return;
-                    }
-                  },
-                  child: const Text('Add to Fridge'),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context)
-                        .colorScheme
-                        .secondary, // Use the secondary color from the theme
-                    onPrimary: Colors.white, // Text color
-                    //shape: RoundedRectangleBorder(
-                    //borderRadius: BorderRadius.circular(30), // Match the border radius
+                  InputTextBox(
+                    isPassword: false,
+                    hint: 'Ex: Strawberries, Milk, Cheese',
+                    controller: foodItemNameController,
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  Text(
+                    'Quantity',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  InputTextBox(
+                    isPassword: false,
+                    hint: 'Ex: 20',
+                    controller: quantityController,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Date of Purchase',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => _selectDate(context, dateOfPurchaseController),
+                    child: AbsorbPointer(
+                      child: InputTextBox(
+                        isPassword: false,
+                        hint: 'Ex: 12/21/2023',
+                        controller: dateOfPurchaseController,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Expiration Date',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => _selectDate(context, expirationDateController),
+                    child: AbsorbPointer(
+                      child: InputTextBox(
+                        isPassword: false,
+                        hint: 'Ex: 12/21/2023',
+                        controller: expirationDateController,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (upcNumberController.text.isNotEmpty) {
+                        // Fetch data using the UPC code
+                        await fetchFromEdamam(upcNumberController.text,
+                            isUpc: true);
+                      } else if (foodItemNameController.text.isNotEmpty) {
+                        // Fetch data using the food name
+                        await fetchFromEdamam(foodItemNameController.text);
+                      } else {
+                        print("Please enter a UPC code or a food name.");
+                        return;
+                      }
+                    },
+                    child: const Text('Add to Fridge'),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Cancel'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context)
+                          .colorScheme
+                          .secondary, // Use the secondary color from the theme
+                      onPrimary: Colors.white, // Text color
+                      //shape: RoundedRectangleBorder(
+                      //borderRadius: BorderRadius.circular(30), // Match the border radius
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
       ),
     );
   }
