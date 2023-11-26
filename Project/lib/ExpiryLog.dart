@@ -50,8 +50,10 @@ class _ExpiryLogState extends State<ExpiryLog> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text(
           'Historical Expiry Log',
           style: GoogleFonts.calligraffitti(
