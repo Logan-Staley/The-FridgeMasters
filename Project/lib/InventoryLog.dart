@@ -32,8 +32,10 @@ class _InventoryLogState extends State<InventoryLog> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
+       backgroundColor: Theme.of(context).primaryColor, 
         title: Text(
           'Historical Inventory Log',
           style: GoogleFonts.calligraffitti(
