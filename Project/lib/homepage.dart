@@ -91,12 +91,12 @@ class _ExpiringItemTileState extends State<ExpiringItemTile>
       animation: _animationController,
       builder: (context, _) {
         final color = ColorTween(
-          begin: Colors.yellow,
-          end: Color.fromARGB(255, 103, 98, 30),
+          begin: Colors.amber,
+          end: Color.fromARGB(255, 197, 188, 67),
         ).lerp(_animationController.value);
         return Container(
           decoration: BoxDecoration(
-            border: Border.all(color: color!, width: 2.0),
+            border: Border.all(color: color!, width: 3.0),
             borderRadius: BorderRadius.circular(70),
           ),
           child: child,
@@ -111,13 +111,12 @@ class _ExpiringItemTileState extends State<ExpiringItemTile>
       builder: (context, _) {
         final color = ColorTween(
           begin: Color.fromARGB(255, 177, 21, 21),
-          end: Color.fromARGB(255, 103, 98, 30),
+          end: Color.fromARGB(255, 131, 122, 121),
         ).lerp(_animationController.value);
         return Container(
           decoration: BoxDecoration(
             border: Border.all(
-              color: Color.fromARGB(255, 168, 169, 173),
-              width: 0.8,
+              color: color!, width: 4.0
             ),
             borderRadius: BorderRadius.circular(70), // Rounded corners
           ),

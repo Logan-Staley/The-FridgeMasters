@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fridgemasters/ExpiryLog.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
@@ -51,7 +52,7 @@ class Recipe {
 class FoodEntry extends StatefulWidget {
   final Function(FoodItem) onFoodItemAdded;
   const FoodEntry({super.key, required this.onFoodItemAdded});
-
+  
   @override
   _FoodEntryState createState() => _FoodEntryState();
 }
@@ -136,7 +137,7 @@ class _FoodEntryState extends State<FoodEntry> {
   }
 
 //Michael Ndudim
-  Future<void> fetchFromEdamam(String foodName, {bool isUpc = false}) async {
+  Future<bool> fetchFromEdamam(String foodName, {bool isUpc = false}) async {
     // Access the variables from .env file
     final String appIdFood = dotenv.env['EDAMAM_APP_FOOD'] ?? "default_id";
     final String appKeyFood =
@@ -159,20 +160,25 @@ class _FoodEntryState extends State<FoodEntry> {
 
     // ... And similarly for Recipes
 
-    try {
-      final response = await http.get(Uri.parse(edamamUrlFood));
+     try {
+    final response = await http.get(Uri.parse(edamamUrlFood));
 
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        // Wait for processEdamamData to finish
-        await processEdamamData(data, isUpc: isUpc);
-      } else {
-        print("Failed to load data from Edamam: ${response.body}");
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if(data.isEmpty || (isUpc && data['hints'].isEmpty)) {
+        return false; // No data found for the UPC code
       }
-    } catch (e) {
-      print("Error fetching data from Edamam: $e");
+      await processEdamamData(data, isUpc: isUpc);
+      return true;
+    } else {
+      print("Failed to load data from Edamam: ${response.body}");
+      return false;
     }
+  } catch (e) {
+    print("Error fetching data from Edamam: $e");
+    return false;
   }
+}
 
   Future<void> _selectDate(
       BuildContext context, TextEditingController controller) async {
@@ -194,6 +200,30 @@ class _FoodEntryState extends State<FoodEntry> {
   TextEditingController quantityController = TextEditingController();
   TextEditingController dateOfPurchaseController = TextEditingController();
   TextEditingController expirationDateController = TextEditingController();
+
+@override
+  void initState() {
+    super.initState();
+    upcNumberController.addListener(_updateFieldState);
+    foodItemNameController.addListener(_updateFieldState);
+  }
+
+  void _updateFieldState() {
+  setState(() {
+    // This will trigger a rebuild of the widget
+  });
+}
+
+  @override
+  void dispose() {
+    upcNumberController.removeListener(_updateFieldState);
+    upcNumberController.dispose();
+    foodItemNameController.removeListener(_updateFieldState);
+    foodItemNameController.dispose();
+    // Dispose of other controllers if needed
+    super.dispose();
+  }
+
 
   String formatDateString(String dateStr) {
     try {
@@ -359,160 +389,282 @@ class _FoodEntryState extends State<FoodEntry> {
         },
       ),
       body: SingleChildScrollView(
-      child: Stack(
-        children: [
-          Background(type: 'Background1'), // for Background1
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Add spacing between buttons row and text
-                SizedBox(height: 20),
-                Column(
-                  children: [
-                    Row(
-                      // Use Row to place buttons side by side
-                      mainAxisAlignment: MainAxisAlignment
-                          .center, // Center-align the buttons horizontally
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        InventoryLog())); // Navigate to InventoryLog
-                          },
-                          child: Text(
-                            'View Inventory Log',
-                            style: TextStyle(
-                                fontSize: 16), // Increase button text size
+        child: Stack(
+          children: [
+            Background(type: 'Background1'), // for Background1
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Add spacing between buttons row and text
+                  SizedBox(height: 20),
+                  Column(
+                    children: [
+                      Row(
+                        // Use Row to place buttons side by side
+                        mainAxisAlignment: MainAxisAlignment
+                            .center, // Center-align the buttons horizontally
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          InventoryLog())); // Navigate to InventoryLog
+                            },
+                            child: Text(
+                              'View Inventory Log',
+                              style: TextStyle(
+                                  fontSize: 16), // Increase button text size
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                            width: 20), // Add some spacing between the buttons
-                        ElevatedButton(
-                          onPressed: () {
-                            /*MaterialPageRoute(
-                                builder: (context) =>
-                                   Log());*/ //  button click
-                          },
-                          child: Text(
-                            'View Expired Items',
-                            style: TextStyle(
-                                fontSize: 16), // Increase button text size
+                          SizedBox(
+                              width:
+                                  20), // Add some spacing between the buttons
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ExpiryLog())); // Navigate to InventoryLog
+                            },
+                            child: Text(
+                              'View Expired Items',
+                              style: TextStyle(
+                                  fontSize: 16), // Increase button text size
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                        height: 20), // Add spacing between buttons row and text
-                  ],
-                ),
-                Text(
-                  'UPC Number (Optional)', // Label for UPC Number
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold, // Make the text bold
+                        ],
+                      ),
+                      SizedBox(
+                          height:
+                              20), // Add spacing between buttons row and text
+                    ],
                   ),
-                ),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: 1234567890',
-                  controller: upcNumberController,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Name',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: Strawberries, Milk, Cheese',
-                  controller: foodItemNameController,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Quantity',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                InputTextBox(
-                  isPassword: false,
-                  hint: 'Ex: 20',
-                  controller: quantityController,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Date of Purchase',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => _selectDate(context, dateOfPurchaseController),
-                  child: AbsorbPointer(
-                    child: InputTextBox(
-                      isPassword: false,
-                      hint: 'Ex: 12/21/2023',
-                      controller: dateOfPurchaseController,
+                  Text(
+                    'UPC Number (Optional)', // Label for UPC Number
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold, // Make the text bold
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Expiration Date',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                  InputTextBox(
+                    isPassword: false,
+                    hint: 'Ex: 1234567890',
+                    controller: upcNumberController,
+                    enabled: foodItemNameController.text.isEmpty, // Disable if Name field is filled
                   ),
-                ),
-                GestureDetector(
-                  onTap: () => _selectDate(context, expirationDateController),
-                  child: AbsorbPointer(
-                    child: InputTextBox(
-                      isPassword: false,
-                      hint: 'Ex: 12/21/2023',
-                      controller: expirationDateController,
+                  const SizedBox(height: 20),
+                  Text(
+                    'Name',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (upcNumberController.text.isNotEmpty) {
-                      // Fetch data using the UPC code
-                      await fetchFromEdamam(upcNumberController.text,
-                          isUpc: true);
-                    } else if (foodItemNameController.text.isNotEmpty) {
-                      // Fetch data using the food name
-                      await fetchFromEdamam(foodItemNameController.text);
-                    } else {
-                      print("Please enter a UPC code or a food name.");
-                      return;
-                    }
-                  },
-                  child: const Text('Add to Fridge'),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context)
-                        .colorScheme
-                        .secondary, // Use the secondary color from the theme
-                    onPrimary: Colors.white, // Text color
-                    //shape: RoundedRectangleBorder(
-                    //borderRadius: BorderRadius.circular(30), // Match the border radius
+                  InputTextBox(
+  isPassword: false,
+                    hint: 'Ex: Strawberries, Milk, Cheese',
+                    controller: foodItemNameController,
+                    enabled: upcNumberController.text.isEmpty, // Disable if UPC field is filled
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  Text(
+                    'Quantity',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  InputTextBox(
+                    isPassword: false,
+                    hint: 'Ex: 20',
+                    controller: quantityController,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Date of Purchase',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => _selectDate(context, dateOfPurchaseController),
+                    child: AbsorbPointer(
+                      child: InputTextBox(
+                        isPassword: false,
+                        hint: 'Ex: 12/21/2023',
+                        controller: dateOfPurchaseController,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Expiration Date',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => _selectDate(context, expirationDateController),
+                    child: AbsorbPointer(
+                      child: InputTextBox(
+                        isPassword: false,
+                        hint: 'Ex: 12/21/2023',
+                        controller: expirationDateController,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+  onPressed: () async {
+    bool result = false;
+    if (upcNumberController.text.isNotEmpty) {
+      result = await fetchFromEdamam(upcNumberController.text, isUpc: true);
+    } else if (foodItemNameController.text.isNotEmpty) {
+      result = await fetchFromEdamam(foodItemNameController.text);
+    } else {
+      print("Please enter a UPC code or a food name.");
+      return;
+    }
+
+    if (!result) {
+      // Show an error message
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('No data found for the entered UPC code.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    // Do not proceed further if the field is empty
+    }
+    // Check if the Date of Purchase field is not empty
+    if (dateOfPurchaseController.text.isEmpty) {
+      // Show an alert or a message to the user that this field is required
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Missing Information'),
+            content: Text('Please enter the Date of Purchase.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Do not proceed further if the field is empty
+    }
+
+    // Check if the Expiration Date field is not empty
+    if (expirationDateController.text.isEmpty) {
+      // Show an alert or a message to the user that this field is required
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Missing Information'),
+            content: Text('Please enter the Expiration Date.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Do not proceed further if the field is empty
+    }
+
+    // Check if both UPC code and Name fields are filled
+    if (upcNumberController.text.isNotEmpty && foodItemNameController.text.isNotEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Please fill either the UPC code or the Name field, not both.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Stop further execution
+    }
+
+    // Check if the Quantity field is empty
+    if (quantityController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Please specify the quantity of the food item.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Stop further execution
+    }
+
+    // Optional 1-second delay
+    await Future.delayed(Duration(seconds: 1));
+
+    // Navigate back to the home tab
+    Navigator.pushReplacementNamed(context, '/home');
+  },
+  child: const Text('Add to Fridge'),
+  
+),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Cancel'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context)
+                          .colorScheme
+                          .secondary, // Use the secondary color from the theme
+                      onPrimary: Colors.white, // Text color
+                      //shape: RoundedRectangleBorder(
+                      //borderRadius: BorderRadius.circular(30), // Match the border radius
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
       ),
     );
   }

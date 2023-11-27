@@ -1,15 +1,20 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart'; // Import intl package for date formatting
 import 'main.dart'; // Import to access the global logFile variable
 
-class InventoryLog extends StatefulWidget {
+class ExpiryLog extends StatefulWidget {
   @override
-  _InventoryLogState createState() => _InventoryLogState();
+  _ExpiryLogState createState() => _ExpiryLogState();
 }
 
-class _InventoryLogState extends State<InventoryLog> {
+class _ExpiryLogState extends State<ExpiryLog> {
   List<String> logEntries = [];
+  final DateFormat dateFormat =
+      DateFormat('yyyy-MM-dd'); // Define the date format
+  final RegExp dateRegex = RegExp(
+      r'Expiration Date: (\d{4}-\d{2}-\d{2})'); // Regular expression to extract the date
 
   @override
   void initState() {
@@ -20,8 +25,21 @@ class _InventoryLogState extends State<InventoryLog> {
   Future<void> _loadLog() async {
     try {
       String fileContents = await logFile.readAsString();
-      logEntries = fileContents.split('\n');
-      setState(() {});
+      List<String> allEntries = fileContents.split('\n');
+      DateTime now = DateTime.now();
+
+      setState(() {
+        // Filter entries to only include expired ones
+        logEntries = allEntries.where((entry) {
+          var matches = dateRegex.firstMatch(entry);
+          if (matches != null && matches.groupCount >= 1) {
+            DateTime entryDate = dateFormat.parse(matches.group(1)!);
+            return entryDate
+                .isBefore(now); // Check if the date is before current date
+          }
+          return false;
+        }).toList();
+      });
     } catch (e) {
       print('Error reading log file: $e');
       setState(() {
@@ -35,11 +53,9 @@ class _InventoryLogState extends State<InventoryLog> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: Theme.of(context).primaryColor,
-
         title: Text(
-          'Historical Inventory Log',
+          'Historical Expiry Log',
           style: GoogleFonts.calligraffitti(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
@@ -47,7 +63,7 @@ class _InventoryLogState extends State<InventoryLog> {
         ),
       ),
       body: logEntries.isEmpty
-          ? Center(child: Text('No log data available.'))
+          ? Center(child: Text('No expired log data available.'))
           : ListView.builder(
               padding: const EdgeInsets.all(8.0),
               itemCount: logEntries.length,
