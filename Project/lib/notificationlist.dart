@@ -45,20 +45,20 @@ class _NotificationListState extends State<NotificationList> {
     }));
   }
 
-  String _getExpirationStatus(Map<String, dynamic> item) {
+ String _getExpirationStatus(Map<String, dynamic> item) {
     DateTime expirationDate = DateTime.parse(item['expirationDate']);
     DateTime currentDate = DateTime.now();
 
     if (currentDate.isAfter(expirationDate)) {
       // Item is expired
-      return "${item['name']} is expired. Expired on: ${DateFormat('yyyy-MM-dd').format(expirationDate)}";
+      return "${item['name']} is expired. Expired on: ${DateFormat('MM/dd/yyyy').format(expirationDate)}";
     } else if (currentDate.isBefore(expirationDate) &&
         currentDate.add(Duration(days: 3)).isAfter(expirationDate)) {
       // Item is about to expire
-      return "${item['name']} is about to expire. Expires on: ${DateFormat('yyyy-MM-dd').format(expirationDate)}";
+      return "${item['name']} is about to expire. Expires on: ${DateFormat('MM/dd/yyyy').format(expirationDate)}";
     } else {
       // For other cases, show the normal expiration date
-      return "Expires on: ${DateFormat('yyyy-MM-dd').format(expirationDate)}";
+      return "Expires on: ${DateFormat('MM/dd/yyyy').format(expirationDate)}";
     }
   }
 
@@ -161,14 +161,31 @@ class _NotificationListState extends State<NotificationList> {
 
                     var item = fridgeItemsNotify[index];
                     return ListTile(
-                      leading: item['imageUrl'] != null &&
-                              item['imageUrl'].isNotEmpty
-                          ? Image.network(item['imageUrl'],
-                              width: 50, height: 50, fit: BoxFit.cover)
-                          : Image.asset('images/default_image.png',
-                              width: 50, height: 50),
-                      title: Text(item['name']),
-                      subtitle: Text(_getExpirationStatus(item)),
+  leading: item['imageUrl'] != null && item['imageUrl'].isNotEmpty
+      ? Image.network(
+          item['imageUrl'],
+          width: 50,
+          height: 50,
+          fit: BoxFit.cover,
+          errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+            // In case of an error (like a 404), use the default image
+            return Image.asset('images/default_image.png', width: 50, height: 50, fit: BoxFit.cover);
+          },
+          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                    : null,
+              ),
+            );
+          },
+        )
+      : Image.asset('images/default_image.png', width: 50, height: 50, fit: BoxFit.cover),
+  title: Text(item['name']),
+  subtitle: Text(_getExpirationStatus(item)),
+                     
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
