@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 class InputTextBox extends StatelessWidget {
   final bool isPassword;
   final String hint;
-  final TextEditingController controller; // Add this line
-
-  // Define the width and height for the InputTextBox
+  final TextEditingController controller;
+  final bool enabled; // Add this line
   final double width = 300.0;
   final double height = 50.0;
 
-  const InputTextBox({super.key, 
+  const InputTextBox({
+    Key? key,
     required this.isPassword,
     required this.hint,
-    required this.controller, // Add this line
-  });
+    required this.controller,
+    this.enabled = true, // Add this line
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,7 @@ class InputTextBox extends StatelessWidget {
       ),
       child: TextField(
         controller: controller, // Add this line
+        enabled: enabled,
         obscureText: isPassword, // If true, the text will be obscured with dots
         decoration: InputDecoration(
           border: const OutlineInputBorder(
