@@ -5,6 +5,7 @@ class InputTextBox extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
   final Color textColor;
+  final bool enabled; // Add this line
   final Color backgroundColor; // Use this in decoration
 
   // Define the width and height for the InputTextBox
@@ -15,6 +16,8 @@ class InputTextBox extends StatelessWidget {
     required this.isPassword,
     required this.hint,
     required this.controller, 
+   
+    this.enabled = true, // Set a default value
     this.textColor = Colors.black87,
     this.backgroundColor = Colors.white, // Default value set to white
   }) : super(key: key);
