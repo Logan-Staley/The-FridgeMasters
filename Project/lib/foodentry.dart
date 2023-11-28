@@ -135,10 +135,7 @@ class _FoodEntryState extends State<FoodEntry> {
     });
   }
 
-<<<<<<< HEAD
-=======
 //Michael Ndudim
->>>>>>> 785764f13936bb1301616d210ccc97d59cc50e92
   Future<void> fetchFromEdamam(String foodName, {bool isUpc = false}) async {
     // Access the variables from .env file
     final String appIdFood = dotenv.env['EDAMAM_APP_FOOD'] ?? "default_id";
@@ -161,20 +158,6 @@ class _FoodEntryState extends State<FoodEntry> {
     print("Edamam URL: $edamamUrlFood");
 
     // ... And similarly for Recipes
-<<<<<<< HEAD
-    final String appIdRecipes =
-        dotenv.env['EDAMAM_APP_ID_RECIPIES'] ?? "default_id";
-    final String appKeyRecipes =
-        dotenv.env['EDAMAM_APP_KEY_RECIPIES'] ?? "default_key";
-    final String appUrlRecipes =
-        dotenv.env['EDAMAM_APP_URL_RECIPIES'] ?? "default_url";
-
-    // Make sure to use the correct URL depending on what type of data you're fetching
-    // For example, if you're fetching food information, use edamamUrlFood
-    // If you're fetching nutrition information, use the appropriate URL and keys
-    // And the same goes for recipes
-=======
->>>>>>> 785764f13936bb1301616d210ccc97d59cc50e92
 
     try {
       final response = await http.get(Uri.parse(edamamUrlFood));
@@ -224,72 +207,6 @@ class _FoodEntryState extends State<FoodEntry> {
     }
   }
 
-<<<<<<< HEAD
-  void saveToInventory(
-      {required String productName, required String imageUrl}) async {
-    final formattedDateOfPurchase =
-        formatDateString(dateOfPurchaseController.text);
-    final formattedExpirationDate =
-        formatDateString(expirationDateController.text);
-
-    final storageService = StorageService();
-    final userId = await storageService.getStoredUserId();
-
-    if (userId == null || userId.isEmpty) {
-      print("UserID is missing or empty.");
-      return;
-    }
-
-    productName = foodItemNameController.text.isEmpty
-        ? productName
-        : foodItemNameController.text;
-
-    final response = await http.post(
-      Uri.parse(
-          'http://ec2-3-141-170-74.us-east-2.compute.amazonaws.com/insert_inventory.php'),
-      body: {
-        'productName': productName,
-        'quantity': quantityController.text,
-        'dateOfPurchase': formattedDateOfPurchase,
-        'expirationDate': formattedExpirationDate,
-        'userId': userId,
-        'imageUrl': imageUrl,
-        'nutritionalData': json.encode(
-            _nutrientsInfo), // Send the nutritional data as a JSON string
-        // Include any other data you need to send
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final responseData = json.decode(response.body);
-      if (responseData != null && responseData['success'] != null) {
-        final itemId = responseData['itemId'];
-        final imageUrl = responseData['imageUrl'];
-        // Here, we are assuming that the server is returning the nutrients data.
-        // If your server isn't currently set up to return this, you'll need to modify it.
-        final nutrientsData =
-            _nutrientsInfo; // Using the state variable _nutrientsInfo
-        print("Nutrients Info: $_nutrientsInfo");
-        // Create a FoodItem with the retrieved itemId and nutrients data
-        final foodItem = FoodItem(
-          itemId: itemId.toString(),
-          name: foodItemNameController.text,
-          quantity: int.tryParse(quantityController.text) ?? 0,
-          dateOfPurchase: formattedDateOfPurchase,
-          expirationDate: formattedExpirationDate,
-          imageUrl: imageUrl,
-          nutrients: nutrientsData,
-        );
-
-        print("Data sent successfully!");
-        widget.onFoodItemAdded(foodItem);
-      } else {
-        print("Error adding item: ${responseData['error']}");
-      }
-    } else {
-      print("Error sending data: ${response.statusCode}");
-    }
-=======
 //Logan S - SavetoInventory
 //Michael Ndudim -SavetoInventory
 // ... [Other parts of the FoodEntry class]
@@ -381,7 +298,6 @@ class _FoodEntryState extends State<FoodEntry> {
     String logEntry =
         'Food Item Added: ${foodItem.name}, Quantity: ${foodItem.quantity}, Date of Purchase: ${foodItem.dateOfPurchase}, Expiration Date: ${foodItem.expirationDate}, Timestamp: ${DateTime.now()}\n';
     await file.writeAsString(logEntry, mode: FileMode.append);
->>>>>>> 785764f13936bb1301616d210ccc97d59cc50e92
   }
 
   void clearFields() {
@@ -442,12 +358,8 @@ class _FoodEntryState extends State<FoodEntry> {
           // Handle food item addition if required
         },
       ),
-<<<<<<< HEAD
-      body: Stack(
-=======
       body: SingleChildScrollView(
       child: Stack(
->>>>>>> 785764f13936bb1301616d210ccc97d59cc50e92
         children: [
           Background(type: 'Background1'), // for Background1
           Center(
@@ -465,15 +377,11 @@ class _FoodEntryState extends State<FoodEntry> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-<<<<<<< HEAD
-                            // Handle the "View Inventory Log" button click
-=======
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         InventoryLog())); // Navigate to InventoryLog
->>>>>>> 785764f13936bb1301616d210ccc97d59cc50e92
                           },
                           child: Text(
                             'View Inventory Log',
@@ -485,13 +393,9 @@ class _FoodEntryState extends State<FoodEntry> {
                             width: 20), // Add some spacing between the buttons
                         ElevatedButton(
                           onPressed: () {
-<<<<<<< HEAD
-                            // Handle the "View Expired Items" button click
-=======
                             /*MaterialPageRoute(
                                 builder: (context) =>
                                    Log());*/ //  button click
->>>>>>> 785764f13936bb1301616d210ccc97d59cc50e92
                           },
                           child: Text(
                             'View Expired Items',
@@ -609,10 +513,7 @@ class _FoodEntryState extends State<FoodEntry> {
           ),
         ],
       ),
-<<<<<<< HEAD
-=======
       ),
->>>>>>> 785764f13936bb1301616d210ccc97d59cc50e92
     );
   }
 }
