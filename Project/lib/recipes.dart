@@ -213,6 +213,7 @@ Future<void> fetchAndSetRecipes() async {
                   : Text('Please Select Ingredients to generate Recipe Suggestions'), // Show this message initially
         )
       : ListView.builder(
+        padding: EdgeInsets.only(bottom: 50),
                           itemCount: recipes.length,
                           itemBuilder: (context, index) {
                             final recipe = recipes[index];

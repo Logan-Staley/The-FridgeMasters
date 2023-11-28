@@ -22,7 +22,7 @@ class _SettingsState extends State<Settings> {
   String _selectedLanguage = 'English';
   final AudioPlayer _audioPlayer = AudioPlayer();
   Future<void> _playLogoutSound() async {
-    await _audioPlayer.play(UrlSource('sounds/logout_sound.mp3'));
+   // await _audioPlayer.play(UrlSource('sounds/logout_sound.mp3'));
   }
 
   Future<void> _showConfirmationDialog(BuildContext context) async {

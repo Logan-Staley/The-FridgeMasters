@@ -43,6 +43,18 @@ class _NotificationListState extends State<NotificationList> {
     fridgeItemsNotify = List.from(widget.fridgeItems.where((item) {
       return !dismissednotices.contains(item['itemId']);
     }));
+
+    // Sort items by expiration date
+    fridgeItemsNotify.sort((a, b) => _compareExpirationDates(a, b));
+  }
+
+  // Compare function for sorting
+  int _compareExpirationDates(Map<String, dynamic> a, Map<String, dynamic> b) {
+    DateTime expirationDateA = DateTime.parse(a['expirationDate']);
+    DateTime expirationDateB = DateTime.parse(b['expirationDate']);
+
+    // Earlier dates will appear first
+    return expirationDateA.compareTo(expirationDateB);
   }
 
  String _getExpirationStatus(Map<String, dynamic> item) {
