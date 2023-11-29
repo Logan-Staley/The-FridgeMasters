@@ -220,9 +220,20 @@ Future<void> fetchAndSetRecipes() async {
                             return Card(
                               elevation: 4.0,
                               child: ListTile(
-                                title: Text(recipe.label),
-                                leading: Image.network(recipe.imageUrl),
-                                onTap: () {
+  title: Text(recipe.label),
+  leading: Container(
+    width: 50, // Set a fixed width for the image
+    height: 50, // Set a fixed height for the image (optional)
+    child: Image.network(
+      recipe.imageUrl,
+      fit: BoxFit.cover, // This ensures the image covers the container area
+      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+        // Return your default image here if there's an error
+        return Image.asset('images/default_image.png'); // Adjust the path as necessary
+      },
+    ),
+  ),
+  onTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => RecipeInstructions(recipe: recipe),

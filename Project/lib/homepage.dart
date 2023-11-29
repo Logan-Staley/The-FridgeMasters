@@ -853,7 +853,7 @@ fontWeight: FontWeight.bold,
                                             ),
                                             Positioned(
                                               top: 2,
-                                              right: 16,
+                                              right: 2,
                                               child: IconButton(
                                                 icon: Icon(
                                                   Icons.delete,
