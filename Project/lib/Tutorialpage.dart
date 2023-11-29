@@ -44,7 +44,7 @@ class _VideoAndTutorialPageState extends State<VideoAndTutorialPage> {
     super.initState();
     _controller = VideoPlayerController.file(
       File(
-        'C:\\Users\\tmass\\OneDrive - University of Houston-Clear Lake\\Documents\\UHCL\\Fall 2023 Classes\\ITEC 4388 (Senior Project)\\FridgeMasters2\\your_video_filename.mp4',
+        "C:\Users\tmass\Downloads\untitled.webm",
       ),
     )..initialize().then((_) {
         setState(() {});
