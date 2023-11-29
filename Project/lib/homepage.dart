@@ -856,51 +856,25 @@ class _HomePageState extends State<HomePage> {
                                                   color: Colors.black,
                                                 ),
                                                 onPressed: () {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      bool isChecked = false;
-                                                      return AlertDialog(
-                                                        title:
-                                                            Text('Delete Item'),
-                                                        content: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Text(
-                                                                'Are you sure you want to delete this item?'),
-                                                            Row(
-                                                              children: [
-                                                                Checkbox(
-                                                                  value:
-                                                                      isChecked,
-                                                                  onChanged:
-                                                                      (bool?
-                                                                          value) {
-                                                                    setState(
-                                                                        () {
-                                                                      isChecked =
-                                                                          value!;
-                                                                    });
-                                                                  },
-                                                                ),
-                                                                Text(
-                                                                    "This has expired"),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        actions: [
-                                                          TextButton(
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop(); // Remove this line
-                                                            },
-                                                            child:
-                                                                Text('Cancel'),
-                                                          ),
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Delete Item'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Are you sure you want to delete this item?'),
+            // Removed the Row containing the Checkbox and Text
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Closes the dialog
+            },
+            child: Text('Cancel'),
+          ),
                                                           TextButton(
                                                             onPressed:
                                                                 () async {

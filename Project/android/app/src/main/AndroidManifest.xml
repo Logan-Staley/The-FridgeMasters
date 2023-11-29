@@ -1,4 +1,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+   
+
+    <!-- Add queries for specific URL schemes -->
+    <queries>
+        <!-- If your app checks for web URL support -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="http" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <!-- If your app checks for telephone support -->
+        <intent>
+            <action android:name="android.intent.action.DIAL" />
+            <data android:scheme="tel" />
+        </intent>
+        <!-- If your app checks for email support -->
+        <intent>
+            <action android:name="android.intent.action.SENDTO" />
+            <data android:scheme="mailto" />
+        </intent>
+    </queries>
+
     <application
         android:label="Fridgemasters"
         android:name="${applicationName}"
