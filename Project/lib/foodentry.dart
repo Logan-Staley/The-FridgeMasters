@@ -293,7 +293,12 @@ class _FoodEntryState extends State<FoodEntry> {
         final nutrientsData =
             _nutrientsInfo; // Using the state variable _nutrientsInfo
         print("Nutrients Info: $_nutrientsInfo");
-
+ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Item added successfully'),
+        duration: Duration(seconds: 2),
+      ),
+    );
         // Create a FoodItem with the retrieved itemId and nutrients data
         final foodItem = FoodItem(
           itemId: itemId.toString(),
@@ -517,24 +522,14 @@ class _FoodEntryState extends State<FoodEntry> {
                   const SizedBox(height: 20),
                   ElevatedButton(
   onPressed: () async {
-    bool result = false;
-    if (upcNumberController.text.isNotEmpty) {
-      result = await fetchFromEdamam(upcNumberController.text, isUpc: true);
-    } else if (foodItemNameController.text.isNotEmpty) {
-      result = await fetchFromEdamam(foodItemNameController.text);
-    } else {
-      print("Please enter a UPC code or a food name.");
-      return;
-    }
-
-    if (!result) {
-      // Show an error message
+    // Check if both UPC code and Name fields are filled
+    if (upcNumberController.text.isNotEmpty && foodItemNameController.text.isNotEmpty) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Error'),
-            content: Text('No data found for the entered UPC code.'),
+            content: Text('Please fill either the UPC code or the Name field, not both.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -546,11 +541,52 @@ class _FoodEntryState extends State<FoodEntry> {
           );
         },
       );
-    // Do not proceed further if the field is empty
+      return; // Stop further execution
+    } else if (upcNumberController.text.isEmpty && foodItemNameController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Please enter a UPC code or a food name.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Stop further execution
     }
+
+    // Check if the Quantity field is empty or non-numeric
+    if (quantityController.text.isEmpty || !RegExp(r'^[0-9]+$').hasMatch(quantityController.text)) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: const Text('Please enter a valid number for quantity.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Stop further execution
+    }
+
     // Check if the Date of Purchase field is not empty
     if (dateOfPurchaseController.text.isEmpty) {
-      // Show an alert or a message to the user that this field is required
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -573,7 +609,6 @@ class _FoodEntryState extends State<FoodEntry> {
 
     // Check if the Expiration Date field is not empty
     if (expirationDateController.text.isEmpty) {
-      // Show an alert or a message to the user that this field is required
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -594,14 +629,23 @@ class _FoodEntryState extends State<FoodEntry> {
       return; // Do not proceed further if the field is empty
     }
 
-    // Check if both UPC code and Name fields are filled
-    if (upcNumberController.text.isNotEmpty && foodItemNameController.text.isNotEmpty) {
+    bool result = false;
+    if (upcNumberController.text.isNotEmpty) {
+      // Fetch data for UPC
+      result = await fetchFromEdamam(upcNumberController.text, isUpc: true);
+    } else {
+      // Fetch data for food item name
+      result = await fetchFromEdamam(foodItemNameController.text);
+    }
+
+    if (!result) {
+      // Show an error message if data not found
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Error'),
-            content: Text('Please fill either the UPC code or the Name field, not both.'),
+            content: Text('No data found for the entered information.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -613,39 +657,18 @@ class _FoodEntryState extends State<FoodEntry> {
           );
         },
       );
-      return; // Stop further execution
+      return; // Do not proceed further if no data is found
     }
 
-    // Check if the Quantity field is empty
-    if (quantityController.text.isEmpty) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text('Please specify the quantity of the food item.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-      return; // Stop further execution
-    }
+    
 
-    // Optional 1-second delay
+    // Optional delay (if needed)
     await Future.delayed(Duration(seconds: 1));
 
     // Navigate back to the home tab
     Navigator.pushReplacementNamed(context, '/home');
   },
   child: const Text('Add to Fridge'),
-  
 ),
                   SizedBox(height: 20),
                   ElevatedButton(

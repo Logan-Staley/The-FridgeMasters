@@ -333,7 +333,7 @@ class _HomePageState extends State<HomePage> {
     } else if (daysLeft <= 7) {
       return const Color.fromARGB(255, 226, 166, 76);
     } else {
-      return Color.fromARGB(255, 20, 220, 27);
+      return Color.fromARGB(255, 84, 175, 90);
     }
   }
 
@@ -357,7 +357,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize:
-            const Size.fromHeight(142.0), // Adjust the height as needed
+            const Size.fromHeight(180.0), // Adjust the height as needed
         child: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           //title: const Text(''),// Make the AppBar background transparent
@@ -377,7 +377,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                    top: 20.0), // Adjust the padding to move the title down
+                    top: 20.0,), // Adjust the padding to move the title down
                 child: Center(
                   child: Text(
                     'The Fridge Masters',
@@ -427,50 +427,63 @@ class _HomePageState extends State<HomePage> {
           ],
 
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(60),
-            child: Padding(
-              //padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              padding: const EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 20.0),
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  colorScheme: Theme.of(context).colorScheme.copyWith(
-                        primary: Colors
-                            .white, // Changes the cursor and selection handle color
-                      ),
-                  textSelectionTheme: TextSelectionThemeData(
-                    cursorColor: Colors.white, // Changes the cursor color
-                    selectionColor: Colors.white
-                        .withOpacity(0.5), // Changes the selection color
-                    selectionHandleColor:
-                        Colors.white, // Changes the selection handle color
-                  ),
-                ),
-                child: TextField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    hintText: 'Filter based on food items',
-                    prefixIcon: Icon(Icons.search), // Icon for search
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Colors.white), // Choose border color
-                      borderRadius:
-                          BorderRadius.circular(10), // Choose border radius
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Colors
-                              .white), // Changes the border color when the TextField is focused
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
+  preferredSize: Size.fromHeight(80), // Increased the height to accommodate the date
+  child: Padding(
+    padding: const EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 15.0),
+    child: Column(
+      mainAxisSize: MainAxisSize.min, // Use min size for the column
+      crossAxisAlignment: CrossAxisAlignment.start, // Aligns the text to the start
+      children: [
+        Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: Colors.white,
+            ),
+            textSelectionTheme: TextSelectionThemeData(
+              cursorColor: Colors.white,
+              selectionColor: Colors.white.withOpacity(0.5),
+              selectionHandleColor: Colors.white,
+            ),
+          ),
+          child: TextField(
+            controller: _searchController,
+            style: TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              hintText: 'Search for a specific food item',
+              hintStyle: TextStyle(color: Colors.white),
+              prefixIcon: Icon(Icons.search, color: Colors.white),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
           ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0), // Add space between search bar and date text
+          child: Text(
+            'Today\'s Date: ${convertToDisplayFormat(DateTime.now().toString().split(' ')[0])}',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ),
+            
+        ),
+      ],
+    ),
+  ),
+),
         ),
       ),
       body: Stack(
@@ -516,26 +529,18 @@ class _HomePageState extends State<HomePage> {
                                   text: TextSpan(
                                     children: [
                                       TextSpan(
-                                        text: 'Today\'s Date: ',
+                                        text: 'Blinking Borders: Yellow - Near Expiry, Red - Expired',
                                         style: TextStyle(
                                             color: _getTextColor(context),
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      TextSpan(
-                                        text:
-                                            '${DateTime.now().month}/${DateTime.now().day}/${DateTime.now().year}',
-                                        style: TextStyle(
-                                          color: _getTextColor(context),
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                                      
                                     ],
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 10),
+                              SizedBox(height: 2),
                             ],
                           );
                         } else {
@@ -697,7 +702,7 @@ class _HomePageState extends State<HomePage> {
                                                                     children: <TextSpan>[
                                                                       TextSpan(
                                                                           text:
-                                                                              'Name: ',
+                                                                              'Name:\n',
                                                                           style: TextStyle(
                                                                               fontWeight: FontWeight.normal,
                                                                               fontSize: 12,
@@ -736,7 +741,7 @@ class _HomePageState extends State<HomePage> {
                                                                     children: <TextSpan>[
                                                                       TextSpan(
                                                                           text:
-                                                                              'Purchased: ',
+                                                                              'Purchased:\n',
                                                                           style: TextStyle(
                                                                               fontWeight: FontWeight.normal,
                                                                               color: Colors.black)),
@@ -750,7 +755,7 @@ class _HomePageState extends State<HomePage> {
                                                                             fontSize:
                                                                                 16,
                                                                             color:
-                                                                                Colors.black,
+                                                                                Color.fromARGB(255, 104, 92, 92),
                                                                             /*color: Color
                                                                         .fromARGB(
                                                                             255,
@@ -818,7 +823,7 @@ class _HomePageState extends State<HomePage> {
                                                                     children: <TextSpan>[
                                                                       TextSpan(
                                                                           text:
-                                                                              'Expiry: ',
+                                                                              'Expiry:\n',
                                                                           style: TextStyle(
                                                                               fontWeight: FontWeight.normal,
                                                                               color: Colors.black)),
@@ -848,7 +853,7 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                             Positioned(
                                               top: 2,
-                                              right: 2,
+                                              right: 16,
                                               child: IconButton(
                                                 icon: Icon(
                                                   Icons.delete,
@@ -956,15 +961,20 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToAddItem,
-        child: Icon(Icons.add),
-
-        //backgroundColor: const Color.fromARGB(210, 84, 85, 87),
-
-        //backgroundColor: const Color.fromARGB(210, 33, 149, 243),
-        backgroundColor: theme.colorScheme.secondary,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+  onPressed: () {
+    // Navigate to the FoodEntry page
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FoodEntry(onFoodItemAdded: (foodItem) {
+        // Handle the added food item if needed
+        // For example, updating a list on the home page or showing a confirmation message
+      })),
+    );
+  },
+  child: Icon(Icons.add),
+  backgroundColor: theme.colorScheme.secondary,
+),
+floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

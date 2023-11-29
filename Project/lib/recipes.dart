@@ -56,7 +56,7 @@ Future<List<Recipe>> fetchRecipes(String ingredients) async {
   final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
-    final data = json.decode(response.body);
+    final data = json.decode(utf8.decode(response.bodyBytes));  // Decode bytes to UTF-8
     List<Recipe> recipes = (data['hits'] as List).map((hit) {
       return Recipe.fromJson(hit['recipe']);
     }).toList();

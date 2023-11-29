@@ -102,12 +102,15 @@ class CreateAccountPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () => handleSubmit(context),
-                    child: const Text('Submit'),
-                    style: ElevatedButton.styleFrom(
-                      primary: fixedButtonColor,
-                    ),
-                  ),
+  onPressed: () => handleSubmit(context),
+  child: Text(
+    'Submit',
+    style: TextStyle(color: Colors.white), // Set text color to white
+  ),
+  style: ElevatedButton.styleFrom(
+    primary: fixedButtonColor,
+  ),
+),
                   const SizedBox(height: 20),
                   TextButton(
                     

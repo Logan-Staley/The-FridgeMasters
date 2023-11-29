@@ -42,12 +42,41 @@ class NutritionPage extends StatelessWidget {
     style: TextStyle(
       fontSize: 24.0,
       fontWeight: FontWeight.bold,
-      //color: Color.fromARGB(255, 95, 83, 12),
-      color: Colors.amber,
+      color: Colors.blue,
+    ),
+    textAlign: TextAlign.center, // Ensure text alignment is centered
+  ),
+),
+
+SizedBox(height: 16),
+
+// Adding the image and recommended serving size text
+if (item['imageUrl'] != null)
+  Center(
+    child: Image.network(
+      item['imageUrl'],
+      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+        // Return an empty container in case of an error
+        return Container();
+      },
+    ),
+  ),
+SizedBox(height: 8),
+// Aligning the text to the left side
+Padding(
+  padding: const EdgeInsets.symmetric(vertical: 8.0),
+  child: Text(
+    'For Recommended Serving Size:',
+    style: TextStyle(
+      fontSize: 18.0,
+      fontWeight: FontWeight.bold,
     ),
   ),
 ),
-            SizedBox(height: 16),
+//SizedBox(height: 2),
+
+// Card widget for nutritional facts
+            SizedBox(height: 2),
             Card(
               elevation: 4.0,
               child: Padding(
@@ -73,7 +102,7 @@ class NutritionPage extends StatelessWidget {
 ),
  SizedBox(height: 16), // Add some space between the cards and the image
           Center(
-            child: Image.asset('images/foodchart.jpg'), // This will display your image
+            //child: Image.asset('images/foodchart.jpg'), // This will display your image
           ),
           ],
         ),
@@ -175,7 +204,7 @@ String _findHighestNutrient(Map<String, dynamic> nutrients) {
           ),
           if (highestNutrient.isNotEmpty) 
             Text(
-              '\nThis item is high in ${_getNutrientName(highestNutrient)} (${nutrients[highestNutrient]}g), which makes it great for ${_getNutrientBenefit(highestNutrient)}.',
+              '\nThis item is high in ${_getNutrientName(highestNutrient)} (${nutrients[highestNutrient]}g), which makes it great for ${_getNutrientBenefit(highestNutrient)}.\n\n*Disclamer: These numbers are general estimates and may not accurately portray your food item nutrition.\n\nFor most accurate info, please see the Nurtitional Information label on specific food item.',
               style: TextStyle(
                 fontSize: 15.0, // Adjust the font size as needed
                 fontWeight: FontWeight.bold,

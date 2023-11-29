@@ -125,16 +125,41 @@ class _NotificationListState extends State<NotificationList> {
     // Save dismissednotices to persistent storage if needed
   }
 
-  @override
+@override
   Widget build(BuildContext context) {
+    // Separate items into 'expired' and 'about to expire' lists
+    List<Map<String, dynamic>> expiredItems = [];
+    List<Map<String, dynamic>> aboutToExpireItems = [];
+
+    for (var item in fridgeItemsNotify) {
+      if (DateTime.now().isAfter(DateTime.parse(item['expirationDate']))) {
+        expiredItems.add(item);
+      } else if (DateTime.now().add(Duration(days: 3)).isAfter(DateTime.parse(item['expirationDate']))) {
+        aboutToExpireItems.add(item);
+      }
+    }
+Widget buildDividerTile(String title) {
+  return Container(
+    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+    color: Colors.grey[300], // Choose a color that makes the divider stand out
+    child: Text(
+      title,
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
+        color: Colors.black,
+      ),
+    ),
+  );
+}
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notification List' , style: GoogleFonts.calligraffitti(
+        title: Text('Notification List', style: GoogleFonts.calligraffitti(
             fontSize: 24.0,
             fontWeight: FontWeight.bold,
-          ),),
+          ),
+        ),
         backgroundColor: Theme.of(context).primaryColor,
-         
       ),
       body: Stack(
         children: [
@@ -145,106 +170,88 @@ class _NotificationListState extends State<NotificationList> {
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
                       "No New Notifications",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
                 )
-              : ListView.builder(
-                  itemCount: fridgeItemsNotify.length + 1,
-                  itemBuilder: (context, index) {
-                    if (index == fridgeItemsNotify.length) {
-                      return Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                        child: ElevatedButton(
-                          onPressed: _dismissAllItems,
-                          child: Text('Dismiss All'),
-                          style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context)
-                                .colorScheme
-                                .secondary, // Background color of the button
-                            onPrimary: Colors.white,
-                          ),
-                          // Text color
-                        ),
-                      );
-                    }
-
-                    var item = fridgeItemsNotify[index];
-                    return ListTile(
-  leading: item['imageUrl'] != null && item['imageUrl'].isNotEmpty
-      ? Image.network(
-          item['imageUrl'],
-          width: 50,
-          height: 50,
-          fit: BoxFit.cover,
-          errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-            // In case of an error (like a 404), use the default image
-            return Image.asset('images/default_image.png', width: 50, height: 50, fit: BoxFit.cover);
-          },
-          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-            if (loadingProgress == null) return child;
-            return Center(
-              child: CircularProgressIndicator(
-                value: loadingProgress.expectedTotalBytes != null
-                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                    : null,
-              ),
-            );
-          },
-        )
-      : Image.asset('images/default_image.png', width: 50, height: 50, fit: BoxFit.cover),
-  title: Text(item['name']),
-  subtitle: Text(_getExpirationStatus(item)),
-                     
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.delete,
-                                size: 24,
-                                color: Theme.of(context).primaryColor),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('Delete Item'),
-                                    content: Text(
-                                        'Are you sure you want to delete this item?'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(),
-                                        child: Text('Cancel'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          _deleteItem(item['itemId']);
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text('Delete'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.notifications_off_outlined,
-                                size: 24,
-                                color: Theme.of(context).primaryColor),
-                            onPressed: () => _dismissItem(item['itemId']),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+              : ListView(
+          children: [
+            if (expiredItems.isNotEmpty) ...[
+              buildDividerTile("Expired Items:"),
+              ...expiredItems.map((item) => buildItemTile(item, context)).toList(),
+            ],
+            if (aboutToExpireItems.isNotEmpty) ...[
+              buildDividerTile("Items about to expire:"),
+              ...aboutToExpireItems.map((item) => buildItemTile(item, context)).toList(),
+            ],
+                  ],
                 ),
         ],
       ),
     );
   }
+
+  Widget buildItemTile(Map<String, dynamic> item, BuildContext context) {
+  return ListTile(
+    leading: item['imageUrl'] != null && item['imageUrl'].isNotEmpty
+        ? Image.network(
+            item['imageUrl'],
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+            errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+              return Image.asset('images/default_image.png', width: 50, height: 50, fit: BoxFit.cover);
+            },
+            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                      : null,
+                ),
+              );
+            },
+          )
+        : Image.asset('images/default_image.png', width: 50, height: 50, fit: BoxFit.cover),
+    title: Text(item['name']),
+    subtitle: Text(_getExpirationStatus(item)),
+    trailing: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          icon: Icon(Icons.delete, size: 24, color: Theme.of(context).primaryColor),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Delete Item'),
+                  content: Text('Are you sure you want to delete this item?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        _deleteItem(item['itemId']);
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Delete'),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.notifications_off_outlined, size: 24, color: Theme.of(context).primaryColor),
+          onPressed: () => _dismissItem(item['itemId']),
+        ),
+      ],
+    ),
+  );
+}
 }

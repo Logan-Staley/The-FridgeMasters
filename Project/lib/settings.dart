@@ -98,7 +98,7 @@ class _SettingsState extends State<Settings> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, '/home');
           },
         ),
         actions: [
@@ -175,17 +175,17 @@ class _SettingsState extends State<Settings> {
                     height:
                         20), // Spacer doesn't work in ListView. Replacing with SizedBox.
                 ElevatedButton(
-                  onPressed: () {
-                    //    AudioManager().playClickSound(); - don't feel it's necessary here
-                    _showConfirmationDialog(context);
-                  },
-                  child: const Text('Sign Out'),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red),
-                    padding: MaterialStateProperty.all(
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0)),
-                  ),
-                ),
+  onPressed: () {
+    _showConfirmationDialog(context);
+  },
+  child: const Text('Sign Out'),
+  style: ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(Colors.red),
+    foregroundColor: MaterialStateProperty.all(Colors.black), // Set the text color to black
+    padding: MaterialStateProperty.all(
+        EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0)),
+  ),
+),
               ],
             ),
           ),

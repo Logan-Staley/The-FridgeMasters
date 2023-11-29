@@ -163,10 +163,11 @@ class _LoginPageState extends State<LoginPage> {
           ),
           const SizedBox(height: 20),
           Button(
-            onPressed: () => login(context),
-            buttonText: 'Login',
-            nextPage: HomePage(fridgeItems: []),
-          ),
+  onPressed: () => login(context),
+  buttonText: 'Login',
+  textStyle: TextStyle(color: Colors.white), // Set the text color to white
+  nextPage: HomePage(fridgeItems: []),
+),
           const SizedBox(height: 20),
           TextOnlyButton(
             text: 'Create Account',

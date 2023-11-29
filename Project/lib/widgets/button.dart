@@ -5,22 +5,24 @@ class Button extends StatelessWidget {
   final Future<bool> Function() onPressed;
   final String buttonText;
   final Widget nextPage;
-  final Color color; // Added the color property
+  final TextStyle textStyle; // Existing TextStyle parameter
+  final Color color; // Existing color property
 
   const Button({
     Key? key, 
     required this.onPressed,
     required this.buttonText,
     required this.nextPage,
-    this.color = Colors.blue, // Set a default color
-  }) : super(key: key); // Updated to include key in the super constructor
+    this.textStyle = const TextStyle(color: Colors.black), // Default text style
+    this.color = Colors.blue, // Default color
+  }) : super(key: key); // Existing super constructor
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () async {
         // Play click sound
-        //AudioManager().playClickSound();
+        // AudioManager().playClickSound();
         bool success = await onPressed();
         if (success) {
           Navigator.pushReplacement(
@@ -29,9 +31,12 @@ class Button extends StatelessWidget {
           );
         }
       },
-      child: Text(buttonText),
+      child: Text(
+        buttonText,
+        style: textStyle, // Apply the textStyle to the Text widget
+      ),
       style: ElevatedButton.styleFrom(
-        primary: color, // Used the color property here
+        primary: color, // Existing color usage
       ),
     );
   }
