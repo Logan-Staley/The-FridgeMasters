@@ -58,21 +58,24 @@ class _NotificationListState extends State<NotificationList> {
   }
 
  String _getExpirationStatus(Map<String, dynamic> item) {
-    DateTime expirationDate = DateTime.parse(item['expirationDate']);
-    DateTime currentDate = DateTime.now();
+  DateTime expirationDate = DateTime.parse(item['expirationDate']);
+  DateTime currentDate = DateTime.now();
+  DateTime currentDateAtMidnight = DateTime(currentDate.year, currentDate.month, currentDate.day);
 
-    if (currentDate.isAfter(expirationDate)) {
-      // Item is expired
-      return "${item['name']} is expired. Expired on: ${DateFormat('MM/dd/yyyy').format(expirationDate)}";
-    } else if (currentDate.isBefore(expirationDate) &&
-        currentDate.add(Duration(days: 3)).isAfter(expirationDate)) {
-      // Item is about to expire
-      return "${item['name']} is about to expire. Expires on: ${DateFormat('MM/dd/yyyy').format(expirationDate)}";
-    } else {
-      // For other cases, show the normal expiration date
-      return "Expires on: ${DateFormat('MM/dd/yyyy').format(expirationDate)}";
-    }
+  // Calculate the number of days left until expiration
+  int daysUntilExpiration = expirationDate.difference(currentDateAtMidnight).inDays;
+
+  if (daysUntilExpiration < 0) {
+    // Item is expired
+    return "${item['name']} is expired. Expired on: ${DateFormat('MM/dd/yyyy').format(expirationDate)}";
+  } else if (daysUntilExpiration <= 7) {
+    // Item is about to expire (within 7 days, including today)
+    return "${item['name']} is about to expire. Expires in $daysUntilExpiration day(s) on: ${DateFormat('MM/dd/yyyy').format(expirationDate)}";
+  } else {
+    // For other cases, show the normal expiration date
+    return "Expires on: ${DateFormat('MM/dd/yyyy').format(expirationDate)}";
   }
+}
 
   Future<void> _deleteItem(dynamic itemId) async {
     try {
@@ -126,18 +129,22 @@ class _NotificationListState extends State<NotificationList> {
   }
 
 @override
-  Widget build(BuildContext context) {
-    // Separate items into 'expired' and 'about to expire' lists
-    List<Map<String, dynamic>> expiredItems = [];
-    List<Map<String, dynamic>> aboutToExpireItems = [];
+Widget build(BuildContext context) {
+  // Separate items into 'expired' and 'about to expire' lists
+  List<Map<String, dynamic>> expiredItems = [];
+  List<Map<String, dynamic>> aboutToExpireItems = [];
 
-    for (var item in fridgeItemsNotify) {
-      if (DateTime.now().isAfter(DateTime.parse(item['expirationDate']))) {
-        expiredItems.add(item);
-      } else if (DateTime.now().add(Duration(days: 3)).isAfter(DateTime.parse(item['expirationDate']))) {
-        aboutToExpireItems.add(item);
-      }
+  for (var item in fridgeItemsNotify) {
+    DateTime expirationDate = DateTime.parse(item['expirationDate']).toLocal();
+    DateTime currentDate = DateTime.now();
+    DateTime currentDateAtMidnight = DateTime(currentDate.year, currentDate.month, currentDate.day);
+
+    if (expirationDate.isBefore(currentDateAtMidnight)) {
+      expiredItems.add(item);
+    } else if (expirationDate.difference(currentDateAtMidnight).inDays <= 7) {
+      aboutToExpireItems.add(item);
     }
+  }
 Widget buildDividerTile(String title) {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
