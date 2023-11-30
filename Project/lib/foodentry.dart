@@ -58,9 +58,15 @@ class FoodEntry extends StatefulWidget {
 }
 
 class _FoodEntryState extends State<FoodEntry> {
+  
+  bool _isButtonActive = true;
   String _productName = '';
   String _imageUrl = '';
-
+void enableButton() {
+  setState(() {
+    _isButtonActive = true;
+  });
+}
   Map<String, dynamic> _nutrientsInfo = {};
   List<Recipe> _recipes = [];
 
@@ -522,6 +528,18 @@ ScaffoldMessenger.of(context).showSnackBar(
                   const SizedBox(height: 20),
                   ElevatedButton(
   onPressed: () async {
+    if (!_isButtonActive) {
+      return; // If the button is inactive, don't perform any action
+    }
+
+    setState(() {
+      _isButtonActive = false; // Disable the button
+    });
+
+    // Your existing button functionality goes here
+   
+
+    
     // Check if both UPC code and Name fields are filled
     if (upcNumberController.text.isNotEmpty && foodItemNameController.text.isNotEmpty) {
       showDialog(
@@ -534,6 +552,7 @@ ScaffoldMessenger.of(context).showSnackBar(
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  enableButton();
                 },
                 child: Text('OK'),
               ),
@@ -553,6 +572,7 @@ ScaffoldMessenger.of(context).showSnackBar(
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  enableButton();
                 },
                 child: Text('OK'),
               ),
@@ -575,6 +595,7 @@ ScaffoldMessenger.of(context).showSnackBar(
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  enableButton();
                 },
                 child: const Text('OK'),
               ),
@@ -591,12 +612,13 @@ ScaffoldMessenger.of(context).showSnackBar(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Missing Information'),
-            content: Text('Please enter the Date of Purchase.'),
+            title: const Text('Missing Information'),
+            content: const Text('Please enter the Date of Purchase.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  enableButton();
                 },
                 child: Text('OK'),
               ),
@@ -613,12 +635,13 @@ ScaffoldMessenger.of(context).showSnackBar(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Missing Information'),
-            content: Text('Please enter the Expiration Date.'),
+            title: const Text('Missing Information'),
+            content: const Text('Please enter the Expiration Date.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  enableButton();
                 },
                 child: Text('OK'),
               ),
@@ -650,6 +673,7 @@ ScaffoldMessenger.of(context).showSnackBar(
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  enableButton();
                 },
                 child: Text('OK'),
               ),
@@ -662,12 +686,20 @@ ScaffoldMessenger.of(context).showSnackBar(
 
     
 
+  
     // Optional delay (if needed)
     await Future.delayed(Duration(seconds: 1));
 
     // Navigate back to the home tab
     Navigator.pushReplacementNamed(context, '/home');
+    // Optional: Re-enable the button after some time
+    await Future.delayed(Duration(seconds: 2)); // 2 seconds delay
+    setState(() {
+      _isButtonActive = true; // Re-enable the button
+    });
+  
   },
+  
   child: const Text('Add to Fridge'),
 ),
                   SizedBox(height: 20),
