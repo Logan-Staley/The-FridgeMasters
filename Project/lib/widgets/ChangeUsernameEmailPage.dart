@@ -1,4 +1,4 @@
-
+//Logan Staley's Code ------
 import 'package:flutter/material.dart';
 import 'package:fridgemasters/Services/storage_service.dart';
 import 'package:http/http.dart' as http;
@@ -78,3 +78,4 @@ class _ChangeUsernameEmailPageState extends State<ChangeUsernameEmailPage> {//Lo
     );
   }
 }
+//Logan Staley's Code ------

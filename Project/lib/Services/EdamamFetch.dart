@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
+//Logan Staley's Code ------//Logan Staley's Code ------//Logan Staley's Code ------//Logan Staley's Code ------
 Future<List<String>> fetchSuggestions(String query) async {
   await dotenv.load(fileName: "edamam.env");
   final apiKey = dotenv.env['API_Key_FOOD'] ??
@@ -46,3 +46,4 @@ List<String> parseSuggestions(String responseBody) {
   return List<String>.from(
       parsed['hints'].map((data) => data['food']['label']));
 }
+//Logan Staley's Code ------

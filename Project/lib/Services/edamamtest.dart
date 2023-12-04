@@ -24,3 +24,4 @@ Future<bool> checkApiConnection() async {
     return false;
   }
 }
+//Logan Staley's Code ------
